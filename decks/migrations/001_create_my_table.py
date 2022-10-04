@@ -8,7 +8,7 @@ steps = [
     );
     ''',
     '''
-    DROP TABLE vacations
+    DROP TABLE cards
     '''
   ]
 ]
