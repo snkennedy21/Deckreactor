@@ -2,6 +2,9 @@ from pydantic import BaseModel
 from querries.pool import pool
 
 
+class Error(BaseModel):
+  message: str
+
 class CardIn(BaseModel):
   name: str
   multiverse_id: int
@@ -10,7 +13,6 @@ class CardOut(BaseModel):
   id: int
   name: str
   multiverse_id: int
-
 
 
 class CardRepository:
