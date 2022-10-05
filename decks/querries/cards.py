@@ -51,6 +51,8 @@ class CardRepository:
             ORDER BY name
             '''
           )
+          for record in result:
+            print(record)
           return [
             self.record_to_card_out(record)
             for record in result
