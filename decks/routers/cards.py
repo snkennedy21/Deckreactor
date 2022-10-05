@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Response, status
 from querries.cards import CardIn, CardRepository, CardOut, Error
-from typing import Union
+from typing import Union, List
 
 router = APIRouter()
 
@@ -13,3 +13,8 @@ def create_card(
   ):
   response.status_code = 400
   return repo.create(card)
+
+
+@router.get("/cards", response_model=Union[List[CardOut], Error])
+def get_all_cards(repo: CardRepository = Depends()):
+  return repo.get_all()

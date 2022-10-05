@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from querries.pool import pool
+from typing import List, Union
 
 
 class Error(BaseModel):
@@ -17,7 +18,6 @@ class CardOut(BaseModel):
 
 class CardRepository:
   def create(self, card: CardIn) -> CardOut:
-
     # Connect the database
     with pool.connection() as conn:
 
@@ -40,3 +40,28 @@ class CardRepository:
         # Return new data
         old_data = card.dict()
         return CardOut(id=id, **old_data)
+  
+  def get_all(self) -> Union[Error, List[CardOut]]:
+    try:
+      with pool.connection() as conn:
+        with conn.cursor() as db:
+          result = db.execute(
+            '''
+            SELECT id, name, multiverse_id
+            FROM cards
+            ORDER BY name
+            '''
+          )
+          result = []
+          for record in db:
+            card = CardOut(
+              id=record[0],
+              name=record[1],
+              multiverse_id=record[2]
+            )
+            result.append(card)
+          return result
+
+    except Exception as e:
+      print(e)
+      return {"message": "Could not get all cards"}
