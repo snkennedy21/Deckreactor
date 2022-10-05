@@ -27,3 +27,17 @@ def update_card(
   repo: CardRepository = Depends()
 ) -> Union[Error, CardOut]:
   return repo.update(card_id, card)
+
+@router.delete('/cards/{card_id}', response_model=bool)
+def delete_card(
+  card_id: int,
+  repo: CardRepository = Depends(),
+) -> bool:
+  return repo.delete(card_id)
+
+@router.get('/cards/{card_id}', response_model=Union[CardOut, Error])
+def get_one_card(
+  card_id: int,
+  repo: CardRepository = Depends(),
+) -> CardOut:
+  return repo.get_one(card_id)
