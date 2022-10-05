@@ -18,3 +18,12 @@ def create_card(
 @router.get("/cards", response_model=Union[List[CardOut], Error])
 def get_all_cards(repo: CardRepository = Depends()):
   return repo.get_all()
+
+
+@router.put('/cards/{card_id}', response_model=Union[CardOut, Error])
+def update_card(
+  card_id: int,
+  card: CardIn,
+  repo: CardRepository = Depends()
+) -> Union[Error, CardOut]:
+  return repo.update(card_id, card)

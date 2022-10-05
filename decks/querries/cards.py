@@ -38,8 +38,7 @@ class CardRepository:
         id = result.fetchone()[0]
 
         # Return new data
-        old_data = card.dict()
-        return CardOut(id=id, **old_data)
+        return self.card_in_to_out(id, card)
   
   def get_all(self) -> Union[Error, List[CardOut]]:
     try:
@@ -65,3 +64,30 @@ class CardRepository:
     except Exception as e:
       print(e)
       return {"message": "Could not get all cards"}
+  
+  def update(self, card_id: int, card: CardIn) -> Union[CardOut, Error]:
+    try:
+      with pool.connection() as conn:
+        with conn.cursor() as db:
+          result = db.execute(
+            '''
+            UPDATE cards
+            SET name = %s
+              , multiverse_id = %s
+            WHERE id = %s
+            ''',
+            [
+              card.name,
+              card.multiverse_id,
+              card_id
+            ]
+          )
+          return self.card_in_to_out(card_id, card)
+    except Exception as e:
+      print(e)
+      return {"message": "Could not get all cards"}
+
+
+  def card_in_to_out(self, id: int, card: CardIn):
+    old_data = card.dict()
+    return CardOut(id=id, **old_data)
