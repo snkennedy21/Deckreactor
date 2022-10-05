@@ -6,6 +6,4 @@ router = APIRouter()
 
 @router.post("/cards")
 def create_card(card: CardIn, repo: CardRepository = Depends()):
-  repo.create(card)
-  
-  return card
+  return repo.create(card)

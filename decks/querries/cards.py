@@ -6,10 +6,15 @@ class CardIn(BaseModel):
   name: str
   multiverse_id: int
 
+class CardOut(BaseModel):
+  id: int
+  name: str
+  multiverse_id: int
+
 
 
 class CardRepository:
-  def create(self, card: CardIn):
+  def create(self, card: CardIn) -> CardOut:
 
     # Connect the database
     with pool.connection() as conn:
@@ -28,6 +33,8 @@ class CardRepository:
           ''',
           [card.multiverse_id, card.name]
         )
-        print(result)
+        id = result.fetchone()[0]
 
         # Return new data
+        old_data = card.dict()
+        return CardOut(id=id, **old_data)
