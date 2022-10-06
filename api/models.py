@@ -17,6 +17,7 @@ class PydanticObjectId(ObjectId):
                 raise ValueError(f"Not a valid object id: {value}")
         return value
 
+
 class AccountIn(BaseModel):
     email: str
     password: str
@@ -33,3 +34,20 @@ class AccountOut(BaseModel):
     email: str
     full_name: str
     roles: List[str]
+
+
+class CardIn(BaseModel):
+    name: str
+    multiverse_id: int
+
+
+class Card(CardIn):
+    id: PydanticObjectId
+
+
+class CardOut(CardIn):
+    id: str
+
+
+class CardList(BaseModel):
+    cards: List[CardOut]
