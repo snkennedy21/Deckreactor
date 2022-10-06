@@ -21,12 +21,18 @@ async def get_all_decks(
     repo: DeckQueries = Depends(),
 ):
     return DeckList(decks=repo.get_all())
-    
-# Get One Deck
-@router.get('/decks/{id}', response_model=DeckOut)
-async def get_one_deck(id):
-    pass
 
+# Get One Deck
+@router.get('/decks/{deck_id}', response_model=DeckOut)
+async def get_one_deck(
+  deck_id: str,
+  repo: DeckQueries = Depends(),
+):
+  deck = repo.get_one(deck_id)
+  print(deck)
+  return deck
+  
+  
 
 # Delete One Deck
 

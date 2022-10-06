@@ -23,5 +23,7 @@ class DeckQueries(Queries):
         decks.append(DeckOut(**doc))
     return decks
 
-  def get_one():
-    pass
+  def get_one(self, deck_id: str) -> DeckOut:
+    deck = self.collection.find_one({"_id" : ObjectId(f"{deck_id}")})
+    deck["id"] = str(deck["_id"])
+    return deck
