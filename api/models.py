@@ -1,6 +1,6 @@
 from bson.objectid import ObjectId
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 
 
 class PydanticObjectId(ObjectId):
@@ -17,17 +17,17 @@ class PydanticObjectId(ObjectId):
                 raise ValueError(f"Not a valid object id: {value}")
         return value
 
-
+##################
+# Account Models #
+##################
 class AccountIn(BaseModel):
     email: str
     password: str
     full_name: str
 
-
 class Account(AccountIn):
     id: PydanticObjectId
     roles: List[str]
-
 
 class AccountOut(BaseModel):
     id: str
@@ -36,18 +36,38 @@ class AccountOut(BaseModel):
     roles: List[str]
 
 
+###############
+# Card Models #
+###############
 class CardIn(BaseModel):
     name: str
     multiverse_id: int
 
-
 class Card(CardIn):
     id: PydanticObjectId
-
 
 class CardOut(CardIn):
     id: str
 
-
 class CardList(BaseModel):
     cards: List[CardOut]
+
+
+###############
+# Deck Models #
+###############
+class DeckIn(BaseModel):
+    name: str
+    description: str
+
+class DeckOut(DeckIn):
+    id: str
+    name: str
+    description: str
+    cards: Optional[List[CardOut]]
+
+class Deck(DeckIn):
+    id: PydanticObjectId
+
+class DeckList(BaseModel):
+    decks: List[DeckOut]
