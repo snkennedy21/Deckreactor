@@ -35,7 +35,14 @@ async def get_one_deck(
   
 
 # Delete One Deck
-
+@router.delete('/decks/{deck_id}', response_model=bool)
+async def delete_deck(
+  deck_id: str,
+  repo: DeckQueries = Depends(),
+):
+  repo.delete_deck(deck_id)
+  return True
+  
 
 
 

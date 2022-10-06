@@ -27,3 +27,10 @@ class DeckQueries(Queries):
     deck = self.collection.find_one({"_id" : ObjectId(f"{deck_id}")})
     deck["id"] = str(deck["_id"])
     return deck
+
+  def delete_deck(self, deck_id: str) -> bool:
+    self.collection.delete_one({"_id" : ObjectId(f"{deck_id}")})
+    
+
+
+
