@@ -1,7 +1,7 @@
 from bson.objectid import ObjectId
 from typing import List
 from .client import Queries
-from models import DeckIn, DeckOut
+from models import DeckIn, DeckOut, DeckList
 
 
 class DeckQueries(Queries):
@@ -15,8 +15,13 @@ class DeckQueries(Queries):
     deck_dict["id"] = str(deck_dict["_id"])
     return DeckOut(**deck_dict)
 
-  def get_all():
-    pass
+  def get_all(self) -> List[DeckOut]:
+    decks = []
+    database = self.collection.find()
+    for doc in database:
+        doc["id"] = str(doc["_id"])
+        decks.append(DeckOut(**doc))
+    return decks
 
   def get_one():
     pass
