@@ -1,5 +1,3 @@
-from email.policy import HTTP
-from imaplib import _Authenticator
 from fastapi import (
     Depends,
     HTTPException,
@@ -9,12 +7,19 @@ from fastapi import (
     Request,
 )
 from jwtdown_fastapi.authentication import Token
-from pydantic import BaseModel
 from .auth import authenticator
 
-from querries.accounts import AccountQueries, DuplicateAccountError
+from pydantic import BaseModel
 
-from models import Account, AccountIn, AccountOut
+from queries.accounts import (
+    AccountQueries,
+    DuplicateAccountError,
+)
+from models import (
+    Account,
+    AccountIn,
+    AccountOut,
+)
 
 class AccountForm(BaseModel):
   username: str
