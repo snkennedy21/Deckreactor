@@ -20,6 +20,6 @@ async def add_card_to_collection(
 async def get_all_cards(
   repo: CardQueries = Depends()
 ):
-  cards = repo.get_all()
-  print(cards)
-  return cards
+  return CardList(cards=repo.get_all())
+
+  
