@@ -12,7 +12,8 @@ async def create_deck(
   deck: DeckIn,
   repo: DeckQueries = Depends(),
 ):
-    pass
+    deck = repo.create(deck)
+    return deck
 
 # Get All Decks
 @router.get('/decks/', response_model=DeckList)
