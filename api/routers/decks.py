@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from models import DeckOut, DeckIn, Deck, DeckList
+from models import DeckOut, DeckIn, DeckList, AccountOut, DeckDetailsIn
 from queries.decks import DeckQueries
 from .auth import authenticator
 from typing import List
@@ -9,11 +9,14 @@ router = APIRouter()
 
 @router.post('/decks/', response_model=DeckOut)
 async def create_deck(
-    deck: DeckIn,
+    deck: DeckDetailsIn,
     repo: DeckQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    deck = repo.create(deck)
-    return deck
+    account = AccountOut(**account_data)
+    user_deck = DeckIn(account_id=account.id, name=deck.name, description=deck.description)
+    user_deck = repo.create(user_deck)
+    return user_deck
 
 # Get All Decks
 @router.get('/decks/', response_model=DeckList)

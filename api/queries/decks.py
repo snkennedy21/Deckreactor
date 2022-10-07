@@ -11,8 +11,10 @@ class DeckQueries(Queries):
 
   def create(self, deck: DeckIn) -> DeckOut:
     deck_dict = deck.dict()
+    deck_dict["account_id"] = ObjectId(deck_dict["account_id"])
     self.collection.insert_one(deck_dict)
     deck_dict["id"] = str(deck_dict["_id"])
+    deck_dict["account_id"] = str(deck_dict["account_id"])
     return DeckOut(**deck_dict)
 
   def get_all(self) -> List[DeckOut]:

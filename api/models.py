@@ -63,7 +63,12 @@ class CardList(BaseModel):
 ###############
 # Deck Models #
 ###############
+class DeckDetailsIn(BaseModel):
+    name: str
+    description: str
+
 class DeckIn(BaseModel):
+    account_id: str
     name: str
     description: str
 
