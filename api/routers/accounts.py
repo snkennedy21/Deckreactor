@@ -31,7 +31,7 @@ class HttpError(BaseModel):
   detail: str
 
 
-router = APIRouter()
+router = APIRouter(tags=["accounts"])
  
 
 # This endpoint takes care of getting tokens. We have not learned this yet
