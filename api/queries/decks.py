@@ -17,12 +17,15 @@ class DeckQueries(Queries):
     deck_dict["account_id"] = str(deck_dict["account_id"])
     return DeckOut(**deck_dict)
 
-  def get_all(self) -> List[DeckOut]:
+  def get_all(self, account_id: str) -> List[DeckOut]:
     decks = []
     database = self.collection.find()
     for doc in database:
         doc["id"] = str(doc["_id"])
-        decks.append(DeckOut(**doc))
+        doc["account_id"] = str(doc["account_id"])
+        if doc["account_id"] == account_id:
+          decks.append(DeckOut(**doc))
+    print(decks)
     return decks
 
   def get_one(self, deck_id: str) -> DeckOut:
