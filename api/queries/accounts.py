@@ -57,4 +57,3 @@ class AccountQueries(Queries): # Queries is a class that handles creation of a d
     props["id"] = str(props["_id"])  # takes the 
     return Account(**props)  # returns the Account
 
-

@@ -74,7 +74,7 @@ class DeckIn(BaseModel):
 
 class DeckOut(DeckIn):
     id: str
-    account_id: str
+    account_id: Optional[str]
     name: str
     description: str
     cards: Optional[List[CardOut]]

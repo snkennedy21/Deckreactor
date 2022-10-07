@@ -38,7 +38,6 @@ async def get_one_deck(
   print(deck)
   return deck
   
-  
 
 # Delete One Deck
 @router.delete('/decks/{deck_id}', response_model=bool)
@@ -48,9 +47,19 @@ async def delete_deck(
 ):
   repo.delete_deck(deck_id)
   return True
-  
 
 
-
-
+@router.put('/decks/{deck_id}', response_model=DeckOut)
+async def update_deck(
+  deck_id: str,
+  deck: DeckIn,
+  repo: DeckQueries = Depends(),
+  account_data: dict = Depends(authenticator.get_current_account_data),
+):
+  account = AccountOut(**account_data)
+  account_id = account.id
+  updated_deck = DeckIn(name=deck.name, description=deck.description, account_id=account_id)
+  updated_deck = repo.update_deck(deck=updated_deck, deck_id=deck_id)
+  print(updated_deck)
+  return updated_deck
 

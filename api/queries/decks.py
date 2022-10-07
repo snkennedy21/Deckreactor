@@ -1,7 +1,8 @@
 from bson.objectid import ObjectId
 from typing import List
 from .client import Queries
-from models import DeckIn, DeckOut, DeckList
+from pymongo import ReturnDocument
+from models import DeckIn, DeckOut, DeckList, DeckDetailsIn
 
 
 class DeckQueries(Queries):
@@ -25,7 +26,6 @@ class DeckQueries(Queries):
         doc["account_id"] = str(doc["account_id"])
         if doc["account_id"] == account_id:
           decks.append(DeckOut(**doc))
-    print(decks)
     return decks
 
   def get_one(self, deck_id: str) -> DeckOut:
@@ -35,7 +35,10 @@ class DeckQueries(Queries):
 
   def delete_deck(self, deck_id: str) -> bool:
     self.collection.delete_one({"_id" : ObjectId(f"{deck_id}")})
+
+  def update_deck(self, deck_id: str, deck: DeckIn) -> DeckOut:
+    deck_dict = deck.dict()
+    self.collection.find_one_and_update({"_id" : ObjectId(deck_id)}, {"$set": deck_dict}, return_document=ReturnDocument.AFTER)
+
+    return DeckOut(**deck_dict, id=deck_id)
     
-
-
-
