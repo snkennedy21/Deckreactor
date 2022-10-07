@@ -1,5 +1,0 @@
-* text=auto
-*.sql text eol=lf
-*.sh text eol=lf
-
-# ensures that Windows users can clone files with correct LF line endings rather than CRLF line endings used by default
