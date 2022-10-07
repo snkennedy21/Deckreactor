@@ -31,7 +31,7 @@ class AccountQueries(Queries): # Queries is a class that handles creation of a d
   def delete(self, id: str) -> bool:
     return self.collection.delete_one({"_id": ObjectId(id)})
 
-  def update(self, id, info: AccountUpdateIn, hashed_password: Union[None, str]):
+  def update(self, id: str, info: AccountUpdateIn, hashed_password: Union[None, str]):
     props = info.dict()
     if hashed_password is not None:
       props["password"] = hashed_password
