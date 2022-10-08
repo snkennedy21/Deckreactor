@@ -4,7 +4,7 @@ from queries.decks import DeckQueries
 from .auth import authenticator
 from typing import List
 
-router = APIRouter()
+router = APIRouter(tags=["decks"])
 
 
 @router.post('/decks/', response_model=DeckOut)
