@@ -4,7 +4,7 @@ from queries.cards import CardQueries
 from .auth import authenticator
 from typing import List
 
-router = APIRouter()
+router = APIRouter(tags=["cards"])
 
 
 @router.post("/cards/", response_model=CardOut)

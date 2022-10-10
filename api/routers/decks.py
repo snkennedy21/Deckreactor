@@ -5,7 +5,7 @@ from .auth import authenticator
 from typing import List
 import requests
 
-router = APIRouter()
+router = APIRouter(tags=["decks"])
 
 
 @router.post('/decks/', response_model=DeckOut)
