@@ -49,6 +49,7 @@ class AccountOut(BaseModel):
 class CardIn(BaseModel):
     name: str
     multiverse_id: int
+    piture_url: Optional[str]
 
 class Card(CardIn):
     id: PydanticObjectId
