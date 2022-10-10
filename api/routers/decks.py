@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from models import DeckOut, DeckIn, DeckList, AccountOut, DeckDetailsIn
 from queries.decks import DeckQueries
-from .auth import authenticator
+from .authenticator import authenticator
 from typing import List
 
 router = APIRouter(tags=["decks"])
@@ -18,9 +18,9 @@ async def create_deck(
     user_deck = repo.create(user_deck)
     return user_deck
 
-# Get All Decks
+# Get All My Decks
 @router.get('/decks/', response_model=DeckList)
-async def get_all_decks(
+async def get_all_my_decks(
     repo: DeckQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
@@ -44,11 +44,12 @@ async def get_one_deck(
 async def delete_deck(
   deck_id: str,
   repo: DeckQueries = Depends(),
+  account_data: dict = Depends(authenticator.get_current_account_data),
 ):
   repo.delete_deck(deck_id)
   return True
 
-
+# Update Deck
 @router.put('/decks/{deck_id}', response_model=DeckOut)
 async def update_deck(
   deck_id: str,
@@ -60,6 +61,5 @@ async def update_deck(
   account_id = account.id
   updated_deck = DeckIn(name=deck.name, description=deck.description, account_id=account_id)
   updated_deck = repo.update_deck(deck=updated_deck, deck_id=deck_id)
-  print(updated_deck)
   return updated_deck
 
