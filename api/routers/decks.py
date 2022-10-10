@@ -65,6 +65,24 @@ async def update_deck(
   return updated_deck
 
 
+@router.put('/decks/{deck_id}/{multiverse_id}', response_model=DeckOut)
+async def update_deck(
+  deck_id: str,
+  deck: DeckIn,
+  repo: DeckQueries = Depends(),
+  account_data: dict = Depends(authenticator.get_current_account_data),
+):
+
+  # If method == Add:
+    # Loop through current cards in the deck.
+    # If the card being added already exists:
+      # Increase the counter for that card by 1
+    # Else:
+      # Add a new card object and append it to the list of cards in deck
+
+  # If method == Remove
+
+
 @router.get('/all-cards/')
 def return_all_cards():
   response = requests.get('https://api.scryfall.com/cards/search?order=cmc&q=c%3Ared+pow%3D3')
