@@ -3,6 +3,7 @@ from models import DeckOut, DeckIn, DeckList, AccountOut, DeckDetailsIn
 from queries.decks import DeckQueries
 from .auth import authenticator
 from typing import List
+import requests
 
 router = APIRouter()
 
@@ -63,3 +64,8 @@ async def update_deck(
   print(updated_deck)
   return updated_deck
 
+
+@router.get('/all-cards/')
+def return_all_cards():
+  response = requests.get('https://api.scryfall.com/cards/search?order=cmc&q=c%3Ared+pow%3D3')
+  return response
