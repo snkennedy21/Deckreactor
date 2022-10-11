@@ -58,7 +58,6 @@ class DeckQueries(Queries):
       card_list.append(card)
     
     deck["cards"] = card_list
-    deck
 
     self.collection.find_one_and_update({"_id" : ObjectId(deck_id)}, {"$set": deck}, return_document=ReturnDocument.AFTER)
 
@@ -73,6 +72,23 @@ class DeckQueries(Queries):
     # Else:
       # Add a new card object and append it to the list of cards in deck with name, picture_url, and multiverse_id
   
-    
-  def remove_card_from_deck(self, deck_id: str) -> DeckOut:
-    pass
+  
+  # remove one card of specified multiverse_id from deck
+  def remove_one_card_from_deck(self, multiverse_id: int, deck_id: str) -> DeckOut:
+    deck = self.collection.find_one({"_id": ObjectId(deck_id)})
+    card_list = deck.get("cards")
+
+    for card_item in card_list:
+      print(type(card_item["multiverse_id"]), type(multiverse_id))
+      if card_item.get("multiverse_id") == multiverse_id:
+        card_item["quantity"] -= 1
+        if card_item["quantity"] == 0:
+          card_list.remove(card_item)
+
+    deck["cards"] = card_list
+
+    self.collection.find_one_and_update({"_id": ObjectId(deck_id)}, {"$set": deck}, return_document=ReturnDocument.AFTER)
+
+    deck["account_id"] = str(deck["account_id"])
+    deck["id"] = str(deck["_id"])
+    return DeckOut(**deck)

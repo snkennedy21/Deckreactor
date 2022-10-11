@@ -66,10 +66,10 @@ async def update_deck(
   return updated_deck
 
 
-@router.put('/decks/{deck_id}/{multiverse_id}', response_model=DeckOut)
+@router.put('/decks/{deck_id}/add/{multiverse_id}', response_model=DeckOut)
 async def add_card_to_deck(
   deck_id: str,
-  multiverse_id: str,
+  multiverse_id: int,
   repo: DeckQueries = Depends(),
   account_data: dict = Depends(authenticator.get_current_account_data),
 ):
@@ -99,3 +99,23 @@ async def add_card_to_deck(
 
   return deck
 
+# remove one card of specified multiverse_id from deck
+@router.put('/decks/{deck_id}/remove_one/{multiverse_id}', response_model=DeckOut)
+def remove_one_card_from_deck(
+  deck_id: str,
+  multiverse_id: int,
+  repo: DeckQueries = Depends(),
+  account_data: dict = Depends(authenticator.get_current_account_data),
+):
+  deck = repo.remove_one_card_from_deck(multiverse_id=multiverse_id, deck_id=deck_id)
+  return deck
+
+# remove all cards of specified multiverse_id from deck
+@router.put('/decks/{deck_id}/remove_all/{multiverse_id}', response_model=DeckOut)
+def remove_cards_from_deck(
+  deck_id: str,
+  multiverse_id: int,
+  repo: DeckQueries = Depends(),
+  account_data: dict = Depends(authenticator.get_current_account_data),
+):
+  pass
