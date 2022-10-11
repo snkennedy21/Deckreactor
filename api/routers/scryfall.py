@@ -22,7 +22,7 @@ async def search_scryfall(
     cards = content.get("data")
     for card in cards:
         if len(card.get("multiverse_ids")) == 0:
-            continue
+            continue # we don't care about tokens, alchemy cards
 
         if "card_faces" in card: # double-faced card
             object = {
