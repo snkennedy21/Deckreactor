@@ -85,3 +85,19 @@ class Deck(DeckIn):
 
 class DeckList(BaseModel):
     decks: List[DeckOut]
+
+#################
+# Search Models #
+#################
+
+# class SearchScryfallIn(BaseModel):
+#     query: str
+
+class SearchScryfallOut(CardList):
+    pass
+
+# class SearchCollectionIn(BaseModel):
+#     query: str
+
+# class SearchCollectionOut(CardList):
+#     pass

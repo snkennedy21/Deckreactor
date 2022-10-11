@@ -1,3 +1,9 @@
+# Week 15
+
+## October 10, 2022
+
+Today our team began working on enabling our API routes to communicate with the Scryfall external API. This led to discussion on exactly which data we would be passing to the front end and what would be left for additional API calls by the user as needed. While initially we were interested in passing data that would minimize the number of additional calls for data that was already procured in the initial search, ultimately we decided that only the data to display the hover image and names of search results would need to be stored, as well as the multiverse ID of each card to direct to a detail API search on click.
+
 # Week 14
 
 ## October 6, 2022
