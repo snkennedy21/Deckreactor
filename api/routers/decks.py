@@ -101,21 +101,22 @@ async def add_card_to_deck(
 
 # remove one card of specified multiverse_id from deck
 @router.put('/decks/{deck_id}/remove_one/{multiverse_id}', response_model=DeckOut)
-def remove_one_card_from_deck(
+def remove_one_card_copy_from_deck(
   deck_id: str,
   multiverse_id: int,
   repo: DeckQueries = Depends(),
   account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-  deck = repo.remove_one_card_from_deck(multiverse_id=multiverse_id, deck_id=deck_id)
+  deck = repo.remove_one_card_copy_from_deck(multiverse_id=multiverse_id, deck_id=deck_id)
   return deck
 
 # remove all cards of specified multiverse_id from deck
 @router.put('/decks/{deck_id}/remove_all/{multiverse_id}', response_model=DeckOut)
-def remove_cards_from_deck(
+def remove_all_card_copies_from_deck(
   deck_id: str,
   multiverse_id: int,
   repo: DeckQueries = Depends(),
   account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-  pass
+  deck = repo.remove_all_card_copies_from_deck(multiverse_id=multiverse_id, deck_id=deck_id)
+  return deck
