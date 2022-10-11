@@ -12,19 +12,20 @@ async def search_scryfall(
     url = f"https://api.scryfall.com/cards/search?q={search}"
     response = requests.get(url)
     content = json.loads(response.content)
-
-    if content.get("code") == "not_found":
-        return {
-            "message": "No cards found matching your query."
-        }
+    error_msg = {"message": "No cards were found matching your query."}
+    if content.get("code") == "not_found" or content.get("total_cards") == 0:
+        return error_msg
 
     output = {"cards": []}
     cards = content.get("data")
     for card in cards:
-        if len(card.get("multiverse_ids")) == 0:
-            continue # we don't care about tokens, alchemy cards
+        if len(card.get("multiverse_ids")) == 0 or card.get("layout") == "art_series":
+            continue # we don't care about tokens, alchemy cards, art series
 
-        if card.get("layout") in ["modal_dfc", "transform"]: # double-faced card
+        if card.get("layout") in [
+            "modal_dfc", 
+            "transform",
+            ]: # double-faced card
             object = {
                 "name": card.get("name"), # "front name // back name"
                 "multiverse_id": card.get("multiverse_ids")[0],
@@ -41,5 +42,5 @@ async def search_scryfall(
             }
 
         output["cards"].append(object)
-    
-    return output
+
+    return error_msg if len(output["cards"]) == 0 else output
