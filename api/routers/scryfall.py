@@ -32,9 +32,7 @@ async def search_scryfall(
                     "name": card.get("name"), # "front name // back name"
                     "multiverse_id": card.get("multiverse_ids")[0],
                     "picture_url": card.get("card_faces")[0].get("image_uris").get("normal"),
-                    "back": {
-                        "picture_url": card.get("card_faces")[1].get("image_uris").get("normal"),
-                    }
+                    "back_picture_url": card.get("card_faces")[1].get("image_uris").get("normal"),
                 }
             else: # single-faced card
                 object = {
