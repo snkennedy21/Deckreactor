@@ -21,9 +21,24 @@ async def search_scryfall(
     output = {"cards": []}
     cards = content.get("data")
     for card in cards:
-        object = {}
+        if len(card.get("multiverse_ids")) == 0:
+            continue
 
-        # assemble card object
+        if "card_faces" in card: # double-faced card
+            object = {
+                "name": card.get("name"), # "front name // back name"
+                "multiverse_id": card.get("multiverse_ids")[0],
+                "picture_url": card.get("card_faces")[0].get("image_uris").get("normal"),
+                "back": {
+                    "picture_url": card.get("card_faces")[1].get("image_uris").get("normal"),
+                }
+            }
+        else: # single-faced card
+            object = {
+                "name": card.get("name"),
+                "multiverse_id": card.get("multiverse_ids")[0],
+                "picture_url": card.get("image_uris").get("normal"),
+            }
 
         output["cards"].append(object)
     
