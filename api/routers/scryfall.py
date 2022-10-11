@@ -24,7 +24,7 @@ async def search_scryfall(
         if len(card.get("multiverse_ids")) == 0:
             continue # we don't care about tokens, alchemy cards
 
-        if "card_faces" in card: # double-faced card
+        if card.get("layout") in ["modal_dfc", "transform"]: # double-faced card
             object = {
                 "name": card.get("name"), # "front name // back name"
                 "multiverse_id": card.get("multiverse_ids")[0],
