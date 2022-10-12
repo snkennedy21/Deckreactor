@@ -49,7 +49,11 @@ class AccountOut(BaseModel):
 class CardIn(BaseModel):
     name: str
     multiverse_id: int
-    piture_url: Optional[str]
+    picture_url: Optional[str]
+    mana: str
+    card_type: str
+    cmc: int
+    formats: List[str]
 
 class Card(CardIn):
     id: PydanticObjectId
@@ -78,7 +82,7 @@ class DeckOut(DeckIn):
     account_id: Optional[str]
     name: str
     description: str
-    cards: Optional[List[CardOut]]
+    cards: list
 
 class Deck(DeckIn):
     id: PydanticObjectId
