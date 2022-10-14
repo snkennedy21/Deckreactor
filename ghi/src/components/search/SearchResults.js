@@ -11,7 +11,6 @@ function ContainerExample() {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  console.log(data);
 
   if ("message" in data) {
     return <div>Hello</div>;

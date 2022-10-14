@@ -6,28 +6,21 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useState, useEffect } from "react";
 import { useGetCardsQuery } from "../../store/scryfallApi";
+import { useNavigate } from "react-router-dom";
 
 function NavScrollExample() {
   const [search, setSearch] = useState("");
   const { data } = useGetCardsQuery(search);
+  const navigate = useNavigate();
 
   function updateSearchTermHandler(e) {
     setSearch(e.target.value);
   }
 
   function queryScryfallHandler(e) {
+    console.log(search);
     e.preventDefault();
-    fetchCardDataFromScryfall(search);
-  }
-
-  async function fetchCardDataFromScryfall(search) {
-    const scryfallUrl = `http://localhost:8000/scryfall/${search}`;
-    const scryfallResponse = await fetch(scryfallUrl);
-
-    if (scryfallResponse.ok) {
-      const scryfallData = await scryfallResponse.json();
-      console.log(scryfallData);
-    }
+    navigate("/search");
   }
 
   return (

@@ -7,7 +7,7 @@ export const scryfallApi = createApi({
   }),
   endpoints: (builder) => ({
     getCards: builder.query({
-      query: () => `/scryfall/wizard`,
+      query: (search) => `/scryfall/${search}`,
     }),
   }),
 });
