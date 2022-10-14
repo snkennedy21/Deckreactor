@@ -3,10 +3,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/esm/Button";
+
+import { useSelector } from "react-redux";
 import { useGetCardsQuery } from "../../store/scryfallApi";
 
 function ContainerExample() {
-  const { data, error, isLoading } = useGetCardsQuery();
+  const search = useSelector((state) => state.search);
+  console.log(search);
+  const { data, error, isLoading } = useGetCardsQuery(search);
 
   if (isLoading) {
     return <div>Loading...</div>;

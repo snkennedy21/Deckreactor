@@ -1,13 +1,17 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { scryfallApi } from "./scryfallApi";
+import { searchSlice } from "./searchSlice";
 
 export const store = configureStore({
   reducer: {
     [scryfallApi.reducerPath]: scryfallApi.reducer,
+    search: searchSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(scryfallApi.middleware),
 });
+
+export const searchActions = searchSlice.actions;
 
 setupListeners(store.dispatch);

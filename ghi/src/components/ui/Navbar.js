@@ -4,13 +4,15 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+
+import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { useGetCardsQuery } from "../../store/scryfallApi";
 import { useNavigate } from "react-router-dom";
+import { searchActions } from "../../store/store";
 
 function NavScrollExample() {
+  const dispatch = useDispatch();
   const [search, setSearch] = useState("");
-  const { data } = useGetCardsQuery(search);
   const navigate = useNavigate();
 
   function updateSearchTermHandler(e) {
@@ -18,8 +20,8 @@ function NavScrollExample() {
   }
 
   function queryScryfallHandler(e) {
-    console.log(search);
     e.preventDefault();
+    dispatch(searchActions.updateSearch(search));
     navigate("/search");
   }
 
