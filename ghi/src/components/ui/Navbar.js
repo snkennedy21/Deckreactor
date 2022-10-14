@@ -4,11 +4,12 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useGetCardsQuery } from "../../store/scryfallApi";
 
 function NavScrollExample() {
-  const [listOfSearchCards, setListOfSearchCards] = useState([]);
   const [search, setSearch] = useState("");
+  const { data } = useGetCardsQuery(search);
 
   function updateSearchTermHandler(e) {
     setSearch(e.target.value);
