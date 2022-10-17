@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Carousel from "react-bootstrap/Carousel";
 
+
 function CardDetailPage() {
   const { multiverse_id } = useParams();
   const [card, setCard] = useState({});
@@ -111,6 +112,7 @@ function CardDetailPage() {
               <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
               <img className="img-fluid" src={card.image_uris.normal}/>
               </Card>
+
             }
             </div>
           </div>

@@ -4,6 +4,8 @@ import SearchResults from "./components/search/SearchResults";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CardDetailPage from "./components/card-details/CardDetailPage";
+import MyCollection from "./components/collection/CollectionList";
+import MyCollection2 from "./components/collection/CollectionCards";
 
 function App() {
   const domain = /https:\/\/[^/]+/
@@ -15,6 +17,8 @@ function App() {
       <Routes>
         <Route path="search" element={<SearchResults />}/>
         <Route path="card/:multiverse_id" element={<CardDetailPage />}/>
+        <Route path="edit_collection" element={<MyCollection />}></Route>   
+        <Route path="collection" element={<MyCollection2 />}></Route>  
       </Routes>
     </BrowserRouter>
   );
