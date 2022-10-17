@@ -18,17 +18,23 @@ function AdvancedSearch() {
   const [name, setName] = useState("");
   const [manaCost, setManaCost] = useState(25);
   const [colors, setColors] = useState(colorsArray);
+  const [colorlessChecked, setColorlessChecked] = useState(false);
+  const [exactColors, setExactColors] = useState(false);
+  const [legendary, setLegendary] = useState(false);
+  const [rarity, setRarity] = useState("");
+  const [type, setType] = useState("");
+  const [format, setFormat] = useState("");
 
   function colorChangeHandler(e) {
+    setColorlessChecked(false);
     const index = e.target.id;
-    console.log(index);
     const newArray = colorsArray;
     newArray[index].checked = !newArray[index].checked;
-    console.log(newArray);
     setColors([...newArray]);
   }
 
   function uncheckColorsHandler() {
+    setColorlessChecked(!colorlessChecked);
     colorsArray.forEach((color) => {
       color.checked = false;
     });
@@ -84,7 +90,11 @@ function AdvancedSearch() {
                   ></Form.Check>
                 );
               })}
-              <Form.Check onChange={uncheckColorsHandler}></Form.Check>
+              <Form.Check
+                label="Colorless"
+                onChange={uncheckColorsHandler}
+                checked={colorlessChecked}
+              ></Form.Check>
             </Form.Group>
 
             <Form.Group>
@@ -92,40 +102,83 @@ function AdvancedSearch() {
                 type="switch"
                 id="custom-switch"
                 label="Exact Colors"
+                onChange={(e) => setExactColors(!exactColors)}
               />
             </Form.Group>
 
             <Form.Group>
-              <Form.Check type="switch" id="custom-switch" label="Legendary" />
+              <Form.Check
+                type="switch"
+                id="custom-switch"
+                label="Legendary"
+                onChange={(e) => setLegendary(!legendary)}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Rarity</Form.Label>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onChange={(e) => setRarity(e.target.value)}
+              >
                 <option>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="Common">Common</option>
+                <option value="Uncommon">Uncommon</option>
+                <option value="Rare">Rare</option>
+                <option value="Mythic Rare">Mythic Rare</option>
               </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Type</Form.Label>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onChange={(e) => setType(e.target.value)}
+              >
                 <option>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="Artifact">Artifact</option>
+                <option value="Conspiracy">Conspiracy</option>
+                <option value="Creature">Creature</option>
+                <option value="Emblem">Emblem</option>
+                <option value="Enchantment">Enchantment</option>
+                <option value="Hero">Hero</option>
+                <option value="Instant">Instant</option>
+                <option value="Land">Land</option>
+                <option value="Phenomenon">Phenomenon</option>
+                <option value="Plane">Plane</option>
+                <option value="Planeswalker">Planeswalker</option>
+                <option value="Scheme">Scheme</option>
+                <option value="Sorcery">Sorcery</option>
+                <option value="Tribal">Tribal</option>
+                <option value="Vanguard">Vanguard</option>
               </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Format</Form.Label>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onChange={(e) => setFormat(e.target.value)}
+              >
                 <option>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="Standard">Standard</option>
+                <option value="Future Standard">Future Standard</option>
+                <option value="Historic">Historic</option>
+                <option value="Gladiator">Gladiator</option>
+                <option value="Pioneer">Pioneer</option>
+                <option value="Explorer">Explorer</option>
+                <option value="Modern">Modern</option>
+                <option value="Legacy">Legacy</option>
+                <option value="Pauper">Pauper</option>
+                <option value="Vintage">Vintage</option>
+                <option value="Pennyy Dreadful">Pennyy Dreadful</option>
+                <option value="Commander">Commander</option>
+                <option value="Brawl">Brawl</option>
+                <option value="Historic Brawl">Historic Brawl</option>
+                <option value="Pauper Commander">Pauper Commander</option>
+                <option value="Duel Commander">Duel Commander</option>
+                <option value="Old School 93/94">Old School 93/94</option>
+                <option value="Premodern">Premodern</option>
               </Form.Select>
             </Form.Group>
 
