@@ -17,8 +17,8 @@ function ContainerExample() {
 
   console.log(data);
 
-  if (data === undefined){
-    return <div>Banana</div>
+  if (data === undefined) {
+    return <div>Banana</div>;
   }
 
   if ("message" in data) {
@@ -26,12 +26,24 @@ function ContainerExample() {
   }
 
   return (
-    <Container fluid="xxl">
+    <Container>
       <Row>
         {data.cards.map((card) => {
           return (
-            <Col sm key={card.multiverse_id}>
-              <Image src={card.picture_url} />
+            <Col
+              key={card.multiverse_id}
+              xxl="2"
+              xl="3"
+              l="3"
+              md="4"
+              sm="6"
+              xs="12"
+            >
+              <Image
+                className="mb-4"
+                src={card.picture_url}
+                style={{ width: "100%" }}
+              />
             </Col>
           );
         })}

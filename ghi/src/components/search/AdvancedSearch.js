@@ -19,7 +19,7 @@ const colorsArray = [
 
 function AdvancedSearch() {
   const [name, setName] = useState("");
-  const [manaCost, setManaCost] = useState(25);
+  const [manaCost, setManaCost] = useState(0);
   const [colors, setColors] = useState(colorsArray);
   const [colorlessChecked, setColorlessChecked] = useState(false);
   const [colorStatus, setColorStatus] = useState("exactly");
@@ -43,7 +43,6 @@ function AdvancedSearch() {
     colorsArray.forEach((color) => {
       color.checked = false;
     });
-    console.log(colorsArray);
     setColors(colorsArray);
   }
 
@@ -104,8 +103,6 @@ function AdvancedSearch() {
       queryString += ` ${legalStatus}:${format}`;
     }
 
-    console.log(queryString);
-
     dispatch(searchActions.updateSearch(queryString));
   }
 
@@ -129,6 +126,7 @@ function AdvancedSearch() {
               <Form.Group as={Row}>
                 <Col xs="9">
                   <Form.Range
+                    max="20"
                     value={manaCost}
                     onChange={(e) => setManaCost(e.target.value)}
                   />
