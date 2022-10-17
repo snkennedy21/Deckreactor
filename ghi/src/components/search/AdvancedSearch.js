@@ -7,7 +7,23 @@ import Form from "react-bootstrap/Form";
 import { useState } from "react";
 
 function AdvancedSearch() {
-  const [value, setValue] = useState(25);
+  const [name, setName] = useState("");
+  const [manaCost, setManaCost] = useState(25);
+  const [colorsArray, setColorsArray] = useState([]);
+  const [isColorlessChecked, setIsColorlessChecked] = useState(false);
+
+  function colorChangeHandler(e) {
+    let newArray = [...colorsArray, e.target.value];
+    if (colorsArray.includes(e.target.value)) {
+      newArray = newArray.filter((color) => color !== e.target.value);
+    }
+    setColorsArray(newArray);
+    console.log(colorsArray);
+  }
+
+  function colorlessChangeHandler(e) {
+    setColorsArray([]);
+  }
 
   return (
     <Container>
@@ -16,7 +32,12 @@ function AdvancedSearch() {
           <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="text" placeholder="Enter Name" />
+              <Form.Control
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                type="text"
+                placeholder="Enter Name"
+              />
             </Form.Group>
 
             <Form.Group>
@@ -24,12 +45,15 @@ function AdvancedSearch() {
               <Form.Group as={Row}>
                 <Col xs="9">
                   <Form.Range
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
+                    value={manaCost}
+                    onChange={(e) => setManaCost(e.target.value)}
                   />
                 </Col>
                 <Col xs="3">
-                  <Form.Control value={value} />
+                  <Form.Control
+                    value={manaCost}
+                    onChange={(e) => setManaCost(e.target.value)}
+                  />
                 </Col>
               </Form.Group>
             </Form.Group>
@@ -37,42 +61,54 @@ function AdvancedSearch() {
             <Form.Group>
               <Form.Label>Colors</Form.Label>
               <Form.Check
+                onChange={colorChangeHandler}
                 inline
+                value="White"
                 label="White"
                 name="group1"
                 type="checkbox"
                 id={`inline-radio-1`}
               />
               <Form.Check
+                onChange={colorChangeHandler}
                 inline
+                value="Blue"
                 label="Blue"
                 name="group1"
                 type="checkbox"
                 id={`inline-radio-2`}
               />
               <Form.Check
+                onChange={colorChangeHandler}
                 inline
+                value="Black"
                 label="Black"
                 name="name"
                 type="checkbox"
                 id={`inline-radio-3`}
               />
               <Form.Check
+                onChange={colorChangeHandler}
                 inline
+                value="Red"
                 label="Red"
                 name="group1"
                 type="checkbox"
                 id={`inline-radio-1`}
               />
               <Form.Check
+                onChange={colorChangeHandler}
                 inline
+                value="Green"
                 label="Green"
                 name="group1"
                 type="checkbox"
                 id={`inline-radio-2`}
               />
               <Form.Check
+                onChange={colorlessChangeHandler}
                 inline
+                value="Colorless"
                 label="Colorless"
                 name="3"
                 type="checkbox"
