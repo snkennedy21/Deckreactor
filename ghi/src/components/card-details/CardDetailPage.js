@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import { useGetCardsQuery } from "../../store/scryfallApi";
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
+import Card from "react-bootstrap/Card";
+import Carousel from "react-bootstrap/Carousel";
 
 function CardDetailPage() {
   const { multiverse_id } = useParams();
