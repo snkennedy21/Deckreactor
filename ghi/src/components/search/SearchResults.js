@@ -9,11 +9,16 @@ import { useGetCardsQuery } from "../../store/scryfallApi";
 
 function ContainerExample() {
   const search = useSelector((state) => state.search);
-  console.log(search);
   const { data, error, isLoading } = useGetCardsQuery(search);
 
   if (isLoading) {
     return <div>Loading...</div>;
+  }
+
+  console.log(data);
+
+  if (data === undefined){
+    return <div>Banana</div>
   }
 
   if ("message" in data) {

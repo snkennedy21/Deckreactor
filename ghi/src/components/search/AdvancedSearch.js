@@ -4,7 +4,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
+import SearchResults from "./SearchResults";
 import { useState } from "react";
+import { searchActions } from "../../store/store";
+import { useDispatch } from "react-redux";
 
 const colorsArray = [
   { name: "White", checked: false, id: "0" },
@@ -25,6 +28,8 @@ function AdvancedSearch() {
   const [type, setType] = useState("");
   const [format, setFormat] = useState("");
 
+  const dispatch = useDispatch();
+
   function colorChangeHandler(e) {
     setColorlessChecked(false);
     const index = e.target.id;
@@ -42,11 +47,33 @@ function AdvancedSearch() {
     setColors(colorsArray);
   }
 
+  function convertColorNameToMagicLetter() {
+    const magicColors = [];
+    colors.forEach((color) => {
+      if (color.checked === true) {
+        if (color.name === "Blue") {
+          magicColors.push("U");
+        } else magicColors.push(color.name[0]);
+      }
+    });
+    return magicColors.join("");
+  }
+
+  function submitHandler(e) {
+    let manaColors = convertColorNameToMagicLetter();
+    e.preventDefault();
+    dispatch(
+      searchActions.updateSearch(
+        `name:${name} color:${manaColors} rarity:${rarity} t:${type} format:${format}`
+      )
+    );
+  }
+
   return (
     <Container>
       <Row>
         <Col>
-          <Form>
+          <Form onSubmit={submitHandler}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -188,7 +215,7 @@ function AdvancedSearch() {
           </Form>
         </Col>
         <Col>
-          <div>Hello</div>
+          <SearchResults />
         </Col>
       </Row>
     </Container>
