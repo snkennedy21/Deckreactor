@@ -17,11 +17,14 @@ function CardDetailPage() {
   useEffect(() => {
     async function getCardData() {
       const cardUrl = `https://api.scryfall.com/cards/multiverse/${multiverse_id}`
-      const symbolUrl = "https://api.scryfall.com/symbology"
-      const response = await fetch(cardUrl);
-      if (response.ok) {
-        const data = await response.json();
-        setCard(data);
+      const symbolUrl = "https://api.scryfall.com/symbology";
+      const cardResponse = await fetch(cardUrl);
+      const symbolResponse = await fetch(symbolUrl);
+      if (cardResponse.ok && symbolResponse.ok) {
+        const cardData = await cardResponse.json();
+        const symbolData = await symbolResponse.json();
+        setCard(cardData);
+        setSymbol(symbolData);
       } else {
         setError('Could not load page data');
       }
