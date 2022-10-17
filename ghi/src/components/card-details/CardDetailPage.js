@@ -13,20 +13,27 @@ import Carousel from "react-bootstrap/Carousel";
 function CardDetailPage() {
   const { multiverse_id } = useParams();
   const [card, setCard] = useState({});
-  const [symbols, setSymbols] = useState([])
+  const [myDecks, setMyDecks] = useState([]);
+  const [deck, setDeck] = useState("");
+  const [symbols, setSymbols] = useState([]);
   const [error, setError] = useState({});
   
   useEffect(() => {
     async function getCardData() {
       const cardUrl = `https://api.scryfall.com/cards/multiverse/${multiverse_id}`
       const symbolUrl = "https://api.scryfall.com/symbology";
+      const myDecksUrl = `${process.env.REACT_APP_API_HOST}/decks/`;
+      console.log(myDecksUrl);
       const cardResponse = await fetch(cardUrl);
       const symbolResponse = await fetch(symbolUrl);
+      // const myDecksResponse = await fetch(myDecksUrl);
       if (cardResponse.ok && symbolResponse.ok) {
         const cardData = await cardResponse.json();
         const symbolData = await symbolResponse.json();
+        // const myDecksData = await myDecksResponse.json();
         setCard(cardData);
         setSymbols(symbolData.data);
+        // setMyDecks(myDecksData.decks);
       } else {
         setError('Could not load page data');
       }
@@ -169,9 +176,21 @@ function CardDetailPage() {
           </>
           <div className="card mb-4 box-shadow">
             <div className="card-body img-fluid">
+              Form will go here
               {/* <Form>
-                test
+                <Form.Label>Add to deck</Form.Label>
+                <Form.Select
+                aria-label="select one of my decks"
+                onChange={(e) => setDeck(e.target.value)}>
+                  <option value="">Select a deck</option>
+                  {myDecks.map(deck => {
+                    return (
+                      <option value={deck.id}>{deck.name}</option>
+                    )
+                  })}
+                </Form.Select>
               </Form> */}
+              
             </div>
           </div>
         </div>
