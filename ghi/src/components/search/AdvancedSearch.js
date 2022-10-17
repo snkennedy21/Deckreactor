@@ -6,23 +6,34 @@ import Form from "react-bootstrap/Form";
 
 import { useState } from "react";
 
+const colorsArray = [
+  { name: "White", checked: false, id: "0" },
+  { name: "Blue", checked: false, id: "1" },
+  { name: "Black", checked: false, id: "2" },
+  { name: "Red", checked: false, id: "3" },
+  { name: "Green", checked: false, id: "4" },
+];
+
 function AdvancedSearch() {
   const [name, setName] = useState("");
   const [manaCost, setManaCost] = useState(25);
-  const [colorsArray, setColorsArray] = useState([]);
-  const [isColorlessChecked, setIsColorlessChecked] = useState(false);
+  const [colors, setColors] = useState(colorsArray);
 
   function colorChangeHandler(e) {
-    let newArray = [...colorsArray, e.target.value];
-    if (colorsArray.includes(e.target.value)) {
-      newArray = newArray.filter((color) => color !== e.target.value);
-    }
-    setColorsArray(newArray);
-    console.log(colorsArray);
+    const index = e.target.id;
+    console.log(index);
+    const newArray = colorsArray;
+    newArray[index].checked = !newArray[index].checked;
+    console.log(newArray);
+    setColors([...newArray]);
   }
 
-  function colorlessChangeHandler(e) {
-    setColorsArray([]);
+  function uncheckColorsHandler() {
+    colorsArray.forEach((color) => {
+      color.checked = false;
+    });
+    console.log(colorsArray);
+    setColors(colorsArray);
   }
 
   return (
@@ -60,60 +71,20 @@ function AdvancedSearch() {
 
             <Form.Group>
               <Form.Label>Colors</Form.Label>
-              <Form.Check
-                onChange={colorChangeHandler}
-                inline
-                value="White"
-                label="White"
-                name="group1"
-                type="checkbox"
-                id={`inline-radio-1`}
-              />
-              <Form.Check
-                onChange={colorChangeHandler}
-                inline
-                value="Blue"
-                label="Blue"
-                name="group1"
-                type="checkbox"
-                id={`inline-radio-2`}
-              />
-              <Form.Check
-                onChange={colorChangeHandler}
-                inline
-                value="Black"
-                label="Black"
-                name="name"
-                type="checkbox"
-                id={`inline-radio-3`}
-              />
-              <Form.Check
-                onChange={colorChangeHandler}
-                inline
-                value="Red"
-                label="Red"
-                name="group1"
-                type="checkbox"
-                id={`inline-radio-1`}
-              />
-              <Form.Check
-                onChange={colorChangeHandler}
-                inline
-                value="Green"
-                label="Green"
-                name="group1"
-                type="checkbox"
-                id={`inline-radio-2`}
-              />
-              <Form.Check
-                onChange={colorlessChangeHandler}
-                inline
-                value="Colorless"
-                label="Colorless"
-                name="3"
-                type="checkbox"
-                id={`inline-radio-3`}
-              />
+              {colorsArray.map((color, index) => {
+                return (
+                  <Form.Check
+                    onChange={colorChangeHandler}
+                    key={color.name}
+                    id={color.id}
+                    value={color.name}
+                    label={color.name}
+                    checked={color.checked}
+                    type="checkbox"
+                  ></Form.Check>
+                );
+              })}
+              <Form.Check onChange={uncheckColorsHandler}></Form.Check>
             </Form.Group>
 
             <Form.Group>
