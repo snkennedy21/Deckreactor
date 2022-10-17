@@ -1,13 +1,36 @@
-# stages:
-#   - test
-#   - build
-#   - deploy
+stages:
+  - test
+  - build
+  - deploy
 
+
+## TEST
+
+api-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - cd api
+    - pip install -r requirements.txt
+    - python -m pytest
+
+lint-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - pip install flake8
+    - flake8 api
 
 ## BUILD
+
 build-front-end-job:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   stage: build
   image: node:lts-bullseye
+  needs: # tests that must pass for this build-job to run
+    - api-unit-test-job
+    - lint-test-job 
   variables:
     # PUBLIC_URL: https://dgb-galv.gitlab.io/apis-with-sql
     PUBLIC_URL: https://sjp19-public-resources.gitlab.io/project_templates/module3-project-gamma
@@ -17,8 +40,9 @@ build-front-end-job:
     - npm install
     - npm run build
     - cp build/index.html build/404.html
+    # why is this extra command here with artifact path below
   artifacts:
-    paths:
+    paths: # save all files in the build path
       - ghi/build/
 
 build-fastapi-api-image-job:  # RENAME THIS
@@ -29,12 +53,14 @@ build-fastapi-api-image-job:  # RENAME THIS
   services:
     - docker:20.10.16-dind
   script:
-    - cd sample_service
-    - docker build -t ${CI_REGISTRY_IMAGE}/fastapi_api:latest .
-    - docker tag ${CI_REGISTRY_IMAGE}/fastapi_api:latest ${CI_REGISTRY_IMAGE}/fastapi_api:$CI_JOB_ID
+    - cd api # service name: deck_reactor_api (5 places)
+    - docker build -t ${CI_REGISTRY_IMAGE}/deck_reactor_api:latest .
+    - docker tag ${CI_REGISTRY_IMAGE}/deck_reactor_api:latest ${CI_REGISTRY_IMAGE}/deck_reactor_api:$CI_JOB_ID
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push ${CI_REGISTRY_IMAGE}/fastapi_api:$CI_JOB_ID
-    - docker push ${CI_REGISTRY_IMAGE}/fastapi_api:latest
+    - docker push ${CI_REGISTRY_IMAGE}/deck_reactor_api:$CI_JOB_ID
+    - docker push ${CI_REGISTRY_IMAGE}/deck_reactor_api:latest
+
+## DEPLOY
 
 deploy-fastapi-api-image-job:  # RENAME THIS
   rules:
