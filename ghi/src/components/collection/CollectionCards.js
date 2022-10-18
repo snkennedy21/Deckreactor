@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import "./collection.css";
 
 // Mike collection
-// const account_id = "634eb06835cf965e4bb7defc";
+// const account_id = "634ed235c46bd0e65d85bdae";
 
 // Sean colleciton
 const account_id = "634eddaa627b226424129563";
