@@ -4,8 +4,11 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import "./collection.css";
 
-// const my_collection = "knight"
+// Mike collection
 const account_id = "634eb06835cf965e4bb7defc";
+
+// Sean colleciton
+// const account_id = "634eb06835cf965e4bb7defc";
 
 export default function MyCollection() {
   const [collection, setCollection] = useState([]);
