@@ -23,7 +23,6 @@ function CardDetailPage() {
       const cardUrl = `https://api.scryfall.com/cards/multiverse/${multiverse_id}`
       const symbolUrl = "https://api.scryfall.com/symbology";
       const myDecksUrl = `${process.env.REACT_APP_API_HOST}/decks/`;
-      console.log(myDecksUrl);
       const cardResponse = await fetch(cardUrl);
       const symbolResponse = await fetch(symbolUrl);
       // const myDecksResponse = await fetch(myDecksUrl);
@@ -90,7 +89,60 @@ function CardDetailPage() {
 
   // get random url from color theme
   const background_url = themes_by_color[color_id][Math.floor(Math.random() * themes_by_color[color_id].length)];
+  
+  const symbolUrls = {}
+  // assemble symbolUrls object {symbol: svg_uri}
+  for (let symbol of symbols) {
+    symbolUrls[symbol.symbol] = symbol.svg_uri;
+  }
 
+  // helper function for parseSymbolsAndLineBreaks
+  function substringSymbolArray(s) {
+    const output = []
+    let substring = ""
+    for (let i=0; i<s.length; i++) {
+      if (s[i] === "{") {
+        output.push(substring);
+        substring = "";
+        while (i < s.length && s[i] !== "}") {
+          substring += s[i];
+          i++;
+        }
+        substring += s[i];
+        output.push(substring);
+        substring = "";
+      } else {
+        substring += s[i];
+      }
+      if (i === s.length-1) {
+        output.push(substring);
+      }
+    }
+    return output;
+  }
+
+  // wrap any text in this to apply card symbols and line breaks to text string
+  function parseSymbolsAndLineBreaks(s) {
+    return (
+      <>
+      {s.split("\n").map((substring, idx) => 
+        <span key={`${substring} ${idx}`}>
+        {substringSymbolArray(substring).map((item, idx) => 
+          <>
+          {
+          item in symbolUrls ? 
+          <img style={{height: "1em"}} key={`${item} ${idx}`} src={symbolUrls[item]} />
+          :
+          <span key={`${item} ${idx}`}>{item}</span>
+          }
+          </>
+        )}
+        <br/>
+        </span>
+      )}
+      </>
+    )
+  }
 
   return (
     <>
@@ -129,27 +181,13 @@ function CardDetailPage() {
               <>
               { 
               "flavor_text" in card.card_faces[0] ? 
-              <p className="fst-italic">{card.card_faces[0].flavor_text.split("\n").map(function(item,idx) {
-                  return (
-                    <span key={idx}>
-                      {item}
-                      <br/>
-                    </span>
-                  )
-                })}</p>
-                :
-                <></>
+              <p className="fst-italic">{card.card_faces[0].flavor_text}</p>
+              :
+              <></>
               }
               { 
               "flavor_text" in card.card_faces[1] ? 
-              <p className="fst-italic">{card.card_faces[1].flavor_text.split("\n").map(function(item,idx) {
-                  return (
-                    <span key={idx}>
-                      {item}
-                      <br/>
-                    </span>
-                  )
-                })}</p>
+              <p className="fst-italic">{parseSymbolsAndLineBreaks(card.card_faces[1].flavor_text)}</p>
                 :
                 <></>
               }
@@ -157,14 +195,7 @@ function CardDetailPage() {
              : 
               <>{
               "flavor_text" in card ? 
-              <p className="fst-italic">{card.flavor_text.split("\n").map(function(item,idx) {
-                  return (
-                    <span key={idx}>
-                      {item}
-                      <br/>
-                    </span>
-                  )
-                })}</p> :
+              <p className="fst-italic">{parseSymbolsAndLineBreaks(card.flavor_text)}</p> :
               <></>
               }
               </>
@@ -204,33 +235,13 @@ function CardDetailPage() {
                 <>
                 <h2>{card.card_faces[0].name}</h2>
                 <h4>{card.card_faces[0].type_line}</h4>
-                <p>{card.card_faces[0].oracle_text.split("\n").map(function(item,idx) {
-                  return (
-                    <span key={idx}>
-                      {item}
-                      <br/>
-                    </span>
-                  )
-                })}</p>
+                <p>{parseSymbolsAndLineBreaks(card.card_faces[0].oracle_text)}</p>
                 <h2>{card.card_faces[1].name}</h2>
                 <h4>{card.card_faces[1].type_line}</h4>
-                <p>{card.card_faces[1].oracle_text.split("\n").map(function(item,idx) {
-                  return (
-                    <span key={idx}>
-                      {item}
-                      <br/>
-                    </span>
-                  )
-                })}</p>
-                </>: 
-                <p>{card.oracle_text.split("\n").map(function(item, idx) {
-                return (
-                  <span key={idx}>
-                    {item}
-                    <br/>
-                  </span>
-                )
-              })}</p>
+                <p>{parseSymbolsAndLineBreaks(card.card_faces[1].oracle_text)}</p>
+                </>
+                : 
+                <p>{parseSymbolsAndLineBreaks(card.oracle_text)}</p>
               }
               
               <div className="table-responsive">
@@ -240,8 +251,9 @@ function CardDetailPage() {
                       <td>Mana cost:</td>
                       {
                         double_faced ? 
-                        <td>{card.card_faces[0].mana_cost}</td> :
-                        <td>{card.mana_cost}</td> 
+                        <td>{parseSymbolsAndLineBreaks(card.card_faces[0].mana_cost)}</td>
+                        :
+                        <td>{parseSymbolsAndLineBreaks(card.mana_cost)}</td> 
                       }
                       
                     </tr>

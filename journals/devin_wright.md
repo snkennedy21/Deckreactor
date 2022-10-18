@@ -1,4 +1,26 @@
+# Week 16
+
+## October 17, 2022
+
+Today I worked on creating a card detail view page based on the card's multiverse ID which is passed into the component through the URL path using UseParams(). I was able to display the card's front/back images, its details, and a background that corresponds to the color of the card. I am trying to figure out how to convert the strings found in the card data (e.g., "{W}" refers to one white mana) into the actual card symbols using Scryfall's api call for symbols.
+
 # Week 15
+
+## October 14, 2022
+
+Today I experimented creating React components that could be reusable in different areas of our site, such as the card search results component. I also researched React Redux and the ways it might be applied to data that would be best stored in a global state, such as the nav search bar and a user's currently selected deck.
+
+## October 13, 2022
+
+Today our group began exploring options for which CSS framework would be best to use for our front end. We researched Material UI as a possible solution, but decided that Bootstrap would provide a more practical solution to fit with our timetable.
+
+## October 12, 2022
+
+Today I worked on bug fixes and added some extra routes to our backend API. We added routes for user collections, including creation of a user's collection on account creation, and adding/removing cards from collection. We also worked on adding cascade on account deletion functionality for a deleted user's decks and collection. We also noticed that certain API routes require input of a user's account_id to run, while certain others (e.g., create deck and view my decks) obtained the data from the current logged in user's token. We discussed the viability of each approach, and whether refactoring of certain routes was warranted for account security purposes.
+
+## October 11, 2022
+
+Today we nearly finished work on our API routes to communicate with our front end. These included routes to add/remove cards to a user's deck, as well as to remove all cards of particular name from the deck. We were unsure whether to also include a route for the Advanced Search page, and ultimately decided that what we had already made for the Nav bar search was sufficient. We reasoned that we could simply construct the required search query string using the values from the Advanced Search form fields on the front end, and that string could then be passed to Scryfall the exact same way as if the user had typed the properly formatted query string out themselves in the Nav search bar.
 
 ## October 10, 2022
 
