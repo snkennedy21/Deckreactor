@@ -13,11 +13,13 @@ from queries.accounts import (
     AccountQueries,
     DuplicateAccountError,
 )
+from queries.collections import CollectionQueries
 from models import (
     Account,
     AccountIn,
     AccountUpdateIn,
     AccountOut,
+    CollectionIn
 )
 
 class AccountForm(BaseModel):
@@ -86,6 +88,7 @@ async def create_account(
   request: Request,
   response: Response,
   repo: AccountQueries = Depends(),
+  collection: CollectionQueries = Depends(),
 ):
 
   # This section of the function takes care of basic account creation. It does not deal with authentication. It just makes an account and puts it in the database
@@ -97,6 +100,8 @@ async def create_account(
       detail="Account with that email already exists"
       )
     account = repo.create(info, hashed_password)  # calls the function in queries.accounts in order to create a new account. account has an id and a list of roles
+    collection_info = CollectionIn(account_id=account.dict()["id"])
+    user_collection = collection.create(collection_info)
   except DuplicateAccountError:
     raise HTTPException(
       status_code=status.HTTP_400_BAD_REQUEST,
