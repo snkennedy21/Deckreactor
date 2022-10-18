@@ -22,7 +22,7 @@ function ContainerExample() {
   }
 
   if ("message" in data) {
-    return <div>Hello</div>;
+    return <div>{data.message}</div>;
   }
 
   return (

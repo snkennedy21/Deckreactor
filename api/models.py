@@ -100,8 +100,8 @@ class DeckList(BaseModel):
 class SearchScryfallOut(CardList):
     pass
 
-# class SearchCollectionIn(BaseModel):
-#     query: str
+class CollectionIn(BaseModel):
+    account_id: str
 
-# class SearchCollectionOut(CardList):
-#     pass
+class CollectionOut(CollectionIn):
+    cards: list
