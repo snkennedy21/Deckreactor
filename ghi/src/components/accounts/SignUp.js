@@ -2,27 +2,33 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/esm/Container";
 
-import { useState } from "react";
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateField } from "../../store/accountSlice";
 
 function SignUp() {
-  const [email, setEmail] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const dispatch = useDispatch();
+  const { email, password, full_name } = useSelector((state) => state.account);
+  const field = useCallback(
+    (e) =>
+      dispatch(updateField({ field: e.target.name, value: e.target.value })),
+    [dispatch]
+  );
 
-  function submitHandler(e) {
-    e.preventDefault();
-  }
+  const state = useSelector((state) => state.account);
+  console.log(state);
 
   return (
     <Container>
-      <Form onSubmit={submitHandler}>
+      <Form method="POST">
         <Form.Group className="mb-3">
           <Form.Label>Email address</Form.Label>
           <Form.Control
             type="email"
             placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            onChange={field}
+            value={email}
           />
         </Form.Group>
 
@@ -31,7 +37,9 @@ function SignUp() {
           <Form.Control
             type="text"
             placeholder="Enter Name"
-            onChange={(e) => setFullName(e.target.value)}
+            name="full_name"
+            onChange={field}
+            value={full_name}
           />
         </Form.Group>
 
@@ -40,16 +48,9 @@ function SignUp() {
           <Form.Control
             type="password"
             placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Confirm Password"
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            name="password"
+            onChange={field}
+            value={password}
           />
         </Form.Group>
 
