@@ -35,9 +35,12 @@ function NavScrollExample() {
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: "100px" }}
             navbarScroll
+            onSelect={(selectedKey) => navigate(selectedKey)}
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">Link</Nav.Link>
+            <Nav.Link eventKey="/advanced-search">AdvancedSearch</Nav.Link>
+            <Nav.Link eventKey="/login">Login</Nav.Link>
+            <Nav.Link eventKey="/signup">Signup</Nav.Link>
+            <Nav.Link eventKey="/collection">My Collection</Nav.Link>
             <NavDropdown title="Link" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action4">

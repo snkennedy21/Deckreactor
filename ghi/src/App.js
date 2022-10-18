@@ -7,6 +7,8 @@ import AdvancedSearch from "./components/search/AdvancedSearch";
 import CardDetailPage from "./components/card-details/CardDetailPage";
 import MyCollection from "./components/collection/CollectionList";
 import MyCollection2 from "./components/collection/CollectionCards";
+import Login from "./components/accounts/Login";
+import SignUp from "./components/accounts/SignUp";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
@@ -21,6 +23,8 @@ function App() {
         <Route path="card/:multiverse_id" element={<CardDetailPage />} />
         <Route path="edit_collection" element={<MyCollection />}></Route>
         <Route path="collection" element={<MyCollection2 />}></Route>
+        <Route path="login" element={<Login />}></Route>
+        <Route path="signup" element={<SignUp />}></Route>
       </Routes>
     </BrowserRouter>
   );
