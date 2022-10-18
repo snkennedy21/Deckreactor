@@ -10,11 +10,11 @@ import "./collection.css";
 // Sean colleciton
 const account_id = "634eddaa627b226424129563";
 
+// const account_id = "6349a18d7b649afdd348ae7f"
+
 export default function MyCollection() {
   const [collection, setCollection] = useState([]);
   const [filteredCollection, setFilteredCollection] = useState([]);
-
-  // as reducer changes from card removal, useEffect fetches card collection
   const [reducerValue, collectionUpdater] = useReducer((x) => x + 1, 0);
 
   const handleDelete = (multiverse_id) => {
@@ -27,14 +27,37 @@ export default function MyCollection() {
         },
       }
     );
+
+    for (var card of filteredCollection) {
+      if (card.multiverse_id === multiverse_id && card.quantity === 1) {
+        card.quantity = 0;
+      } else if (card.multiverse_id === multiverse_id && card.quantity >= 1) {
+        card.quantity = card.quantity -= 1;
+      }
+    }
     collectionUpdater();
   };
 
-  // ###################################### handle delete and refetch to update state on ui
+  const handleIncrease = (multiverse_id) => {
+    fetch(
+      `http://localhost:8000/collections/${account_id}/add/${multiverse_id}`,
+      {
+        method: "PUT",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    );
+    for (var card of filteredCollection) {
+      if (card.multiverse_id === multiverse_id) {
+        card.quantity = card.quantity += 1;
+      }
+    }
+    collectionUpdater();
+  };
 
   useEffect(() => {
     async function getCollection() {
-      // const url = `http://localhost:8000/scryfall/${my_collection}`
       const url = `http://localhost:8000/collections/${account_id}`;
       const response = await fetch(url);
       if (response.ok) {
@@ -45,9 +68,7 @@ export default function MyCollection() {
       }
     }
     getCollection();
-
-    // whenever reducer value changes useEffect runs get collection
-  }, [reducerValue]);
+  }, []);
 
   const handleInputChange = (event) => {
     let search = event.target.value.toLowerCase();
@@ -120,6 +141,9 @@ export default function MyCollection() {
           </p>
         </form>
         <div>
+          <Link to="/collection" className="right_side">
+            My collection
+          </Link>
           <b>
             Collection Value:{" "}
             <b className="text-success">${collection_value.toFixed(2)}</b>
@@ -151,13 +175,21 @@ export default function MyCollection() {
                         {row.name} <br></br>
                         <p className="mt-3">Quantity: {row.quantity}</p>
                         <Button
+                          className="mb-1"
+                          variant="success"
+                          size="xs"
+                          onClick={() => handleIncrease(row.multiverse_id)}
+                        >
+                          Add one card
+                        </Button>
+                        <br></br>
+                        <Button
                           variant="danger"
                           size="xs"
                           onClick={() => handleDelete(row.multiverse_id)}
                         >
                           Remove one card
                         </Button>
-                        <br></br>
                         <p className="mt-3">Card Price: {row.card_price}</p>
                       </td>
                       <td className="text-center">
@@ -186,6 +218,15 @@ export default function MyCollection() {
                       <td className="text-center">
                         {row.name} <br></br>
                         <p className="mt-3">Quantity: {row.quantity}</p>
+                        <Button
+                          className="mb-1"
+                          variant="success"
+                          size="xs"
+                          onClick={() => handleIncrease(row.multiverse_id)}
+                        >
+                          Add one card
+                        </Button>
+                        <br></br>
                         <Button
                           variant="danger"
                           size="xs"
