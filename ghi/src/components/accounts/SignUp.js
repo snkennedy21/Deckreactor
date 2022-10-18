@@ -2,25 +2,32 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/esm/Container";
 
+import { useSignUpMutation } from "../../store/accountApi";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateField } from "../../store/accountSlice";
+import { preventDefault } from "../../store/utils";
 
 function SignUp() {
   const dispatch = useDispatch();
   const { email, password, full_name } = useSelector((state) => state.account);
+  const [signUp, { error, isLoading: signUpLoading }] = useSignUpMutation();
   const field = useCallback(
     (e) =>
       dispatch(updateField({ field: e.target.name, value: e.target.value })),
     [dispatch]
   );
 
-  const state = useSelector((state) => state.account);
-  console.log(state);
-
   return (
     <Container>
-      <Form method="POST">
+      <Form
+        method="POST"
+        onSubmit={preventDefault(signUp, () => ({
+          email,
+          password,
+          full_name,
+        }))}
+      >
         <Form.Group className="mb-3">
           <Form.Label>Email address</Form.Label>
           <Form.Control
