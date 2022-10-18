@@ -9,7 +9,7 @@ import './collection.css'
 
 
 // const my_collection = "knight"
-const account_id = "634dee76571cdd381634590d"
+const account_id = "63472bdb850d85d09deb5987"
 
 export default function MyCollection2() {
   const [collection, setCollection] = useState([]);
