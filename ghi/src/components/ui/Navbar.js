@@ -4,11 +4,13 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Image from "react-bootstrap/Image";
 
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { searchActions } from "../../store/store";
+import logo from "../../images/logo.png";
 
 function NavScrollExample() {
   const dispatch = useDispatch();
@@ -28,7 +30,9 @@ function NavScrollExample() {
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
-        <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
+        <Navbar.Brand href="#">
+          <Image src={logo} style={{ width: "4rem" }} />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
