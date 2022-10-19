@@ -311,15 +311,66 @@ function CardDetailPage() {
           <div className="card mb-4 box-shadow">
             <div className="card-header"><h1 className="my-2">{card.name}</h1></div>
             <div className="card-body">
-              {double_faced ? <React.Fragment></React.Fragment> : <h3>{card.type_line}</h3>}
+              {double_faced ? <React.Fragment></React.Fragment> : <h3>
+                {
+                  "power" in card ?
+                  card.power : 
+                  ""
+                } 
+                {
+                  "power" in card ? 
+                  "/" :
+                  ""
+                }
+                {
+                  "toughness" in card ?
+                  card.toughness + " " :
+                  ""
+                }
+                {card.type_line}
+              </h3>}
               {
                 double_faced ? 
                 <React.Fragment>
                 <h2>{card.card_faces[0].name}</h2>
-                <h4>{card.card_faces[0].type_line}</h4>
+                <h4>
+                {
+                  "power" in card.card_faces[0] ?
+                  card.card_faces[0].power : 
+                  ""
+                } 
+                {
+                  "power" in card.card_faces[0] ? 
+                  "/" :
+                  ""
+                }
+                {
+                  "toughness" in card.card_faces[0] ?
+                  card.card_faces[0].toughness + " " :
+                  ""
+                }
+                {card.card_faces[0].type_line}
+                </h4>
                 <p>{parseSymbolsAndLineBreaks(card.card_faces[0].oracle_text)}</p>
                 <h2>{card.card_faces[1].name}</h2>
-                <h4>{card.card_faces[1].type_line}</h4>
+                <h4>
+                {
+                  "power" in card.card_faces[1] ?
+                  card.card_faces[1].power : 
+                  ""
+                } 
+                {
+                  "power" in card.card_faces[1] ? 
+                  "/" :
+                  ""
+                }
+                {
+                  "toughness" in card.card_faces[1] ?
+                  card.card_faces[1].toughness + " " :
+                  ""
+                }
+                {card.card_faces[1].type_line}
+                </h4>
                 <p>{parseSymbolsAndLineBreaks(card.card_faces[1].oracle_text)}</p>
                 </React.Fragment>
                 : 

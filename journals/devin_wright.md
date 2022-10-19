@@ -1,5 +1,9 @@
 # Week 16
 
+## October 18, 2022
+
+Today I added mana symbols to the card detail page, with code that can be reused to parse any string with those symbols. Our team worked together to implement signup/login/logout functionality. I learned more about how data is sent to/retrieved from the Redux store, and began work on a form on the card detail page to allow users to send the card to their deck or collection.
+
 ## October 17, 2022
 
 Today I worked on creating a card detail view page based on the card's multiverse ID which is passed into the component through the URL path using UseParams(). I was able to display the card's front/back images, its details, and a background that corresponds to the color of the card. I am trying to figure out how to convert the strings found in the card data (e.g., "{W}" refers to one white mana) into the actual card symbols using Scryfall's api call for symbols.
