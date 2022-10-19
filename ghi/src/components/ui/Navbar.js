@@ -47,10 +47,10 @@ function LoginButton() {
 }
 
 function NavScrollExample() {
-  const { data: token, error, isLoading: tokenLoading } = useGetTokenQuery();
+  const { data: token, isLoading: tokenLoading } = useGetTokenQuery();
   const {
     account: { roles = [] },
-  } = token || { account: { error } };
+  } = token || { account: {} };
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
