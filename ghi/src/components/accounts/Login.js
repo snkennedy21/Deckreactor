@@ -20,7 +20,6 @@ function Login() {
     [dispatch]
   );
   const state = useSelector((state) => state.account);
-  console.log(state);
   return (
     <Container>
       <Form method="POST" onSubmit={preventDefault(logIn, target)}>

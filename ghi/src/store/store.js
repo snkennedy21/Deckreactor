@@ -9,7 +9,7 @@ export const store = configureStore({
   reducer: {
     [scryfallApi.reducerPath]: scryfallApi.reducer,
     [accountApiSlice.reducerPath]: accountApiSlice.reducer,
-    search: searchSlice.reducer,
+    [searchSlice.name]: searchSlice.reducer,
     [accountSlice.name]: accountSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -10,6 +10,7 @@ import MyCollection2 from "./components/collection/CollectionCards";
 import Login from "./components/accounts/Login";
 import SignUp from "./components/accounts/SignUp";
 import Footer from "./components/Footer/Footer";
+import HomePage from "./components/home/HomePage";
 import "./App.css";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <BrowserRouter basename={basename}>
           <Navbar />
           <Routes>
+            <Route path="/home" element={<HomePage />} />
             <Route path="search" element={<SearchResults />} />
             <Route path="advanced-search" element={<AdvancedSearch />}></Route>
             <Route path="card/:multiverse_id" element={<CardDetailPage />} />
