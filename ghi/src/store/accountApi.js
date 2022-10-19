@@ -41,12 +41,13 @@ export const accountApiSlice = createApi({
 
     logIn: builder.mutation({
       query: (info) => {
+        console.log(info);
         let formData = null;
         if (info instanceof HTMLElement) {
           formData = new FormData(info);
-          formData.append("username", info.email);
-          formData.append("password", info.password);
+          formData.append("username", info.email.value);
         }
+        console.log(formData);
         return {
           url: "/token",
           method: "post",
