@@ -21,15 +21,12 @@ export const accountApiSlice = createApi({
   tagTypes: ["Account"],
   endpoints: (builder) => ({
     signUp: builder.mutation({
-      query: (data) => {
-        console.log(data);
-        return {
-          url: "/api/account/",
-          method: "post",
-          body: data,
-          credentials: "include",
-        };
-      },
+      query: (data) => ({
+        url: "/api/account/",
+        method: "post",
+        body: data,
+        credentials: "include",
+      }),
       providesTags: ["Account"],
       invalidatesTags: (result) => {
         return (result && ["Token"]) || [];

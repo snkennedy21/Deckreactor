@@ -91,8 +91,6 @@ async def create_account(
   collection: CollectionQueries = Depends(),
 ):
 
-  print(info)
-
   # This section of the function takes care of basic account creation. It does not deal with authentication. It just makes an account and puts it in the database
   hashed_password = authenticator.hash_password(info.password)   # authenicator.hash_password is a security measure for create password 
   try:
