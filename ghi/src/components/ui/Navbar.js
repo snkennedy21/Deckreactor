@@ -22,15 +22,8 @@ function LogoutButton() {
   const navigate = useNavigate();
   const [logOut, { data }] = useLogOutMutation();
 
-  function logTheUserOut() {
-    logOut();
-    setTimeout(() => {
-      window.location.reload();
-    }, 10);
-  }
-
   return (
-    <Button onClick={logTheUserOut} variant="outline-danger mx-2">
+    <Button onClick={logOut} variant="outline-danger mx-2">
       Logout
     </Button>
   );
@@ -82,7 +75,6 @@ function NavScrollExample() {
             onSelect={(selectedKey) => navigate(selectedKey)}
           >
             <Nav.Link eventKey="/advanced-search">AdvancedSearch</Nav.Link>
-            <Nav.Link eventKey="/login">Login</Nav.Link>
             <Nav.Link eventKey="/signup">Signup</Nav.Link>
             {token ? (
               <Nav.Link eventKey="/collection">My Collection</Nav.Link>

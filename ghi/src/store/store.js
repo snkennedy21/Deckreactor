@@ -13,7 +13,9 @@ export const store = configureStore({
     [accountSlice.name]: accountSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(scryfallApi.middleware),
+    getDefaultMiddleware()
+      .concat(scryfallApi.middleware)
+      .concat(accountApiSlice.middleware),
 });
 
 export const searchActions = searchSlice.actions;
