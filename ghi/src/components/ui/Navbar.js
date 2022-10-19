@@ -18,17 +18,19 @@ import { searchActions } from "../../store/store";
 import logo from "../../images/logo.png";
 
 function LogoutButton() {
+  const { data: token, isLoading: tokenLoading } = useGetTokenQuery();
   const navigate = useNavigate();
   const [logOut, { data }] = useLogOutMutation();
 
-  useEffect(() => {
-    if (data) {
-      navigate("/home");
-    }
-  }, [data]);
+  function logTheUserOut() {
+    logOut();
+    setTimeout(() => {
+      window.location.reload();
+    }, 10);
+  }
 
   return (
-    <Button onClick={logOut} variant="outline-danger mx-2">
+    <Button onClick={logTheUserOut} variant="outline-danger mx-2">
       Logout
     </Button>
   );
@@ -40,7 +42,7 @@ function LoginButton() {
     navigate("/login");
   };
   return (
-    <Button onClick={navigateToLogin} variant="outline-success">
+    <Button onClick={navigateToLogin} variant="outline-success mx-2">
       Login
     </Button>
   );
@@ -82,10 +84,13 @@ function NavScrollExample() {
             <Nav.Link eventKey="/advanced-search">AdvancedSearch</Nav.Link>
             <Nav.Link eventKey="/login">Login</Nav.Link>
             <Nav.Link eventKey="/signup">Signup</Nav.Link>
-            <Nav.Link eventKey="/collection">My Collection</Nav.Link>
+            {token ? (
+              <Nav.Link eventKey="/collection">My Collection</Nav.Link>
+            ) : (
+              <></>
+            )}
           </Nav>
-          <LoginButton />
-          <LogoutButton />
+          {token ? <LogoutButton /> : <LoginButton />}
           <Form onSubmit={queryScryfallHandler} className="d-flex">
             <Form.Control
               type="search"
