@@ -7,34 +7,30 @@ import Card from 'react-bootstrap/Card';
 import {Link} from 'react-router-dom';
 import './collection.css'
 
-// Mike collection
-// const account_id = "634ed235c46bd0e65d85bdae";
 
-// Sean colleciton
-const account_id = "634eddaa627b226424129563";
-// account for joey 634dee76571cdd381634590d
-
-// const scryfall_call = "knight"
-// const account_id = "6349a18d7b649afdd348ae7f"
 
 export default function MyCollection2() {
   const [collection, setCollection] = useState([]);
   const [filteredCollection, setFilteredCollection] = useState([])
 
+
   useEffect(() => {
     async function getCollection() {
-    //   const url = `http://localhost:8000/scryfall/${scryfall_call}`
-      const url = `http://localhost:8000/collections/${account_id}`
-      const response = await fetch(url);
+      const url = `${process.env.REACT_APP_API_HOST}/collections/`;
+      const response = await fetch(url, 
+        {
+          method: "GET",
+          credentials: "include",
+        } );
       if (response.ok) {
-        const data = await response.json()
-        console.log(`${data.cards.length} card(s) rendered`)
-        setCollection(data.cards)
-        setFilteredCollection(data.cards)
+        const data = await response.json();
+        console.log(`${data.cards.length} card(s) rendered`);
+        setCollection(data.cards);
+        setFilteredCollection(data.cards);
       }
     }
     getCollection();
-  },[])
+  }, []);
 
   
   const handleInputChange = (event) => {
