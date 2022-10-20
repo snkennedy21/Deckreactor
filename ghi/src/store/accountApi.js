@@ -6,9 +6,7 @@ export const accountApiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API_HOST,
     prepareHeaders: (headers, { getState }) => {
-      console.log("here");
       const selector = accountApiSlice.endpoints.getToken.select();
-      console.log("after here");
       const { data: tokenData } = selector(getState());
       if (tokenData && tokenData.access_token) {
         headers.set(

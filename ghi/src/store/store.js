@@ -4,6 +4,7 @@ import { scryfallApi } from "./scryfallApi";
 import { searchSlice } from "./searchSlice";
 import { accountSlice } from "./accountSlice";
 import { accountApiSlice } from "./accountApi";
+import { deckSlice } from "./deckSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     [accountApiSlice.reducerPath]: accountApiSlice.reducer,
     [searchSlice.name]: searchSlice.reducer,
     [accountSlice.name]: accountSlice.reducer,
+    [deckSlice.name]: deckSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -19,5 +21,6 @@ export const store = configureStore({
 });
 
 export const searchActions = searchSlice.actions;
+export const deckActions = deckSlice.actions;
 
 setupListeners(store.dispatch);

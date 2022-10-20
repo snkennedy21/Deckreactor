@@ -11,6 +11,8 @@ import Login from "./components/accounts/Login";
 import SignUp from "./components/accounts/SignUp";
 import Footer from "./components/Footer/Footer";
 import HomePage from "./components/home/HomePage";
+import DecksList from "./components/decks/DecksList";
+import DeckDetail from "./components/decks/DeckDetail";
 import "./App.css";
 
 function App() {
@@ -29,6 +31,8 @@ function App() {
             <Route path="card/:multiverse_id" element={<CardDetailPage />} />
             <Route path="edit_collection" element={<MyCollection />}></Route>
             <Route path="collection" element={<MyCollection2 />}></Route>
+            <Route path="decks" element={<DecksList />}></Route>
+            <Route path="deck" element={<DeckDetail />}></Route>
             <Route path="login" element={<Login />}></Route>
             <Route path="signup" element={<SignUp />}></Route>
           </Routes>

@@ -50,8 +50,6 @@ function NavScrollExample() {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-  console.log(token);
-
   function updateSearchTermHandler(e) {
     setSearch(e.target.value);
   }
@@ -83,6 +81,7 @@ function NavScrollExample() {
             ) : (
               <></>
             )}
+            {token ? <Nav.Link eventKey="/decks">My Decks</Nav.Link> : <></>}
           </Nav>
           {token ? <LogoutButton /> : <LoginButton />}
           <Form onSubmit={queryScryfallHandler} className="d-flex">
