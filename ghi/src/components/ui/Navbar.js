@@ -50,6 +50,8 @@ function NavScrollExample() {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
+  console.log(token);
+
   function updateSearchTermHandler(e) {
     setSearch(e.target.value);
   }
