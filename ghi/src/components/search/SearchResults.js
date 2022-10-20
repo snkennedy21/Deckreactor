@@ -68,7 +68,7 @@ function ContainerExample() {
               />
               <Dropdown className="mb-4">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  Add To Deck
+                  Add To
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
