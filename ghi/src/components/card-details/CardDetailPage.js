@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/Form"
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useGetCardsQuery } from "../../store/scryfallApi";
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
@@ -20,7 +20,7 @@ function CardDetailPage() {
   const [symbols, setSymbols] = useState([]);
   const [error, setError] = useState({});
   const [background_url, setBackgroundUrl] = useState("");
-  // const [state, dispatch] = useReducer(reducer)
+  const dispatch = useDispatch();
 
   const sampleDecks = [
     {
