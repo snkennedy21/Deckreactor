@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/esm/Button";
 import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -47,6 +48,12 @@ function ContainerExample() {
     return <div>{data.message}</div>;
   }
 
+  function execute(selectedKey) {
+    const eventKeyObject = JSON.parse(selectedKey);
+    if (eventKeyObject.placeToStore === "collection") {
+    }
+  }
+
   return (
     <Container>
       <Row>
@@ -66,17 +73,32 @@ function ContainerExample() {
                 src={card.picture_url}
                 style={{ width: "100%" }}
               />
-              <Dropdown className="mb-4">
+              <Dropdown className="mb-4" onSelect={execute}>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Add To
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item>My Collection</Dropdown.Item>
+                  <Dropdown.Item
+                    eventKey={JSON.stringify({
+                      placeToStore: "collection",
+                      multiverseId: card.multiverse_id,
+                    })}
+                  >
+                    My Collection
+                  </Dropdown.Item>
                   <Dropdown.Divider />
                   {usersDecks.map((deck) => {
                     return (
-                      <Dropdown.Item key={deck.id}>{deck.name}</Dropdown.Item>
+                      <Dropdown.Item
+                        key={deck.id}
+                        eventKey={JSON.stringify({
+                          placeToStore: deck.id,
+                          multiverseId: card.multiverse_id,
+                        })}
+                      >
+                        {deck.name}
+                      </Dropdown.Item>
                     );
                   })}
                 </Dropdown.Menu>
