@@ -1,5 +1,9 @@
 # Week 16
 
+# October 19, 2022
+
+Today I implemented formatting for displaying power, toughness, and loyalty stats for single- and double-faced cards on their detail page. Our group also worked together to finish the account authorization features. We were confronted with a bug that arose from the token 
+
 ## October 18, 2022
 
 Today I added mana symbols to the card detail page, with code that can be reused to parse any string with those symbols. Our team worked together to implement signup/login/logout functionality. I learned more about how data is sent to/retrieved from the Redux store, and began work on a form on the card detail page to allow users to send the card to their deck or collection.
