@@ -4,27 +4,19 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import "./collection.css";
 
-// Mike collection
-// const account_id = "634ed235c46bd0e65d85bdae";
-
-// Sean colleciton
-const account_id = "634eddaa627b226424129563";
-
-// const account_id = "6349a18d7b649afdd348ae7f"
 
 export default function MyCollection() {
   const [collection, setCollection] = useState([]);
   const [filteredCollection, setFilteredCollection] = useState([]);
   const [reducerValue, collectionUpdater] = useReducer((x) => x + 1, 0);
 
+
   const handleDelete = (multiverse_id) => {
     fetch(
-      `http://localhost:8000/collections/${account_id}/remove_one/${multiverse_id}`,
+      `${process.env.REACT_APP_API_HOST}/collections/remove_one/${multiverse_id}`,
       {
         method: "PUT",
-        headers: {
-          accept: "application/json",
-        },
+        credentials: "include",
       }
     );
 
@@ -40,12 +32,10 @@ export default function MyCollection() {
 
   const handleIncrease = (multiverse_id) => {
     fetch(
-      `http://localhost:8000/collections/${account_id}/add/${multiverse_id}`,
+      `${process.env.REACT_APP_API_HOST}/collections/add/${multiverse_id}`,
       {
         method: "PUT",
-        headers: {
-          accept: "application/json",
-        },
+        credentials: "include",
       }
     );
     for (var card of filteredCollection) {
@@ -58,8 +48,12 @@ export default function MyCollection() {
 
   useEffect(() => {
     async function getCollection() {
-      const url = `http://localhost:8000/collections/${account_id}`;
-      const response = await fetch(url);
+      const url = `${process.env.REACT_APP_API_HOST}/collections/`;
+      const response = await fetch(url, 
+        {
+          method: "GET",
+          credentials: "include",
+        } );
       if (response.ok) {
         const data = await response.json();
         console.log(`${data.cards.length} card(s) rendered`);

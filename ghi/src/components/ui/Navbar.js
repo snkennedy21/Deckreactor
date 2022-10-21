@@ -6,13 +6,46 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Image from "react-bootstrap/Image";
 
+import {
+  useLogOutMutation,
+  useGetTokenQuery,
+  useLogInMutation,
+} from "../../store/accountApi";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { searchActions } from "../../store/store";
 import logo from "../../images/logo.png";
 
+function LogoutButton() {
+  const { data: token, isLoading: tokenLoading } = useGetTokenQuery();
+  const navigate = useNavigate();
+  const [logOut, { data }] = useLogOutMutation();
+
+  return (
+    <Button onClick={logOut} variant="outline-danger mx-2">
+      Logout
+    </Button>
+  );
+}
+
+function LoginButton() {
+  const navigate = useNavigate();
+  const navigateToLogin = () => {
+    navigate("/login");
+  };
+  return (
+    <Button onClick={navigateToLogin} variant="outline-success mx-2">
+      Login
+    </Button>
+  );
+}
+
 function NavScrollExample() {
+  const { data: token, isLoading: tokenLoading } = useGetTokenQuery();
+  const {
+    account: { roles = [] },
+  } = token || { account: {} };
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
@@ -42,10 +75,14 @@ function NavScrollExample() {
             onSelect={(selectedKey) => navigate(selectedKey)}
           >
             <Nav.Link eventKey="/advanced-search">AdvancedSearch</Nav.Link>
-            <Nav.Link eventKey="/login">Login</Nav.Link>
             <Nav.Link eventKey="/signup">Signup</Nav.Link>
-            <Nav.Link eventKey="/collection">My Collection</Nav.Link>
+            {token ? (
+              <Nav.Link eventKey="/collection">My Collection</Nav.Link>
+            ) : (
+              <></>
+            )}
           </Nav>
+          {token ? <LogoutButton /> : <LoginButton />}
           <Form onSubmit={queryScryfallHandler} className="d-flex">
             <Form.Control
               type="search"
@@ -55,6 +92,7 @@ function NavScrollExample() {
               onChange={updateSearchTermHandler}
               value={search}
             />
+
             <Button type="submit" variant="outline-success">
               Search
             </Button>

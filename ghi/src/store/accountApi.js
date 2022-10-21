@@ -2,11 +2,13 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { clearForm } from "./accountSlice";
 
 export const accountApiSlice = createApi({
-  reducerPath: "account",
+  reducerPath: "token",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API_HOST,
     prepareHeaders: (headers, { getState }) => {
+      console.log("here");
       const selector = accountApiSlice.endpoints.getToken.select();
+      console.log("after here");
       const { data: tokenData } = selector(getState());
       if (tokenData && tokenData.access_token) {
         headers.set(
@@ -18,7 +20,7 @@ export const accountApiSlice = createApi({
     },
   }),
 
-  tagTypes: ["Account"],
+  tagTypes: ["Account, Token"],
   endpoints: (builder) => ({
     signUp: builder.mutation({
       query: (data) => ({
@@ -41,13 +43,11 @@ export const accountApiSlice = createApi({
 
     logIn: builder.mutation({
       query: (info) => {
-        console.log(info);
         let formData = null;
         if (info instanceof HTMLElement) {
           formData = new FormData(info);
           formData.append("username", info.email.value);
         }
-        console.log(formData);
         return {
           url: "/token",
           method: "post",

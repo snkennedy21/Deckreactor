@@ -10,12 +10,14 @@ export const store = configureStore({
   reducer: {
     [scryfallApi.reducerPath]: scryfallApi.reducer,
     [accountApiSlice.reducerPath]: accountApiSlice.reducer,
-    search: searchSlice.reducer,
     [myDecksSlice.name]: myDecksSlice.reducer,
+    [searchSlice.name]: searchSlice.reducer,
     [accountSlice.name]: accountSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(scryfallApi.middleware),
+    getDefaultMiddleware()
+      .concat(scryfallApi.middleware)
+      .concat(accountApiSlice.middleware),
 });
 
 export const searchActions = searchSlice.actions;
