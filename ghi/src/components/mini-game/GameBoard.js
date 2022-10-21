@@ -148,7 +148,7 @@ const GameBoard = () => {
             flipped={card.flipped}
             matched={card.matched}
             clicked={flippedCards.length === 2 ? () => {} : handleClick}
-          />
+            />
         ))}
       {gameOver && <GameOver restartGame={restartGame} />}
     </div>
