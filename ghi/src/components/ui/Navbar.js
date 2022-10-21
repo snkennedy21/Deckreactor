@@ -17,6 +17,8 @@ import { useNavigate } from "react-router-dom";
 import { searchActions } from "../../store/store";
 import logo from "../../images/logo.png";
 
+import React from "react";
+
 function LogoutButton() {
   const { data: token, isLoading: tokenLoading } = useGetTokenQuery();
   const navigate = useNavigate();

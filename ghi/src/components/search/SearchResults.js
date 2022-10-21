@@ -74,15 +74,7 @@ function ContainerExample() {
       <Row>
         {data.cards.map((card) => {
           return (
-            <Col
-              key={card.multiverse_id}
-              xxl="2"
-              xl="3"
-              l="3"
-              md="4"
-              sm="6"
-              xs="12"
-            >
+            <Col key={card.multiverse_id} xxl="3" xl="4" l="5" md="6" sm="12">
               <Image
                 className="mb-1"
                 src={card.picture_url}

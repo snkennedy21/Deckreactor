@@ -107,7 +107,7 @@ function AdvancedSearch() {
   }
 
   return (
-    <Container>
+    <Container fluid>
       <Row>
         <Col>
           <Form onSubmit={submitHandler}>
