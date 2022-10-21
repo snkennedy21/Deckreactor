@@ -9,6 +9,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
+import { FaPlus, FaMinus } from "react-icons/fa";
 
 function DeckDetail() {
   const [cards, setCards] = useState([]);
@@ -53,6 +54,12 @@ function DeckDetail() {
                 xs="12"
               >
                 <Image src={card.picture_url} style={{ width: "100%" }} />
+                <Button>
+                  <FaPlus></FaPlus>
+                </Button>
+                <Button>
+                  <FaMinus></FaMinus>
+                </Button>
                 <div>{card.name}</div>
                 <div>Quantity in Deck: {card.quantity}</div>
               </Col>

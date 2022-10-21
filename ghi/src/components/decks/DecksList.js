@@ -11,6 +11,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
+import CreateDeckModal from "./CreateDeckModal";
 
 function DecksList() {
   const [usersDecks, setUsersDecks] = useState([]);
@@ -38,8 +39,15 @@ function DecksList() {
     navigate("/deck");
   }
 
+  function updateUsersDecksHandler(newDeck) {
+    setUsersDecks((prevState) => {
+      return [...prevState, newDeck];
+    });
+  }
+
   return (
     <React.Fragment>
+      <CreateDeckModal updateUsersDecks={updateUsersDecksHandler} />
       <Nav onSelect={(selectedKey) => navigate(selectedKey)}>
         <Container>
           <Row>
