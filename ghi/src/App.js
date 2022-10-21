@@ -13,6 +13,8 @@ import Footer from "./components/Footer/Footer";
 import HomePage from "./components/home/HomePage";
 import DecksList from "./components/decks/DecksList";
 import DeckDetail from "./components/decks/DeckDetail";
+import NotFoundPage from "./components/NotFound/NotFound";
+import GameBoard from "./components/mini-game/GameBoard";
 import "./App.css";
 
 function App() {
@@ -35,6 +37,8 @@ function App() {
             <Route path="deck" element={<DeckDetail />}></Route>
             <Route path="login" element={<Login />}></Route>
             <Route path="signup" element={<SignUp />}></Route>
+            <Route path="*" element={<NotFoundPage />} />
+            <Route path="game" element={<GameBoard />}></Route>
           </Routes>
         </BrowserRouter>
       </div>
