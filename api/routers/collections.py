@@ -21,7 +21,7 @@ async def add_card_to_collection(
     account_id: str,
     multiverse_id: int,
     repo: CollectionQueries = Depends(),
-    account_data: dict = Depends(authenticator.get_current_account_data),
+    # account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     url = f"https://api.scryfall.com/cards/multiverse/{multiverse_id}"
     response = requests.get(url)

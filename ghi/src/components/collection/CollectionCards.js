@@ -7,9 +7,15 @@ import Card from 'react-bootstrap/Card';
 import {Link} from 'react-router-dom';
 import './collection.css'
 
+// Mike collection
+// const account_id = "634ed235c46bd0e65d85bdae";
 
-// const my_collection = "knight"
-const account_id = "63472bdb850d85d09deb5987"
+// Sean colleciton
+const account_id = "634eddaa627b226424129563";
+// account for joey 634dee76571cdd381634590d
+
+// const scryfall_call = "knight"
+// const account_id = "6349a18d7b649afdd348ae7f"
 
 export default function MyCollection2() {
   const [collection, setCollection] = useState([]);
@@ -17,7 +23,7 @@ export default function MyCollection2() {
 
   useEffect(() => {
     async function getCollection() {
-    //   const url = `http://localhost:8000/scryfall/${my_collection}`
+    //   const url = `http://localhost:8000/scryfall/${scryfall_call}`
       const url = `http://localhost:8000/collections/${account_id}`
       const response = await fetch(url);
       if (response.ok) {
