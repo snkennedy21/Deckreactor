@@ -66,6 +66,13 @@ function DeckDetail() {
       })
       .filter((card) => card.quantity > 0);
     setCards(newCards);
+    const addCardUrl = `http://localhost:8000/decks/${deckId}/remove_one/${multiverseId}`;
+    const fetchConfig = {
+      method: "PUT",
+      credentials: "include",
+    };
+    const response = await fetch(addCardUrl, fetchConfig);
+    console.log(response);
   }
 
   return (
