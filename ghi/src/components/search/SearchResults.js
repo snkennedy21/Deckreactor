@@ -48,9 +48,24 @@ function ContainerExample() {
     return <div>{data.message}</div>;
   }
 
-  function execute(selectedKey) {
+  async function execute(selectedKey) {
     const eventKeyObject = JSON.parse(selectedKey);
+    console.log(eventKeyObject);
+    const multiverseId = eventKeyObject.multiverseId;
     if (eventKeyObject.placeToStore === "collection") {
+      const collectionUrl = `http://localhost:8000/collections/add/${multiverseId}`;
+      const response = await fetch(collectionUrl, {
+        method: "PUT",
+        credentials: "include",
+      });
+    } else {
+      const deckId = eventKeyObject.placeToStore;
+      const deckUrl = `http://localhost:8000/decks/${deckId}/add/${multiverseId}`;
+      console.log(deckUrl);
+      const response = await fetch(deckUrl, {
+        method: "PUT",
+        credentials: "include",
+      });
     }
   }
 
