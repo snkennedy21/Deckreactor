@@ -20,9 +20,9 @@ export const myDecksSlice = createSlice({
     addCard: async (state, action) => { // must receive deck_id, multiverse_id as keys in action object
       const deck_id = action.deck_id;
       const multiverse_id = action.multiverse_id;
-      for (deck of state.decks) {
+      for (let deck of state.decks) {
         if (deck.id === deck_id) {
-          for (card of deck.cards) {
+          for (let card of deck.cards) {
             if (card.multiverse_id === multiverse_id) {
               card.quantity += 1;
             }
@@ -49,9 +49,9 @@ export const myDecksSlice = createSlice({
     removeCard: (state, action) => { // must receive deck_id, multiverse_id as keys in action object
       const deck_id = action.deck_id;
       const multiverse_id = action.multiverse_id;
-      for (deck of state.decks) {
+      for (let deck of state.decks) {
         if (deck.id === deck_id) {
-          for (card of deck.cards) {
+          for (let card of deck.cards) {
             if (card.multiverse_id === multiverse_id) {
               card.quantity -= 1;
               deck.cards = deck.cards.filter(card => card.quantity !== 0);
@@ -61,7 +61,7 @@ export const myDecksSlice = createSlice({
       }
     },
     removeOneCardCopy: (state, action) => { // must receive deck_id, multiverse_id as keys in action object
-      for (deck of state.decks) {
+      for (let deck of state.decks) {
         if (deck.id === action.deck_id) {
           deck.cards = deck.cards.filter(card => card.multiverse_id !== action.multiverse_id);
         }
