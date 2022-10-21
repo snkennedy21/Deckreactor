@@ -1,12 +1,15 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/esm/Container";
-
+import "./accounts.css";
+import { Link } from "react-router-dom";
 import { useSignUpMutation } from "../../store/accountApi";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateField } from "../../store/accountSlice";
 import { preventDefault } from "../../store/utils";
+import logo from "../../images/logo.png";
+import Image from "react-bootstrap/esm/Image";
 
 function SignUp() {
   const dispatch = useDispatch();
@@ -19,7 +22,16 @@ function SignUp() {
   );
 
   return (
-    <Container>
+    <Container className="cool-form card shadow p-4 mt-5 w-50 d-grid">
+      <div className="d-flex justify-content-center mt-2">
+        <Image src={logo} style={{ width: "6rem" }} />
+      </div>
+      <div className="text-center mt-3 mb-3">
+        <h2>Create an account</h2>
+        <h6 className="text-muted">
+          Manage your Magic the Gathering collection!{" "}
+        </h6>
+      </div>
       <Form
         method="POST"
         onSubmit={preventDefault(signUp, () => ({
@@ -29,7 +41,7 @@ function SignUp() {
         }))}
       >
         <Form.Group className="mb-3">
-          <Form.Label>Email address</Form.Label>
+          <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"
             placeholder="Enter email"
@@ -40,7 +52,7 @@ function SignUp() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Full Name</Form.Label>
+          <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter Name"
@@ -61,10 +73,21 @@ function SignUp() {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Create Account
-        </Button>
+        <div className="d-grid gap-2">
+          <Button size="md" variant="info" type="submit">
+            Create Account
+          </Button>
+        </div>
       </Form>
+      <div className="text-center mt-3">
+        <p>Already have an account?</p>
+        <p>
+          Sign in{" "}
+          <Link className="link" to="/login">
+            here!
+          </Link>
+        </p>
+      </div>
     </Container>
   );
 }

@@ -1,9 +1,13 @@
 import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/esm/Image";
 import Form from "react-bootstrap/Form";
+import "./accounts.css";
 import Container from "react-bootstrap/esm/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogInMutation } from "../../store/accountApi";
 import { useCallback } from "react";
+import logo from "../../images/logo.png";
+import { Link } from "react-router-dom";
 import { updateField } from "../../store/accountSlice";
 import {
   eventTargetSelector as target,
@@ -20,11 +24,21 @@ function Login() {
     [dispatch]
   );
   const state = useSelector((state) => state.account);
+
   return (
-    <Container>
-      <Form method="POST" onSubmit={preventDefault(logIn, target)}>
+    <Container className="cool-form card shadow p-4 mt-5 w-50 d-grid">
+      <div className="d-flex justify-content-center mt-2">
+        <Image src={logo} style={{ width: "6rem" }} />
+      </div>
+      <div className="text-center mt-3">
+        <h5>Please sign in</h5>
+      </div>
+      <Form
+        className="mt-3 mb-3 w-100 justify-content-center"
+        method="POST"
+        onSubmit={preventDefault(logIn, target)}
+      >
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
           <Form.Control
             required
             onChange={field}
@@ -35,7 +49,6 @@ function Login() {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
           <Form.Control
             required
             onChange={field}
@@ -45,10 +58,22 @@ function Login() {
             placeholder="Password"
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
+        <div className="d-grid gap-2">
+          <Button size="md" variant="info" type="submit">
+            Sign in
+          </Button>
+        </div>
       </Form>
+      <div className="text-center">
+        <p>Don't have an account?</p>
+        <p>
+          Create one{" "}
+          <Link className="link" to="/signup">
+            {" "}
+            here!
+          </Link>
+        </p>
+      </div>
     </Container>
   );
 }

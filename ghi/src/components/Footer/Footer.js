@@ -2,7 +2,7 @@ import "./footer.css";
 
 function Footer() {
   return (
-    <div className="main-footer">
+    <div className="bg-light main-footer">
       <div className="container">
         <div className="row">
           {/* Column1 */}
@@ -37,7 +37,7 @@ function Footer() {
         </div>
 
         <div className="row">
-          <small className="col-sm">
+          <small className=" text-muted col-sm">
             &copy;{new Date().getFullYear()} DeckReactor | All rights reserved |
             Terms Of Service | Privacy
           </small>
