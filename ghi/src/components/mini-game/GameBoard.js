@@ -8,16 +8,16 @@ const GameBoard = () => {
   // card image assembler
 
   const cards = [
-    "akoum-warrior",
-    "akoum-warrior",
-    "blackmail",
-    "blackmail",
-    "bloodthrone-vampire",
-    "bloodthrone-vampire",
-    "dakkon-blackblade",
-    "dakkon-blackblade",
-    "fissure-wizard",
-    "fissure-wizard",
+    "brainstorm",
+    "brainstorm",
+    "deathrite-shaman",
+    "deathrite-shaman",
+    "demonic-tutor",
+    "demonic-tutor",
+    "jace-mind",
+    "jace-mind",
+    "oko-theif",
+    "oko-theif",
     "tezzeret",
     "tezzeret"
   ];

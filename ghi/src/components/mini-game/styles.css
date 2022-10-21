@@ -7,7 +7,7 @@
 .game-board .card {
   width: 200px;
   user-select: none;
-  height: 200px;
+  height: 250px;
   box-sizing: auto;
   margin: 10px;
   transition: .2s;
