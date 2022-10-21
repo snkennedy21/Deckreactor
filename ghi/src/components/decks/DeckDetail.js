@@ -37,6 +37,37 @@ function DeckDetail() {
     navigate("/decks");
   }
 
+  async function increaseCardInDeck(e) {
+    const multiverseId = e.currentTarget.value;
+    const newCards = cards.map((card) => {
+      if (card.multiverse_id == multiverseId) {
+        card.quantity++;
+      }
+      return card;
+    });
+    setCards(newCards);
+    const addCardUrl = `http://localhost:8000/decks/${deckId}/add/${multiverseId}`;
+    const fetchConfig = {
+      method: "PUT",
+      credentials: "include",
+    };
+    const response = await fetch(addCardUrl, fetchConfig);
+    console.log(response);
+  }
+
+  async function decreaseCardInDeck(e) {
+    const multiverseId = e.currentTarget.value;
+    const newCards = cards
+      .map((card) => {
+        if (card.multiverse_id == multiverseId) {
+          card.quantity--;
+        }
+        return card;
+      })
+      .filter((card) => card.quantity > 0);
+    setCards(newCards);
+  }
+
   return (
     <React.Fragment>
       <Button onClick={execute}>Back To Decks</Button>
@@ -54,10 +85,10 @@ function DeckDetail() {
                 xs="12"
               >
                 <Image src={card.picture_url} style={{ width: "100%" }} />
-                <Button>
+                <Button value={card.multiverse_id} onClick={increaseCardInDeck}>
                   <FaPlus></FaPlus>
                 </Button>
-                <Button>
+                <Button value={card.multiverse_id} onClick={decreaseCardInDeck}>
                   <FaMinus></FaMinus>
                 </Button>
                 <div>{card.name}</div>
