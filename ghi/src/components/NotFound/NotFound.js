@@ -35,7 +35,8 @@ function NotFoundPage() {
                         </Modal.Header>
                           <Modal.Body>
                                 <Card>
-                                <img  src="https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=553908&type=card" alt="unauthorized" />
+                                <img  src="https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=553908&type=card"
+                                 alt="unauthorized"/>
                                 </Card>
                           </Modal.Body>
                         <Modal.Footer>

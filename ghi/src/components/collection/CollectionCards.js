@@ -89,7 +89,7 @@ export default function MyCollection2() {
                   backgroundSize: "cover",
                   height: "80vh"
                 }}>
-      
+                  <Link to="/game"><b className="right_side">X</b></Link>
         <Row className="table table-bordered table-striped mb-0 my-custom-scrollbar">
           { filteredCollection.map(row => {
             if (row.back_picture_url){
