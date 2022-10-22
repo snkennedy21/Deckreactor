@@ -24,9 +24,9 @@ function NotFoundPage() {
                   "modal":"Page not found"}
 
   window.addEventListener("click", function(e) {
-        // console.log(`x:${e.x} | y:${e.y} `)
-        if((e.x > 300 && e.x < 475 && e.y > 220 && e.y < 405)
-          || (e.x > 900 && e.x < 1100 && e.y > 330 && e.y < 475)){
+        console.log(`x:${e.x} | y:${e.y} `)
+        if((e.x > 370 && e.x < 545 && e.y > 300 && e.y < 425)
+          || (e.x > 930 && e.x < 1100 && e.y > 360 && e.y < 460)){
         setFound(true)
         setShow(true)
         }
