@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 import { useState } from 'react';
+// import Container from "react-bootstrap/Container";
 
 
 
@@ -23,24 +24,19 @@ function NotFoundPage() {
   const message = {"found_him": "You found Fblthp", 
                   "modal":"(404) Page not found"}
 
-  window.addEventListener("click", function(e) {
-        console.log(`x:${e.x} | y:${e.y} `)
-        if(e.x > 335 && e.x < 610 && e.y > 247 && e.y < 447){
-        setFound(true)
-        setShow(true)
-        }
-        })
-        return (        
-                <div style={{
-                        backgroundImage: 
-                        `url(https://media.magic.wizards.com/images/wallpaper/where_fbithp_2560x1600.jpg)`,
-                        backgroundPositionY: "center",
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
-                        height: "100vh",
-                        opacity: 2,
-                        }}>
-                        
+//   window.addEventListener("click", function(e) {
+//         console.log(`clicked here   x:${e.x} | y:${e.y} `)
+//         if(e.x > 335 && e.x < 610 && e.y > 247 && e.y < 447){
+//         setFound(true)
+//         setShow(true)
+//         }
+//         })
+        return ( 
+                <div className="p-4 img-fluid" style={{
+                background: `url("https://media.magic.wizards.com/images/wallpaper/where_fbithp_2560x1600.jpg") no-repeat center center fixed`,
+                backgroundSize: "contain",
+                height: "100vh",
+                }}>                    
                 <Modal show={show} onHide={handleClose} centered>
                         { found === true ?
                         <Modal.Header closeButton>
@@ -65,7 +61,7 @@ function NotFoundPage() {
                                 <Link to="/home"><Button variant="success">Take me home</Button></Link>
                         </Modal.Footer>
                 </Modal>  
-                </div>
+                </div>     
         );
     }
 export default NotFoundPage;
