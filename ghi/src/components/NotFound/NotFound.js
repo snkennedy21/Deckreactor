@@ -44,7 +44,6 @@ function NotFoundPage() {
                 <Modal show={show} onHide={handleClose} centered>
                         { found === true ?
                         <Modal.Header closeButton>
-                                <h1 className="text-xs-center">{message["found_him"]}</h1>
                         </Modal.Header>:
                         <Modal.Header closeButton>
                                 <h1 className="text-xs-center">{message["modal"]}</h1>
