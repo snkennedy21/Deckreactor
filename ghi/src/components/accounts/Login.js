@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLogInMutation } from "../../store/accountApi";
 import { useCallback } from "react";
 import { updateField } from "../../store/accountSlice";
+import { getMyDecks } from "../../store/myDecksSlice";
+import { useGetMyDecksQuery } from "../../store/myDecksApi";
 import {
   eventTargetSelector as target,
   preventDefault,
@@ -13,6 +15,7 @@ import {
 function Login() {
   const dispatch = useDispatch();
   const { email, username, password } = useSelector((state) => state.account);
+  const { deckData, deckError, deckIsLoading } = useGetMyDecksQuery();
   const [logIn, { error, isLoading: loginInLoading }] = useLogInMutation();
   const field = useCallback(
     (e) =>
@@ -20,6 +23,7 @@ function Login() {
     [dispatch]
   );
   const state = useSelector((state) => state.account);
+
   return (
     <Container>
       <Form method="POST" onSubmit={preventDefault(logIn, target)}>

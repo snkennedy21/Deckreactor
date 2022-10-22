@@ -222,7 +222,6 @@ function CardDetailPage() {
     <div className="p-4 img-fluid" style={{
       background: `url(${background_url}) no-repeat center center fixed`,
       backgroundSize: "cover",
-      height: "100%",
     }}>
       <div className="row">
         <div className="col-sm-6">
