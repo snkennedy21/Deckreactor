@@ -26,7 +26,7 @@ function NotFoundPage() {
   window.addEventListener("click", function(e) {
         console.log(`x:${e.x} | y:${e.y} `)
         if((e.x > 370 && e.x < 545 && e.y > 300 && e.y < 425)
-          || (e.x > 930 && e.x < 1100 && e.y > 360 && e.y < 460)){
+          || (e.x > 930 && e.x < 1200 && e.y > 360 && e.y < 460)){
         setFound(true)
         setShow(true)
         }
