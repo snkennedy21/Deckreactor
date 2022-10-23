@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
+import styles from "./AdvancedSearch.module.css";
 
 import SearchResults from "./SearchResults";
 import { useState } from "react";
@@ -109,7 +110,7 @@ function AdvancedSearch() {
   return (
     <Container fluid>
       <Row>
-        <Col>
+        <Col className="cool-form card shadow p-4 m-3 w-100 d-grid">
           <Form onSubmit={submitHandler}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Name</Form.Label>
@@ -257,7 +258,7 @@ function AdvancedSearch() {
             </Button>
           </Form>
         </Col>
-        <Col>
+        <Col className={`m-3 ${styles["my-custom-scrollbar"]}`}>
           <SearchResults />
         </Col>
       </Row>
