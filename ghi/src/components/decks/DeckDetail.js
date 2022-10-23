@@ -14,11 +14,18 @@ import { FaPlus, FaMinus } from "react-icons/fa";
 function DeckDetail() {
   const [cards, setCards] = useState([]);
   const stuff = useSelector((state) => state.deck);
-  const deckId = stuff.id;
+  let deckId = stuff.id;
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function getDecks() {
+    async function getCardsInDeck() {
+      if (deckId === "") {
+        console.log("hello");
+        deckId = localStorage.getItem("deckId");
+        console.log(deckId);
+      } else {
+        localStorage.setItem("deckId", deckId);
+      }
       const deckUrl = `http://localhost:8000/decks/${deckId}`;
       const fetchConfig = {
         method: "get",
@@ -30,7 +37,7 @@ function DeckDetail() {
         setCards(deckData.cards);
       }
     }
-    getDecks();
+    getCardsInDeck();
   }, []);
 
   function execute() {
