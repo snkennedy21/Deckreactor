@@ -8,7 +8,6 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import Nav from "react-bootstrap/Nav";
 import { FaPlus, FaMinus } from "react-icons/fa";
 
 function DeckDetail() {
@@ -20,9 +19,7 @@ function DeckDetail() {
   useEffect(() => {
     async function getCardsInDeck() {
       if (deckId === "") {
-        console.log("hello");
         deckId = localStorage.getItem("deckId");
-        console.log(deckId);
       } else {
         localStorage.setItem("deckId", deckId);
       }
