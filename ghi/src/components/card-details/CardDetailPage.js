@@ -6,11 +6,12 @@ import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/Form"
 import { useSelector, useDispatch } from "react-redux";
 import { useGetCardsQuery } from "../../store/scryfallApi";
+import { useGetSymbolsQuery } from "../../store/symbolsApi";
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Carousel from "react-bootstrap/Carousel";
-
+import AddToDeckForm from "../ui/AddToDeckForm";
 
 function CardDetailPage() {
   const { multiverse_id } = useParams();
@@ -68,18 +69,18 @@ function CardDetailPage() {
     async function getCardData() {
       const cardUrl = `https://api.scryfall.com/cards/multiverse/${multiverse_id}`
       const symbolUrl = "https://api.scryfall.com/symbology";
-      const myDecksUrl = `${process.env.REACT_APP_API_HOST}/decks/`;
+      // const myDecksUrl = `${process.env.REACT_APP_API_HOST}/decks/`;
       const cardResponse = await fetch(cardUrl);
       const symbolResponse = await fetch(symbolUrl);
-      const myDecksResponse = await fetch(myDecksUrl);
+      // const myDecksResponse = await fetch(myDecksUrl);
       if (cardResponse.ok && symbolResponse.ok) {
         const cardData = await cardResponse.json();
         const symbolData = await symbolResponse.json();
-        const myDecksData = await myDecksResponse.json();
+        // const myDecksData = await myDecksResponse.json();
         setCard(cardData);
         setSymbols(symbolData.data);
         // setMyDecks(sampleDecks);
-        setMyDecks(myDecksData.decks);
+        // setMyDecks(myDecksData.decks);
       } else {
         setError('Could not load page data');
       }
@@ -281,29 +282,7 @@ function CardDetailPage() {
           </React.Fragment>
 
           {/* FORM CARD */}
-          {/* <div className="card mb-4 box-shadow">
-            <div className="card-body img-fluid">
-              <Form onSubmit={e => {e.preventDefault(); handleAddToDeck(e.target.value)}} id="add to deck form">
-                <Form.Select
-                aria-label="select one of my decks"
-                onChange={(e) => setDeck(e.target.value)}>
-                  <option value="">Select a deck</option>
-                  {myDecks.map(deck => {
-                    return (
-                      <option key={`${deck.name} ${deck.id}`} value={deck.id}>{deck.name}</option>
-                    )
-                  })}
-                </Form.Select>
-                {
-                  deck.cards.map(card => card.multiverse_id).includes(multiverse_id)
-                  ?
-                  <Button variant="success" type="submit" onClick={handleAddToDeck}>+ Add more! ({deck.cards.find(card => card.multiverse_id == multiverse_id).quantity})</Button>
-                  :
-                  <Button variant="success" type="submit" onClick={handleAddToDeck}>+ Add to deck</Button>
-                }
-              </Form>
-            </div>
-          </div> */}
+          <AddToDeckForm multiverseId={multiverse_id} />
         </div>
         <div className="col-sm-6">
           {/* CARD DETAILS */}

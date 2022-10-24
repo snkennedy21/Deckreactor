@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLogInMutation } from "../../store/accountApi";
 import { useCallback } from "react";
 import { updateField } from "../../store/accountSlice";
-import { getMyDecks } from "../../store/myDecksSlice";
-import { useGetMyDecksQuery } from "../../store/myDecksApi";
+import { useGetMyDecksQuery } from "../../store/myCardsApi";
 import {
   eventTargetSelector as target,
   preventDefault,
