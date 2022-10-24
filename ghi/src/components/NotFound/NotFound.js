@@ -24,13 +24,13 @@ function NotFoundPage() {
   const message = {"found_him": "You found Fblthp", 
                   "modal":"(404) Page not found"}
 
-//   window.addEventListener("click", function(e) {
-//         console.log(`clicked here   x:${e.x} | y:${e.y} `)
-//         if(e.x > 335 && e.x < 610 && e.y > 247 && e.y < 447){
-//         setFound(true)
-//         setShow(true)
-//         }
-//         })
+  window.addEventListener("click", function(e) {
+        console.log(`clicked here   x:${e.x} | y:${e.y} `)
+        if(e.x > 335 && e.x < 610 && e.y > 247 && e.y < 447){
+        setFound(true)
+        setShow(true)
+        }
+        })
         return ( 
                 <div className="p-4 img-fluid" style={{
                 background: `url("https://media.magic.wizards.com/images/wallpaper/where_fbithp_2560x1600.jpg") no-repeat center center fixed`,
