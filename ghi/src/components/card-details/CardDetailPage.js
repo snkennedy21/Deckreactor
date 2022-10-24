@@ -3,13 +3,15 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/esm/Button";
-import { useSelector } from "react-redux";
+import Form from "react-bootstrap/Form"
+import { useSelector, useDispatch } from "react-redux";
 import { useGetCardsQuery } from "../../store/scryfallApi";
-import { Form, useParams } from 'react-router-dom';
-import { useEffect, useState } from "react";
+import { useGetSymbolsQuery } from "../../store/symbolsApi";
+import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Carousel from "react-bootstrap/Carousel";
-
+import AddToDeckForm from "../ui/AddToDeckForm";
 
 function CardDetailPage() {
   const { multiverse_id } = useParams();
@@ -18,12 +20,56 @@ function CardDetailPage() {
   const [deck, setDeck] = useState("");
   const [symbols, setSymbols] = useState([]);
   const [error, setError] = useState({});
+  const [background_url, setBackgroundUrl] = useState("");
+  const dispatch = useDispatch();
+
+  const sampleDecks = [
+    {
+      "account_id": "63472bdb850d85d09deb5987",
+      "name": "cool deck",
+      "description": "very cool stuff",
+      "id": "634dd45cf5ee1be5d68d3bb2",
+      "cards": []
+    },
+    {
+      "account_id": "63472bdb850d85d09deb5987",
+      "name": "very cool deck",
+      "description": "extremely cool stuff",
+      "id": "634dd466f5ee1be5d68d3bb3",
+      "cards": []
+    },
+    {
+      "account_id": "63472bdb850d85d09deb5987",
+      "name": "very cool deck",
+      "description": "extremely cool stuff",
+      "id": "634dd467f5ee1be5d68d3bb4",
+      "cards": [
+        {
+          "name": "Blue Mana Battery",
+          "multiverse_id": 1402,
+          "mana": "{4}",
+          "card_type": "Artifact",
+          "cmc": 4,
+          "formats": [
+            "legacy",
+            "vintage",
+            "commander",
+            "duel",
+            "oldschool",
+            "premodern"
+          ],
+          "picture_url": "https://cards.scryfall.io/normal/front/3/5/35393661-2c53-46f0-bb33-2390d552b060.jpg?1562858694",
+          "quantity": 2
+        }
+      ]
+    }
+  ];
   
   useEffect(() => {
     async function getCardData() {
       const cardUrl = `https://api.scryfall.com/cards/multiverse/${multiverse_id}`
       const symbolUrl = "https://api.scryfall.com/symbology";
-      const myDecksUrl = `${process.env.REACT_APP_API_HOST}/decks/`;
+      // const myDecksUrl = `${process.env.REACT_APP_API_HOST}/decks/`;
       const cardResponse = await fetch(cardUrl);
       const symbolResponse = await fetch(symbolUrl);
       // const myDecksResponse = await fetch(myDecksUrl);
@@ -33,6 +79,7 @@ function CardDetailPage() {
         // const myDecksData = await myDecksResponse.json();
         setCard(cardData);
         setSymbols(symbolData.data);
+        // setMyDecks(sampleDecks);
         // setMyDecks(myDecksData.decks);
       } else {
         setError('Could not load page data');
@@ -41,8 +88,32 @@ function CardDetailPage() {
     getCardData();
   }, []);
 
+  // async function handleAddToDeck(deck_id) {
+  //   const addToDeckUrl = `${process.env.REACT_APP_API_HOST}/decks/${deck_id}/${multiverse_id}`;
+  //   fetch(
+  //     addToDeckUrl,
+  //     {
+  //       method: "PUT",
+  //       headers: {accept: "application/json"}
+  //     }
+  //   );
+  //   let myDecksNew = [...myDecks];
+  //   for (deck of myDecksNew) {
+  //     if (deck.id === deck_id) {
+  //       for (card of deck.cards) {
+  //         if (card.multiverse_id === multiverse_id) {
+  //           card.quantity++;
+  //           break;
+  //         }
+  //       }
+  //       break;
+  //     }
+  //   }
+  //   setMyDecks(myDecksNew);
+  // }
+
   if (Object.entries(card).length === 0) {
-    return (<>Loading...</>)
+    return (<React.Fragment>Loading...</React.Fragment>)
   }
 
   const double_faced = ["transform", "modal_dfc"].includes(card.layout);
@@ -89,7 +160,9 @@ function CardDetailPage() {
   }
 
   // get random url from color theme
-  const background_url = themes_by_color[color_id][Math.floor(Math.random() * themes_by_color[color_id].length)];
+  if (background_url === "") {
+    setBackgroundUrl(themes_by_color[color_id][Math.floor(Math.random() * themes_by_color[color_id].length)]);
+  }
   
   const symbolUrls = {}
   // assemble symbolUrls object {symbol: svg_uri}
@@ -125,35 +198,35 @@ function CardDetailPage() {
   // wrap any text in this to apply card symbols and line breaks to text string
   function parseSymbolsAndLineBreaks(s) {
     return (
-      <>
-      {s.split("\n").map((substring, idx) => 
-        <span key={`${substring} ${idx}`}>
+      <React.Fragment>
+      {s.split("\n").map((substring, index) => 
+        <span key={`${s} ${substring} ${index}`}>
         {substringSymbolArray(substring).map((item, idx) => 
-          <>
+          <React.Fragment key={`${s} ${item} ${idx} fragment`}>
           {
           item in symbolUrls ? 
-          <img style={{height: "1em"}} key={`${item} ${idx}`} src={symbolUrls[item]} />
+          <img style={{height: "1em"}} key={`${s} ${item} ${idx}`} src={symbolUrls[item]} />
           :
-          <span key={`${item} ${idx}`}>{item}</span>
+          <span key={`${s} ${item} ${idx}`}>{item}</span>
           }
-          </>
+          </React.Fragment>
         )}
         <br/>
         </span>
       )}
-      </>
+      </React.Fragment>
     )
   }
 
   return (
-    <>
+    <React.Fragment>
     <div className="p-4 img-fluid" style={{
       background: `url(${background_url}) no-repeat center center fixed`,
       backgroundSize: "cover",
-      height: "100%",
     }}>
       <div className="row">
         <div className="col-sm-6">
+          {/* CARD FACES */}
           <div className="card mb-4 box-shadow">
             <div className="card-body img-fluid">
             {
@@ -175,81 +248,110 @@ function CardDetailPage() {
             }
             </div>
           </div>
-          <>
+          <React.Fragment>
           { "flavor_text" in card || ("card_faces" in card && ("flavor_text" in card.card_faces[0] || "flavor_text" in card.card_faces[1])) ?
           <div className="card mb-4 box-shadow p-4">
             {
               double_faced ? 
-              <>
+              <React.Fragment>
               { 
               "flavor_text" in card.card_faces[0] ? 
               <p className="fst-italic">{card.card_faces[0].flavor_text}</p>
               :
-              <></>
+              <React.Fragment/>
               }
               { 
               "flavor_text" in card.card_faces[1] ? 
               <p className="fst-italic">{parseSymbolsAndLineBreaks(card.card_faces[1].flavor_text)}</p>
                 :
-                <></>
+                <React.Fragment/>
               }
-              </>
+              </React.Fragment>
              : 
-              <>{
+              <React.Fragment>{
               "flavor_text" in card ? 
               <p className="fst-italic">{parseSymbolsAndLineBreaks(card.flavor_text)}</p> :
-              <></>
+              <React.Fragment/>
               }
-              </>
+              </React.Fragment>
             }
           </div>
           :
-          <></>
+          <React.Fragment/>
           }
-          </>
-          <div className="card mb-4 box-shadow">
-            <div className="card-body img-fluid">
-              Form will go here
-              {/* <Form>
-                <Form.Label>Add to deck</Form.Label>
-                <Form.Select
-                aria-label="select one of my decks"
-                onChange={(e) => setDeck(e.target.value)}>
-                  <option value="">Select a deck</option>
-                  {myDecks.map(deck => {
-                    return (
-                      <option value={deck.id}>{deck.name}</option>
-                    )
-                  })}
-                </Form.Select>
-              </Form> */}
-              
-            </div>
-          </div>
+          </React.Fragment>
+
+          {/* FORM CARD */}
+          <AddToDeckForm multiverseId={multiverse_id} />
         </div>
         <div className="col-sm-6">
+          {/* CARD DETAILS */}
           <div className="card mb-4 box-shadow">
             <div className="card-header"><h1 className="my-2">{card.name}</h1></div>
             <div className="card-body">
-              {double_faced ? <></> : <h3>{card.type_line}</h3>}
+              {double_faced ? <React.Fragment/> : <h3>{card.type_line}</h3>}
               {
                 double_faced ? 
-                <>
+                <React.Fragment>
                 <h2>{card.card_faces[0].name}</h2>
                 <h4>{card.card_faces[0].type_line}</h4>
                 <p>{parseSymbolsAndLineBreaks(card.card_faces[0].oracle_text)}</p>
+                {
+                  "power" in card.card_faces[0] && "toughness" in card.card_faces[0]
+                  ? 
+                  <p className="fw-bold">{card.card_faces[0].power}/{card.card_faces[0].toughness}</p>
+                  :
+                  <React.Fragment />
+                }
+                {
+                  "loyalty" in card.card_faces[0]
+                  ?
+                  <p className="fw-bold">Loyalty: {card.card_faces[0].loyalty}</p>
+                  :
+                  <React.Fragment/>
+                }
                 <h2>{card.card_faces[1].name}</h2>
                 <h4>{card.card_faces[1].type_line}</h4>
                 <p>{parseSymbolsAndLineBreaks(card.card_faces[1].oracle_text)}</p>
-                </>
+                {
+                  "power" in card.card_faces[1] && "toughness" in card.card_faces[1]
+                  ? 
+                  <p className="fw-bold">{card.card_faces[1].power}/{card.card_faces[1].toughness}</p>
+                  :
+                  <React.Fragment />
+                }
+                {
+                  "loyalty" in card.card_faces[1]
+                  ?
+                  <p className="fw-bold">Loyalty: {card.card_faces[1].loyalty}</p>
+                  :
+                  <React.Fragment/>
+                }
+                </React.Fragment>
                 : 
-                <p>{parseSymbolsAndLineBreaks(card.oracle_text)}</p>
+                <React.Fragment>
+                  <p>{parseSymbolsAndLineBreaks(card.oracle_text)}</p>
+                  {
+                    "power" in card && "toughness" in card
+                    ?
+                    <p className="fw-bold">{card.power}/{card.toughness}</p>
+                    :
+                    <React.Fragment/>
+                  }
+                  {
+                    "loyalty" in card
+                    ?
+                    <p className="fw-bold">Loyalty: {card.loyalty}</p>
+                    :
+                    <React.Fragment/>
+                  }
+                </React.Fragment>
               }
               
               <div className="table-responsive">
                 <table className="table table-striped table-sm">
                   <tbody>
-                    <tr>
+                    <tr key="mana cost row">
                       <td>Mana cost:</td>
                       {
                         double_faced ? 
@@ -259,7 +361,7 @@ function CardDetailPage() {
                       }
                       
                     </tr>
-                    <tr>
+                    <tr key="formats row">
                       <td>Legal formats:</td>
                       {
                         Object.entries(card.legalities).filter(format => format[1] === "legal").map(format => format[0]).length === 0 ?
@@ -267,15 +369,15 @@ function CardDetailPage() {
                           <td>{Object.entries(card.legalities).filter(format => format[1] === "legal").map(format => format[0]).join(", ")}</td>
                       }
                     </tr>
-                    <tr>
+                    <tr key="set row">
                       <td>Set name:</td>
                       <td>{card.set_name} ({card.released_at.slice(0,4)})</td>
                     </tr>
-                    <tr>
+                    <tr key="artist row">
                       <td>Artist:</td>
                       <td>{card.artist}</td>
                     </tr>
-                    <tr>
+                    <tr key="price row">
                       <td>Price (USD):</td>
                       {
                         card.prices.usd === null ?
@@ -291,7 +393,7 @@ function CardDetailPage() {
         </div>
       </div>
     </div>
-    </>
+    </React.Fragment>
   );
 }
 
