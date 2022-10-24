@@ -22,7 +22,7 @@ function SignUp() {
   );
 
   return (
-    <Container className="cool-form card shadow p-4 mt-5 w-50 d-grid">
+    <Container className="form-signup card shadow p-4 mt-5 w-50 d-grid">
       <div className="d-flex justify-content-center mt-2">
         <Image src={logo} style={{ width: "6rem" }} />
       </div>

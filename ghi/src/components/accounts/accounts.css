@@ -2,7 +2,13 @@
   color: red;
   text-decoration: none;
 }
-.cool-form {
+.form-login {
+  background: floralwhite;
+  justify-content: center;
+  width: 35%;
+}
+
+.form-signup {
   background: floralwhite;
   justify-content: center;
 }
