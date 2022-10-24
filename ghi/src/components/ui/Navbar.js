@@ -12,7 +12,7 @@ import {
   useLogInMutation,
 } from "../../store/accountApi";
 import { useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { searchActions } from "../../store/store";
 import logo from "../../images/logo.png";
@@ -62,10 +62,14 @@ function NavScrollExample() {
     navigate("/search");
   }
 
+  function navigateToHome(e) {
+    navigate("/");
+  }
+
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light">
       <Container fluid>
-        <Navbar.Brand href="#">
+        <Navbar.Brand onClick={navigateToHome} style={{ cursor: "pointer" }}>
           <Image src={logo} style={{ width: "4rem" }} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
@@ -80,9 +84,13 @@ function NavScrollExample() {
             {token ? (
               <Nav.Link eventKey="/collection">My Collection</Nav.Link>
             ) : (
-              <></>
+              <React.Fragment></React.Fragment>
             )}
-            {token ? <Nav.Link eventKey="/decks">My Decks</Nav.Link> : <></>}
+            {token ? (
+              <Nav.Link eventKey="/decks">My Decks</Nav.Link>
+            ) : (
+              <React.Fragment></React.Fragment>
+            )}
           </Nav>
           {token ? <LogoutButton /> : <LoginButton />}
           <Form onSubmit={queryScryfallHandler} className="d-flex">

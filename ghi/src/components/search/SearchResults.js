@@ -2,9 +2,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
-import Button from "react-bootstrap/esm/Button";
 import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
+import Spinner from "react-bootstrap/Spinner";
 
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -35,10 +34,12 @@ function ContainerExample() {
   const { data, error, isLoading } = useGetCardsQuery(search);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Container>
+        <Spinner animation="grow" />
+      </Container>
+    );
   }
-
-  console.log(data);
 
   if (data === undefined) {
     return <div>Banana</div>;
@@ -61,7 +62,6 @@ function ContainerExample() {
     } else {
       const deckId = eventKeyObject.placeToStore;
       const deckUrl = `http://localhost:8000/decks/${deckId}/add/${multiverseId}`;
-      console.log(deckUrl);
       const response = await fetch(deckUrl, {
         method: "PUT",
         credentials: "include",

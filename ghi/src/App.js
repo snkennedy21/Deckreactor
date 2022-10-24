@@ -25,7 +25,7 @@ function App() {
         <BrowserRouter basename={basename}>
           <Navbar />
           <Routes>
-            <Route path="/home" element={<HomePage />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="search" element={<SearchResults />} />
             <Route path="advanced-search" element={<AdvancedSearch />}></Route>
             <Route path="card/:multiverse_id" element={<CardDetailPage />} />
