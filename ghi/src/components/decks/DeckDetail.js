@@ -15,15 +15,12 @@ import { useGetTokenQuery } from "../../store/accountApi";
 function DeckDetail() {
   // const [cards, setCards] = useState([]);
   const { deck_id } = useParams();
-  console.log(deck_id)
   const { data: decksData, error: decksError, isLoading: decksIsLoading } = useGetMyDecksQuery();
-  const { data: tokenData, error: tokenError, isLoading: tokenIsLoading } = useGetTokenQuery();
   const navigate = useNavigate();
   
-  if (!decksData || !tokenData) {
+  if (!decksData) {
     return (<></>)
   } else {
-    console.log("decksData", decksData);
     const cards = decksData.decks.find(deck => deck.id === deck_id).cards;
     return (
       <React.Fragment>

@@ -21,9 +21,11 @@ export const myCardsApi = createApi({
   endpoints: builder => ({
     // DECK STUFF //
     getMyDecks: builder.query({
-      query: () => '/decks/',
+      query: () => ({
+        url: '/decks/',
+        credentials: 'include',
+      }),
       providesTags: ["DeckList"],
-      credentials: 'include',
     }),
     addCardToDeck: builder.mutation({
       query: (data) => ({
