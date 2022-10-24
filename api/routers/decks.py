@@ -15,6 +15,7 @@ async def create_deck(
     repo: DeckQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
+    print('hello')
     account = AccountOut(**account_data)
     user_deck = DeckIn(account_id=account.id, name=deck.name, description=deck.description)
     user_deck = repo.create(user_deck)

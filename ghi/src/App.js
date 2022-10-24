@@ -11,6 +11,8 @@ import Login from "./components/accounts/Login";
 import SignUp from "./components/accounts/SignUp";
 import Footer from "./components/Footer/Footer";
 import HomePage from "./components/home/HomePage";
+import DecksList from "./components/decks/DecksList";
+import DeckDetail from "./components/decks/DeckDetail";
 import "./App.css";
 
 function App() {
@@ -23,12 +25,14 @@ function App() {
         <BrowserRouter basename={basename}>
           <Navbar />
           <Routes>
-            <Route path="/home" element={<HomePage />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="search" element={<SearchResults />} />
             <Route path="advanced-search" element={<AdvancedSearch />}></Route>
             <Route path="card/:multiverse_id" element={<CardDetailPage />} />
             <Route path="edit_collection" element={<MyCollection />}></Route>
             <Route path="collection" element={<MyCollection2 />}></Route>
+            <Route path="decks" element={<DecksList />}></Route>
+            <Route path="deck" element={<DeckDetail />}></Route>
             <Route path="login" element={<Login />}></Route>
             <Route path="signup" element={<SignUp />}></Route>
           </Routes>

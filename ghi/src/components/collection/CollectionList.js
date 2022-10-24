@@ -4,12 +4,10 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import "./collection.css";
 
-
 export default function MyCollection() {
   const [collection, setCollection] = useState([]);
   const [filteredCollection, setFilteredCollection] = useState([]);
   const [reducerValue, collectionUpdater] = useReducer((x) => x + 1, 0);
-
 
   const handleDelete = (multiverse_id) => {
     fetch(
@@ -49,11 +47,10 @@ export default function MyCollection() {
   useEffect(() => {
     async function getCollection() {
       const url = `${process.env.REACT_APP_API_HOST}/collections/`;
-      const response = await fetch(url, 
-        {
-          method: "GET",
-          credentials: "include",
-        } );
+      const response = await fetch(url, {
+        method: "GET",
+        credentials: "include",
+      });
       if (response.ok) {
         const data = await response.json();
         console.log(`${data.cards.length} card(s) rendered`);

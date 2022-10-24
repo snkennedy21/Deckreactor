@@ -6,6 +6,7 @@ import { accountSlice } from "./accountSlice";
 import { accountApiSlice } from "./accountApi";
 import { myCardsApi } from "./myCardsApi";
 import { symbolsApi } from "./symbolsApi";
+import { deckSlice } from "./deckSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,7 +15,8 @@ export const store = configureStore({
     [myCardsApi.reducerPath]: myCardsApi.reducer,
     [searchSlice.name]: searchSlice.reducer,
     [accountSlice.name]: accountSlice.reducer,
-    [symbolsApi.reducerPath]: symbolsApi.reducer
+    [symbolsApi.reducerPath]: symbolsApi.reducer,
+    [deckSlice.name]: deckSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -25,5 +27,6 @@ export const store = configureStore({
 });
 
 export const searchActions = searchSlice.actions;
+export const deckActions = deckSlice.actions;
 
 setupListeners(store.dispatch);

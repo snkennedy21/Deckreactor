@@ -31,6 +31,7 @@ class DeckQueries(Queries):
 
   def get_one(self, deck_id: str) -> DeckOut:
     deck = self.collection.find_one({"_id" : ObjectId(f"{deck_id}")})
+    deck["account_id"] = str(deck["account_id"])
     deck["id"] = str(deck["_id"])
     return deck
 
