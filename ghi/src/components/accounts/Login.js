@@ -9,6 +9,7 @@ import { useCallback } from "react";
 import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
 import { updateField } from "../../store/accountSlice";
+import { useGetMyDecksQuery } from "../../store/myCardsApi";
 import {
   eventTargetSelector as target,
   preventDefault,
@@ -17,6 +18,7 @@ import {
 function Login() {
   const dispatch = useDispatch();
   const { email, username, password } = useSelector((state) => state.account);
+  const { deckData, deckError, deckIsLoading } = useGetMyDecksQuery();
   const [logIn, { error, isLoading: loginInLoading }] = useLogInMutation();
   const field = useCallback(
     (e) =>
