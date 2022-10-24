@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
 import Spinner from "react-bootstrap/Spinner";
+import {Link} from 'react-router-dom';
 
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -75,11 +76,11 @@ function ContainerExample() {
         {data.cards.map((card) => {
           return (
             <Col key={card.multiverse_id} xxl="3" xl="4" l="5" md="6" sm="12">
-              <Image
+              <Link to={`/card/${card.multiverse_id}`}><Image
                 className="mb-1"
                 src={card.picture_url}
                 style={{ width: "100%" }}
-              />
+              /></Link>
               <Dropdown className="mb-4" onSelect={execute}>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Add To
