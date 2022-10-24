@@ -23,47 +23,6 @@ function CardDetailPage() {
   const [background_url, setBackgroundUrl] = useState("");
   const dispatch = useDispatch();
 
-  const sampleDecks = [
-    {
-      "account_id": "63472bdb850d85d09deb5987",
-      "name": "cool deck",
-      "description": "very cool stuff",
-      "id": "634dd45cf5ee1be5d68d3bb2",
-      "cards": []
-    },
-    {
-      "account_id": "63472bdb850d85d09deb5987",
-      "name": "very cool deck",
-      "description": "extremely cool stuff",
-      "id": "634dd466f5ee1be5d68d3bb3",
-      "cards": []
-    },
-    {
-      "account_id": "63472bdb850d85d09deb5987",
-      "name": "very cool deck",
-      "description": "extremely cool stuff",
-      "id": "634dd467f5ee1be5d68d3bb4",
-      "cards": [
-        {
-          "name": "Blue Mana Battery",
-          "multiverse_id": 1402,
-          "mana": "{4}",
-          "card_type": "Artifact",
-          "cmc": 4,
-          "formats": [
-            "legacy",
-            "vintage",
-            "commander",
-            "duel",
-            "oldschool",
-            "premodern"
-          ],
-          "picture_url": "https://cards.scryfall.io/normal/front/3/5/35393661-2c53-46f0-bb33-2390d552b060.jpg?1562858694",
-          "quantity": 2
-        }
-      ]
-    }
-  ];
   
   useEffect(() => {
     async function getCardData() {
@@ -87,30 +46,6 @@ function CardDetailPage() {
     };
     getCardData();
   }, []);
-
-  // async function handleAddToDeck(deck_id) {
-  //   const addToDeckUrl = `${process.env.REACT_APP_API_HOST}/decks/${deck_id}/${multiverse_id}`;
-  //   fetch(
-  //     addToDeckUrl,
-  //     {
-  //       method: "PUT",
-  //       headers: {accept: "application/json"}
-  //     }
-  //   );
-  //   let myDecksNew = [...myDecks];
-  //   for (deck of myDecksNew) {
-  //     if (deck.id === deck_id) {
-  //       for (card of deck.cards) {
-  //         if (card.multiverse_id === multiverse_id) {
-  //           card.quantity++;
-  //           break;
-  //         }
-  //       }
-  //       break;
-  //     }
-  //   }
-  //   setMyDecks(myDecksNew);
-  // }
 
   if (Object.entries(card).length === 0) {
     return (<React.Fragment>Loading...</React.Fragment>)
