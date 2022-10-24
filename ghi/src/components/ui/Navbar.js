@@ -26,7 +26,7 @@ function LogoutButton() {
   const [logOut, { data }] = useLogOutMutation();
 
   return (
-    <Link to="/home"><Button onClick={logOut} variant="outline-danger mx-2">
+    <Link to="/"><Button onClick={logOut} variant="outline-danger mx-2">
       Logout
     </Button></Link>
   );
