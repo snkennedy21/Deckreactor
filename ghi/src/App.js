@@ -34,7 +34,7 @@ function App() {
             <Route path="edit_collection" element={<MyCollection />}></Route>
             <Route path="collection" element={<MyCollection2 />}></Route>
             <Route path="decks" element={<DecksList />}></Route>
-            <Route path="deck" element={<DeckDetail />}></Route>
+            <Route path="deck/:deck_id" element={<DeckDetail />}></Route>
             <Route path="login" element={<Login />}></Route>
             <Route path="signup" element={<SignUp />}></Route>
             <Route path="*" element={<NotFoundPage />} />

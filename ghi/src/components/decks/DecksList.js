@@ -21,8 +21,8 @@ function DecksList() {
   const dispatch = useDispatch();
 
   function goToDeck(e) {
-    dispatch(deckActions.updateId(e.target.value));
-    navigate("/deck");
+    // dispatch(deckActions.updateId(e.target.value));
+    navigate(`/deck/${e.target.value}/`);
   }
 
   if (decksIsLoading || decksError) {

@@ -15,9 +15,10 @@ function AddToDeckForm(props) {
   const { data: tokenData, error: tokenError, isLoading: tokenIsLoading } = useGetTokenQuery();
 
   function handleSubmit(e) {
+    e.preventDefault();
     if (e.target.name === 'deck') {
       if (deckId === "") {
-        e.preventDefault();
+        alert("Please select a deck.")
         return
       }
       addCardToDeck({multiverseId, deckId});
