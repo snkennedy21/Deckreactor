@@ -58,7 +58,7 @@ function NotFoundPage() {
                           </Modal.Body>
                         <Modal.Footer>
                                 <Button variant="secondary" onClick={handleClose}>Close</Button>
-                                <Link to="/home"><Button variant="success">Take me home</Button></Link>
+                                <Link to="/"><Button variant="success">Take me home</Button></Link>
                         </Modal.Footer>
                 </Modal>  
                 </div>     
