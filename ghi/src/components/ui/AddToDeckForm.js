@@ -1,7 +1,9 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
 import { useAddCardToCollectionMutation, useAddCardToDeckMutation, useGetMyCollectionQuery, useGetMyDecksQuery } from "../../store/myCardsApi";
 import { useState } from "react";
+import { useGetTokenQuery } from "../../store/accountApi";
 
 function AddToDeckForm(props) {
   const { data: decksData, error: decksError, isLoading: decksIsLoading } = useGetMyDecksQuery();
@@ -10,37 +12,35 @@ function AddToDeckForm(props) {
   const [addCardToDeck] = useAddCardToDeckMutation();
   const { data: collectionData, error: collectionError, isLoading: collectionIsLoading } = useGetMyCollectionQuery();
   const [addCardToCollection] = useAddCardToCollectionMutation();
+  const { data: tokenData, error: tokenError, isLoading: tokenIsLoading } = useGetTokenQuery();
 
   function handleSubmit(e) {
-    e.preventDefault();
-    const formData = {
-      deckId,
-      multiverseId,
-    };
-
     if (e.target.name === 'deck') {
-      addCardToDeck(formData);
+      if (deckId === "") {
+        e.preventDefault();
+        return
+      }
+      addCardToDeck({multiverseId, deckId});
       console.log("new decks", decksData.decks)
     } else if (e.target.name === 'collection') {
-      addCardToCollection(formData);
+      addCardToCollection({multiverseId});
       console.log("new collection", collectionData.cards)
     }
-    
   }
 
-  if (decksIsLoading || collectionIsLoading) {
+  if (!decksData || !collectionData || !tokenData) {
     return (
       <></>
     );
   }
 
   return (
-    <div className="card mb-4 box-shadow">
+    <div className="card mb-4 p-2 box-shadow">
       <Form 
       method="put"
       onSubmit={handleSubmit}
       name='deck'>
-        <Form.Select aria-label="select one of my decks" onChange={(e) => setDeckId(e.target.value)}>
+        <Form.Select className="mb-2" aria-label="select one of my decks" onChange={(e) => setDeckId(e.target.value)}>
           <option value="">Select a deck</option>
           {decksData.decks.map( selectedDeck => {
             return (
@@ -51,9 +51,9 @@ function AddToDeckForm(props) {
         {
           deckId !== "" && decksData.decks.find(deck => deck.id === deckId).cards.map(card => card.multiverse_id).includes(multiverseId)
           ?
-          <Button variant="success" type="submit">+ Add to deck (currently: {decksData.decks.find(deck => deck.id === deckId).cards.find(card => card.multiverse_id === multiverseId).quantity})</Button>
+          <Button className="mb-2" variant="outline-success" size="sm" type="submit">+ Add more to deck ({decksData.decks.find(deck => deck.id === deckId).cards.find(card => card.multiverse_id === multiverseId).quantity})</Button>
           :
-          <Button variant="success" type="submit">+ Add to Deck</Button>
+          <Button className="mb-2" variant="outline-success" size="sm" type="submit">+ Add to deck</Button>
         }
       </Form>
       <Form
@@ -63,9 +63,9 @@ function AddToDeckForm(props) {
         {
           collectionData.cards.map(card => card.multiverse_id).includes(multiverseId)
           ?
-          <Button variant="success" type="submit">+ Add More to Collection (currently: {collectionData.cards.find(card => card.multiverse_id === multiverseId).quantity})</Button>
+          <Button variant="outline-success" size="sm" type="submit">+ Add more to collection ({collectionData.cards.find(card => card.multiverse_id === multiverseId).quantity})</Button>
           :
-          <Button variant="success" type="submit">+ Add to Collection</Button>
+          <Button variant="outline-success" size="sm" type="submit">+ Add to Collection</Button>
         }
       </Form>
     </div>
