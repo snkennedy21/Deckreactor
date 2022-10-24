@@ -6,7 +6,7 @@ import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/Form"
 import { useSelector, useDispatch } from "react-redux";
 import { useGetCardsQuery } from "../../store/scryfallApi";
-import { useGetSymbolsQuery } from "../../store/symbolsApi";
+import { useGetSymbolsQuery, useGetCardQuery } from "../../store/scryfallWebApi";
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
@@ -15,39 +15,11 @@ import AddToDeckForm from "../ui/AddToDeckForm";
 
 function CardDetailPage() {
   const { multiverse_id } = useParams();
-  const [card, setCard] = useState({});
-  const [myDecks, setMyDecks] = useState([]);
-  const [deck, setDeck] = useState("");
-  const [symbols, setSymbols] = useState([]);
-  const [error, setError] = useState({});
+  const { data: card, error: cardError, isLoading: cardIsLoading } = useGetCardQuery(multiverse_id);
+  const { data: symbols, error: symbolsError, isLoading: symbolsIsLoading } = useGetSymbolsQuery();
   const [background_url, setBackgroundUrl] = useState("");
-  const dispatch = useDispatch();
 
-  
-  useEffect(() => {
-    async function getCardData() {
-      const cardUrl = `https://api.scryfall.com/cards/multiverse/${multiverse_id}`
-      const symbolUrl = "https://api.scryfall.com/symbology";
-      // const myDecksUrl = `${process.env.REACT_APP_API_HOST}/decks/`;
-      const cardResponse = await fetch(cardUrl);
-      const symbolResponse = await fetch(symbolUrl);
-      // const myDecksResponse = await fetch(myDecksUrl);
-      if (cardResponse.ok && symbolResponse.ok) {
-        const cardData = await cardResponse.json();
-        const symbolData = await symbolResponse.json();
-        // const myDecksData = await myDecksResponse.json();
-        setCard(cardData);
-        setSymbols(symbolData.data);
-        // setMyDecks(sampleDecks);
-        // setMyDecks(myDecksData.decks);
-      } else {
-        setError('Could not load page data');
-      }
-    };
-    getCardData();
-  }, []);
-
-  if (Object.entries(card).length === 0) {
+  if (cardIsLoading || cardError || symbolsIsLoading || symbolsError) {
     return (<React.Fragment>Loading...</React.Fragment>)
   }
 
@@ -101,7 +73,7 @@ function CardDetailPage() {
   
   const symbolUrls = {}
   // assemble symbolUrls object {symbol: svg_uri}
-  for (let symbol of symbols) {
+  for (let symbol of symbols.data) {
     symbolUrls[symbol.symbol] = symbol.svg_uri;
   }
 

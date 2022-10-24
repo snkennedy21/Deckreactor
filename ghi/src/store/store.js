@@ -5,7 +5,7 @@ import { searchSlice } from "./searchSlice";
 import { accountSlice } from "./accountSlice";
 import { accountApiSlice } from "./accountApi";
 import { myCardsApi } from "./myCardsApi";
-import { symbolsApi } from "./symbolsApi";
+import { scryfallWebApi } from "./scryfallWebApi";
 import { deckSlice } from "./deckSlice";
 
 export const store = configureStore({
@@ -15,7 +15,7 @@ export const store = configureStore({
     [myCardsApi.reducerPath]: myCardsApi.reducer,
     [searchSlice.name]: searchSlice.reducer,
     [accountSlice.name]: accountSlice.reducer,
-    [symbolsApi.reducerPath]: symbolsApi.reducer,
+    [scryfallWebApi.reducerPath]: scryfallWebApi.reducer,
     [deckSlice.name]: deckSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -23,7 +23,7 @@ export const store = configureStore({
       .concat(scryfallApi.middleware)
       .concat(accountApiSlice.middleware)
       .concat(myCardsApi.middleware)
-      .concat(symbolsApi.middleware),
+      .concat(scryfallWebApi.middleware),
 });
 
 export const searchActions = searchSlice.actions;

@@ -40,6 +40,15 @@ export const myCardsApi = createApi({
       }),
       invalidatesTags: ["DeckList"],
     }),
+    createDeck: builder.mutation({
+      query: (data) => ({
+        url: '/decks/',
+        method: 'post',
+        body: data,
+        credentials: 'include',
+      }),
+      invalidatesTags: ["DeckList"],
+    }),
     // COLLECTION STUFF //
     getMyCollection: builder.query({
       query: () => '/collections/',
@@ -68,6 +77,7 @@ export const {
   useGetMyDecksQuery,
   useAddCardToDeckMutation,
   useRemoveOneCardFromDeckMutation,
+  useCreateDeckMutation,
   useGetMyCollectionQuery,
   useAddCardToCollectionMutation,
   useRemoveCardFromCollectionMutation,

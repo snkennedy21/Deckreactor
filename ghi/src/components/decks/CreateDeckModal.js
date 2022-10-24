@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import { useCreateDeckMutation } from "../../store/myCardsApi";
 
 function CreateDeckModal(props) {
   const [name, setName] = useState("");
   const [description, setDescriptioon] = useState("");
-
+  const [createDeck] = useCreateDeckMutation();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -14,28 +15,13 @@ function CreateDeckModal(props) {
 
   async function submitHandler(e) {
     e.preventDefault();
-    const createDeckUrl = "http://localhost:8000/decks/";
-
+    
     const body = {
       name: name,
       description: description,
     };
-
-    const fetchConfig = {
-      method: "POST",
-      body: JSON.stringify(body),
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    const createDeckResponse = await fetch(createDeckUrl, fetchConfig);
-
-    if (createDeckResponse.ok) {
-      const newDeck = await createDeckResponse.json();
-      props.updateUsersDecks(newDeck);
-    }
+    
+    createDeck(body);
 
     setShow(false);
   }
