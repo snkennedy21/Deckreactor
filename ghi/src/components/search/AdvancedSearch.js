@@ -110,7 +110,9 @@ function AdvancedSearch() {
   return (
     <Container fluid>
       <Row>
-        <Col className="cool-form card shadow p-4 m-3 w-100 d-grid">
+        <Col
+          className={`${styles["search-form"]} card shadow p-4 m-3 w-100 d-grid`}
+        >
           <Form onSubmit={submitHandler}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Name</Form.Label>
