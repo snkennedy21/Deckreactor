@@ -9,19 +9,38 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { FaPlus, FaMinus } from "react-icons/fa";
-import { useGetMyDecksQuery } from "../../store/myCardsApi";
+import {
+  useGetMyDecksQuery,
+  useAddCardToDeckMutation,
+  useRemoveOneCardFromDeckMutation,
+} from "../../store/myCardsApi";
 import { useGetTokenQuery } from "../../store/accountApi";
 
 function DeckDetail() {
   // const [cards, setCards] = useState([]);
   const { deck_id } = useParams();
-  const { data: decksData, error: decksError, isLoading: decksIsLoading } = useGetMyDecksQuery();
+  const {
+    data: decksData,
+    error: decksError,
+    isLoading: decksIsLoading,
+  } = useGetMyDecksQuery();
+  const [addCardToDeck, { error, isLoading: addCardLoading }] =
+    useAddCardToDeckMutation();
   const navigate = useNavigate();
-  
+
+  function increaseCardInDeckHandler(e) {
+    const object = {
+      deckId: deck_id,
+      multiverseId: e.currentTarget.value,
+    };
+    console.log(object);
+    addCardToDeck(object);
+  }
+
   if (!decksData) {
-    return (<></>)
+    return <></>;
   } else {
-    const cards = decksData.decks.find(deck => deck.id === deck_id).cards;
+    const cards = decksData.decks.find((deck) => deck.id === deck_id).cards;
     return (
       <React.Fragment>
         <Button onClick={execute}>Back To Decks</Button>
@@ -39,7 +58,10 @@ function DeckDetail() {
                   xs="12"
                 >
                   <Image src={card.picture_url} style={{ width: "100%" }} />
-                  <Button value={card.multiverse_id}>
+                  <Button
+                    value={card.multiverse_id}
+                    onClick={increaseCardInDeckHandler}
+                  >
                     <FaPlus></FaPlus>
                   </Button>
                   <Button value={card.multiverse_id}>
@@ -119,7 +141,6 @@ function DeckDetail() {
   //   const response = await fetch(addCardUrl, fetchConfig);
   //   console.log(response);
   // }
-
 }
 
 export default DeckDetail;
