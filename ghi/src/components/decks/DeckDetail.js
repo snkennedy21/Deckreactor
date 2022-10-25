@@ -37,14 +37,20 @@ function DeckDetail() {
   }, [decksData]);
 
   function increaseCardInDeckHandler(e) {
+    const multiverseId = e.currentTarget.value;
     const object = {
       deckId: deck_id,
-      multiverseId: e.currentTarget.value,
+      multiverseId: multiverseId,
     };
-
-    setCards((prevState) => {
-      return [...prevState];
+    const newCards = cards.map((card) => {
+      console.log(card);
+      if (card.multiverse_id == multiverseId) {
+        card.quantity++;
+      }
+      return card;
     });
+
+    setCards(newCards);
     addCardToDeck(object);
   }
 
