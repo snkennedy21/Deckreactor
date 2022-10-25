@@ -24,8 +24,10 @@ function DeckDetail() {
     error: decksError,
     isLoading: decksIsLoading,
   } = useGetMyDecksQuery();
-  const [addCardToDeck, { error, isLoading: addCardLoading }] =
+  const [addCardToDeck, { addError, isLoading: addCardLoading }] =
     useAddCardToDeckMutation();
+  const [removeCardFromDeck, { removeError, isLoading: removeCardLoading }] =
+    useRemoveOneCardFromDeckMutation();
   const navigate = useNavigate();
 
   function increaseCardInDeckHandler(e) {
@@ -33,8 +35,16 @@ function DeckDetail() {
       deckId: deck_id,
       multiverseId: e.currentTarget.value,
     };
-    console.log(object);
     addCardToDeck(object);
+  }
+
+  function decreaseCardInDeckHandler(e) {
+    const object = {
+      deckId: deck_id,
+      multiverseId: e.currentTarget.value,
+    };
+    console.log(object);
+    removeCardFromDeck(object);
   }
 
   if (!decksData) {
@@ -64,7 +74,10 @@ function DeckDetail() {
                   >
                     <FaPlus></FaPlus>
                   </Button>
-                  <Button value={card.multiverse_id}>
+                  <Button
+                    value={card.multiverse_id}
+                    onClick={decreaseCardInDeckHandler}
+                  >
                     <FaMinus></FaMinus>
                   </Button>
                   <div>{card.name}</div>
