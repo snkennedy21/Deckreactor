@@ -163,7 +163,8 @@ export default function MyCollection() {
                   return (
                     <tr key={row.multiverse_id}>
                       <td className="text-center">
-                        {row.name} <br></br>
+                        <Link to={`/card/${row.multiverse_id}`}>{row.name}</Link>
+                        <br></br>
                         <p className="mt-3">Quantity: {row.quantity}</p>
                         <Button
                           className="mb-1"
@@ -199,9 +200,6 @@ export default function MyCollection() {
                         />
                         </Link>
                         <br></br>
-                        <Link to={`/card/${row.multiverse_id}`}>
-                          <Button vaiant="success">See card details</Button>
-                        </Link>
                       </td>
                     </tr>
                   );
@@ -209,7 +207,8 @@ export default function MyCollection() {
                   return (
                     <tr key={row.multiverse_id}>
                       <td className="text-center">
-                        {row.name} <br></br>
+                      <Link to={`/card/${row.multiverse_id}`}>{row.name}</Link>
+                      <br></br>
                         <p className="mt-3">Quantity: {row.quantity}</p>
                         <Button
                           className="mb-1"
@@ -240,9 +239,6 @@ export default function MyCollection() {
                         />
                         </Link>
                         <br></br>
-                        <Link to={`/card/${row.multiverse_id}`}>
-                          <Button vaiant="success">See card details</Button>
-                        </Link>
                       </td>
                     </tr>
                   );

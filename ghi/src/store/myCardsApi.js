@@ -15,65 +15,73 @@ export const myCardsApi = createApi({
         );
       }
       return headers;
-    }
+    },
   }),
-  tagTypes: ['DeckList', 'Collection'],
-  endpoints: builder => ({
+  tagTypes: ["DeckList", "Collection"],
+  endpoints: (builder) => ({
     // DECK STUFF //
     getMyDecks: builder.query({
       query: () => ({
-        url: '/decks/',
-        credentials: 'include',
+        url: "/decks/",
+        credentials: "include",
       }),
       providesTags: ["DeckList"],
     }),
+
     addCardToDeck: builder.mutation({
       query: (data) => ({
         url: `/decks/${data.deckId}/add/${data.multiverseId}/`,
-        method: 'put',
-        credentials: 'include',
+        method: "put",
+        credentials: "include",
       }),
       invalidatesTags: ["DeckList"],
     }),
+
     removeOneCardFromDeck: builder.mutation({
       query: (data) => ({
         url: `/decks/${data.deckId}/remove_one/${data.multiverseId}/`,
-        method: 'put', 
-        credentials: 'include',
+        method: "put",
+        credentials: "include",
       }),
       invalidatesTags: ["DeckList"],
     }),
+
     createDeck: builder.mutation({
       query: (data) => ({
-        url: '/decks/',
-        method: 'post',
+        url: "/decks/",
+        method: "post",
         body: data,
-        credentials: 'include',
+        credentials: "include",
       }),
+
       invalidatesTags: ["DeckList"],
     }),
     // COLLECTION STUFF //
     getMyCollection: builder.query({
-      query: () => '/collections/',
-      providesTags: ['Collection'],
+      query: () => ({
+        url: "/collections/",
+        method: "get",
+        credentials: "include",
+      }),
+      providesTags: ["Collection"],
     }),
     addCardToCollection: builder.mutation({
       query: (data) => ({
         url: `/collections/add/${data.multiverseId}`,
-        method: 'put',
-        credentials: 'include',
+        method: "put",
+        credentials: "include",
       }),
-      invalidatesTags: ['Collection'],
+      invalidatesTags: ["Collection"],
     }),
     removeCardFromCollection: builder.mutation({
       query: (data) => ({
         url: `/collections/remove_one/${data.multiverseId}`,
-        method: 'put',
-        credentials: 'include',
+        method: "put",
+        credentials: "include",
       }),
-      invalidatesTags: ['Collection'],
+      invalidatesTags: ["Collection"],
     }),
-  })
+  }),
 });
 
 export const {
