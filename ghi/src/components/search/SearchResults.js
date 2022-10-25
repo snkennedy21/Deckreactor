@@ -4,35 +4,37 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
 import Spinner from "react-bootstrap/Spinner";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useGetCardsQuery } from "../../store/scryfallApi";
 
+import {
+  useGetMyDecksQuery,
+  useAddCardToCollectionMutation,
+  useAddCardToDeckMutation,
+} from "../../store/myCardsApi";
+
 function ContainerExample() {
   const [usersDecks, setUsersDecks] = useState([]);
 
-  useEffect(() => {
-    async function getDecks() {
-      const decksUrl = "http://localhost:8000/decks/";
-      const fetchConfig = {
-        method: "get",
-        credentials: "include",
-      };
-      const decksResponse = await fetch(decksUrl, fetchConfig);
-      if (decksResponse.ok) {
-        const decksData = await decksResponse.json();
-        setUsersDecks(decksData.decks);
-      }
-    }
-    getDecks();
-  }, []);
-
-  console.log(usersDecks);
+  const [addCardToDeck, { addToDeckError, isLoading: addCardToDeckLoading }] =
+    useAddCardToDeckMutation();
+  const [
+    addCardToCollection,
+    { addToCollectionError, isLoading: addCardToCollectionLoading },
+  ] = useAddCardToCollectionMutation();
+  const {
+    data: decksData,
+    getDeckError,
+    isLoading: decksLoading,
+  } = useGetMyDecksQuery();
 
   const search = useSelector((state) => state.search);
   const { data, error, isLoading } = useGetCardsQuery(search);
+
+  console.log(decksData);
 
   if (isLoading) {
     return (
@@ -50,23 +52,14 @@ function ContainerExample() {
     return <div>{data.message}</div>;
   }
 
-  async function execute(selectedKey) {
+  async function addCard(selectedKey) {
     const eventKeyObject = JSON.parse(selectedKey);
-    console.log(eventKeyObject);
     const multiverseId = eventKeyObject.multiverseId;
     if (eventKeyObject.placeToStore === "collection") {
-      const collectionUrl = `http://localhost:8000/collections/add/${multiverseId}`;
-      const response = await fetch(collectionUrl, {
-        method: "PUT",
-        credentials: "include",
-      });
+      addCardToCollection({ multiverseId });
     } else {
       const deckId = eventKeyObject.placeToStore;
-      const deckUrl = `http://localhost:8000/decks/${deckId}/add/${multiverseId}`;
-      const response = await fetch(deckUrl, {
-        method: "PUT",
-        credentials: "include",
-      });
+      addCardToDeck({ multiverseId, deckId });
     }
   }
 
@@ -76,12 +69,14 @@ function ContainerExample() {
         {data.cards.map((card) => {
           return (
             <Col key={card.multiverse_id} xxl="3" xl="4" l="5" md="6" sm="12">
-              <Link to={`/card/${card.multiverse_id}`}><Image
-                className="mb-1"
-                src={card.picture_url}
-                style={{ width: "100%" }}
-              /></Link>
-              <Dropdown className="mb-4" onSelect={execute}>
+              <Link to={`/card/${card.multiverse_id}`}>
+                <Image
+                  className="mb-1"
+                  src={card.picture_url}
+                  style={{ width: "100%" }}
+                />
+              </Link>
+              <Dropdown className="mb-4" onSelect={addCard}>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Add To
                 </Dropdown.Toggle>
@@ -96,7 +91,7 @@ function ContainerExample() {
                     My Collection
                   </Dropdown.Item>
                   <Dropdown.Divider />
-                  {usersDecks.map((deck) => {
+                  {decksData.decks.map((deck) => {
                     return (
                       <Dropdown.Item
                         key={deck.id}
