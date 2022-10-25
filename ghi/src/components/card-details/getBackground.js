@@ -40,10 +40,11 @@ const colors_to_abbrevs = {
 }
 
 function getBackground(color) {
+  console.log(Object.keys(backgrounds))
   if (color.toLowerCase() in Object.keys(colors_to_abbrevs)) {
     color = colors_to_abbrevs[color.toLowerCase()];
   }
-  if (color in Object.keys(backgrounds)) {
+  if (Object.keys(backgrounds).includes(color)) {
     return backgrounds[color][Math.floor(Math.random() * backgrounds[color].length)];
   } else {
     const allBackgrounds = backgrounds.R.concat(backgrounds.W, backgrounds.B, backgrounds.G, backgrounds.U);

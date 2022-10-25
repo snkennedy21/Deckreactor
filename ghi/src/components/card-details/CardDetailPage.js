@@ -13,7 +13,7 @@ import Carousel from "react-bootstrap/Carousel";
 import AddToDeckForm from "../ui/AddToDeckForm";
 import ParseSymbolsAndLineBreaks from "./ParseSymbolsAndLineBreaks";
 import { useDispatch, useSelector } from "react-redux";
-import { getBackground } from "../../store/getBackground";
+import getBackground from "./getBackground";
 
 function CardDetailPage() {
   const { multiverse_id } = useParams();
@@ -25,6 +25,7 @@ function CardDetailPage() {
   if (background_url.length === 0 && card) {
     console.log(card)
     const color_id = (card.color_identity.length > 0 ? card.color_identity[0] : "None");
+    console.log('color_id', color_id)
     background_url = getBackground(color_id);
     console.log(background_url)
   }
@@ -34,51 +35,6 @@ function CardDetailPage() {
   }
 
   const double_faced = ["transform", "modal_dfc"].includes(card.layout);
-
-  // const red_themes = [
-  //   "https://media.magic.wizards.com/images/wallpaper/wrenn-and-six-2x2-background-2560x1600.jpg",
-  //   "https://media.magic.wizards.com/images/wallpaper/koll_the_forgemaster_khm_2560x1600_wallpaper_0.jpg",
-  //   "https://media.magic.wizards.com/images/wallpaper/Blood_Sun_RIX_2560x1600_Wallpaper.jpg",
-  //   "https://media.magic.wizards.com/images/wallpaper/Chandra_PW_2560x1600_Wallpaper.jpg",
-  // ];
-  // const white_themes = [
-  //   "https://media.magic.wizards.com/images/wallpaper/CityofBrass_MMA_2560x1600_Wallpaper.jpg",
-  //   "https://media.magic.wizards.com/images/wallpaper/Azor-the-Lawbringer_RIX_2560x1600_Wallpaper.jpg",
-  //   "https://media.magic.wizards.com/images/wallpaper/Angelic-Page_A25_2560x1600_Wallpaper.jpg",
-  //   "https://media.magic.wizards.com/images/wallpaper/Weatherlight_DAR_2560x1600_Wallpaper.jpg",
-  // ];
-  // const black_themes = [
-  //   "https://media.magic.wizards.com/images/wallpaper/Wallpaper_Erebos_God_ofthe_Dead_2560x1600.jpg",
-  //   "https://media.magic.wizards.com/images/wallpaper/Campaign-of-Vengeance_EMN_2560x1600_Wallpaper.jpg",
-  //   "https://media.magic.wizards.com/images/wallpaper/PollutedDelta_2560x1600_Wallpaper.jpg",
-  //   "https://media.magic.wizards.com/images/wallpaper/callofthenightwing_GTC_2560x1600_Wallpaper.jpg",
-  // ];
-  // const blue_themes = [
-  //   "https://media.magic.wizards.com/images/wallpaper/grand-arbiter-augustin-iv-2x2-background-2560x1600.jpg",
-  //   "https://media.magic.wizards.com/images/wallpaper/422742_inquisitor_greyfax_2560x1600_wallpaper.jpg",
-  //   "https://media.magic.wizards.com/images/wallpaper/tidechannel-pathway_khm_2560x1600_wallpaper.jpg",
-  //   "https://media.magic.wizards.com/images/wallpaper/tidechannel-pathway_khm_2560x1600_wallpaper.jpg",
-  // ];
-  // const green_themes = [
-  //   "https://media.magic.wizards.com/images/wallpaper/sparas_headquarters_kieran_yanner_2560x1600_wpoozxbqpcw.jpg",
-  //   "https://media.magic.wizards.com/images/wallpaper/quandrixcommand_stx_2560x1600_wallpaper.jpg",
-  //   "https://media.magic.wizards.com/images/wallpaper/timbercrown-pathway_sld_2560x1600_wallpaper.jpg",
-  //   "https://media.magic.wizards.com/images/wallpaper/Tarmogoyf_DGM_2560x1600_Wallpaper.jpg",
-  // ];
-
-  // const themes_by_color = {
-  //   "R": red_themes,
-  //   "W": white_themes,
-  //   "B": black_themes,
-  //   "G": green_themes,
-  //   "U": blue_themes,
-  //   "None": red_themes.concat(white_themes, black_themes, green_themes, blue_themes),
-  // }
-
-  // // get random url from color theme
-  // if (background_url === "") {
-  //   setBackgroundUrl(themes_by_color[color_id][Math.floor(Math.random() * themes_by_color[color_id].length)]);
-  // }
 
   return (
     <React.Fragment>
