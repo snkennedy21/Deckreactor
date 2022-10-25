@@ -65,11 +65,11 @@ async def update_account(
     hashed_password = None
 
   try:
-    if info.email in [document.email for document in repo.get_all()]:
-      raise HTTPException(
-      status_code=status.HTTP_400_BAD_REQUEST,
-      detail="Account with that email already exists"
-      )
+    # if info.email in [document.email for document in repo.get_all()]:
+    #   raise HTTPException(
+    #   status_code=status.HTTP_400_BAD_REQUEST,
+    #   detail="Account with that email already exists"
+    #   )
     account = repo.update(account_id, info, hashed_password)
   except DuplicateAccountError:
     raise HTTPException(
@@ -94,11 +94,11 @@ async def create_account(
   # This section of the function takes care of basic account creation. It does not deal with authentication. It just makes an account and puts it in the database
   hashed_password = authenticator.hash_password(info.password)   # authenicator.hash_password is a security measure for create password 
   try:
-    if info.email in [document.email for document in repo.get_all()]:
-      raise HTTPException(
-      status_code=status.HTTP_400_BAD_REQUEST,
-      detail="Account with that email already exists"
-      )
+    # if info.email in [document.email for document in repo.get_all()]:
+    #   raise HTTPException(
+    #   status_code=status.HTTP_400_BAD_REQUEST,
+    #   detail="Account with that email already exists"
+    #   )
     account = repo.create(info, hashed_password)  # calls the function in queries.accounts in order to create a new account. account has an id and a list of roles
     collection_info = CollectionIn(account_id=account.dict()["id"])
     user_collection = collection.create(collection_info)

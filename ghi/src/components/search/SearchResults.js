@@ -4,12 +4,13 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
 import Spinner from "react-bootstrap/Spinner";
-import {Link, Navigate, useNavigate} from 'react-router-dom';
+import {Link, Navigate, useNavigate, useLocation} from 'react-router-dom';
 
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetCardsQuery } from "../../store/scryfallApi";
 import { useAddCardToCollectionMutation, useAddCardToDeckMutation, useGetMyDecksQuery } from "../../store/myCardsApi";
+import { searchActions } from "../../store/store";
 
 function ContainerExample() {
   const [usersDecks, setUsersDecks] = useState([]);
@@ -17,6 +18,8 @@ function ContainerExample() {
   const [addCardToCollection] = useAddCardToCollectionMutation();
   const [addCardToDeck] = useAddCardToDeckMutation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     if (decksData) {
@@ -55,7 +58,9 @@ function ContainerExample() {
     }
   }
 
-  if (decksData !== undefined && data.cards.length === 1) {
+  console.log(location.pathname);
+  if (data !== undefined && data.cards.length === 1) {
+    dispatch(searchActions.updateSearch(""));
     navigate(`/card/${data.cards[0].multiverse_id}/`);
   }
 

@@ -20,7 +20,7 @@ const colorsArray = [
 
 function AdvancedSearch() {
   const [name, setName] = useState("");
-  const [manaCost, setManaCost] = useState(0);
+  const [manaCost, setManaCost] = useState(20);
   const [colors, setColors] = useState(colorsArray);
   const [colorlessChecked, setColorlessChecked] = useState(false);
   const [colorStatus, setColorStatus] = useState("exactly");
@@ -78,7 +78,7 @@ function AdvancedSearch() {
     let unselectedManaColors = getUnselectedManaColors();
 
     // Base Query
-    let queryString = `cmc<=${manaCost}`;
+    let queryString = manaCost === 20 ? '' : `cmc<=${manaCost}`;
     if (name !== "") {
       queryString += ` ${name}`;
     }
@@ -103,7 +103,7 @@ function AdvancedSearch() {
     if (format !== "") {
       queryString += ` ${legalStatus}:${format}`;
     }
-
+    
     dispatch(searchActions.updateSearch(queryString));
   }
 

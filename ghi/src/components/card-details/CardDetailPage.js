@@ -1,12 +1,4 @@
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
-import Button from "react-bootstrap/esm/Button";
-import Form from "react-bootstrap/Form"
-import { useGetCardsQuery } from "../../store/scryfallApi";
-import { useGetSymbolsQuery, useGetCardQuery } from "../../store/scryfallWebApi";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Carousel from "react-bootstrap/Carousel";
@@ -14,6 +6,7 @@ import AddToDeckForm from "./AddToDeckForm";
 import ParseSymbolsAndLineBreaks from "./ParseSymbolsAndLineBreaks";
 import { useDispatch, useSelector } from "react-redux";
 import getBackground from "./getBackground";
+import { useGetCardQuery } from "../../store/scryfallWebApi";
 
 function CardDetailPage() {
   const { multiverse_id } = useParams();
@@ -207,7 +200,7 @@ function CardDetailPage() {
         </div>
       </div>
     </div>
-    </React.Fragment>
+  </React.Fragment>
   );
 }
 

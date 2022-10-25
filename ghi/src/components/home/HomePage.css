@@ -1,0 +1,16 @@
+.card-carousel {
+  width: 75%;
+  height: auto;
+  position: bottom;
+}
+
+.img {
+  float: left;
+}
+
+.banner {
+  width: 100%;
+  background-color: floralwhite;
+  color: black;
+  text-align: center;
+}
