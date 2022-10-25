@@ -17,7 +17,6 @@ import {
 import { useGetTokenQuery } from "../../store/accountApi";
 
 function DeckDetail() {
-  // const [cards, setCards] = useState([]);
   const { deck_id } = useParams();
   const {
     data: decksData,

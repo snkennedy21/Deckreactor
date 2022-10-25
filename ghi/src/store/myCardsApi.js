@@ -58,7 +58,11 @@ export const myCardsApi = createApi({
     }),
     // COLLECTION STUFF //
     getMyCollection: builder.query({
-      query: () => "/collections/",
+      query: () => ({
+        url: "/collections/",
+        method: "get",
+        credentials: "include",
+      }),
       providesTags: ["Collection"],
     }),
     addCardToCollection: builder.mutation({

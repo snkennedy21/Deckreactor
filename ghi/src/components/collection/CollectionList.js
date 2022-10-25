@@ -163,7 +163,8 @@ export default function MyCollection() {
                   return (
                     <tr key={row.multiverse_id}>
                       <td className="text-center">
-                        {row.name} <br></br>
+                        <Link to={`/card/${row.multiverse_id}`}>{row.name}</Link>
+                        <br></br>
                         <p className="mt-3">Quantity: {row.quantity}</p>
                         <Button
                           className="mb-1"
@@ -184,6 +185,7 @@ export default function MyCollection() {
                         <p className="mt-3">Card Price: {row.card_price}</p>
                       </td>
                       <td className="text-center">
+                        <Link to={`/card/${row.multiverse_id}`}>
                         <img
                           className="p-1"
                           src={row.picture_url}
@@ -196,10 +198,8 @@ export default function MyCollection() {
                           alt="card_picture"
                           width="170px"
                         />
-                        <br></br>
-                        <Link to={`/card/${row.multiverse_id}`}>
-                          <Button vaiant="success">See card details</Button>
                         </Link>
+                        <br></br>
                       </td>
                     </tr>
                   );
@@ -207,7 +207,8 @@ export default function MyCollection() {
                   return (
                     <tr key={row.multiverse_id}>
                       <td className="text-center">
-                        {row.name} <br></br>
+                      <Link to={`/card/${row.multiverse_id}`}>{row.name}</Link>
+                      <br></br>
                         <p className="mt-3">Quantity: {row.quantity}</p>
                         <Button
                           className="mb-1"
@@ -229,16 +230,15 @@ export default function MyCollection() {
                         <p className="mt-3">Card Price: {row.card_price}</p>
                       </td>
                       <td className="text-center">
+                        <Link to={`/card/${row.multiverse_id}`}>
                         <img
                           className="p-1"
                           src={row.picture_url}
                           alt="card_picture"
                           width="170px"
                         />
-                        <br></br>
-                        <Link to={`/card/${row.multiverse_id}`}>
-                          <Button vaiant="success">See card details</Button>
                         </Link>
+                        <br></br>
                       </td>
                     </tr>
                   );
