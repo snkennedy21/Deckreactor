@@ -43,32 +43,38 @@ function DeckDetail() {
       multiverseId: multiverseId,
     };
     const newCards = cards.map((card) => {
-      console.log(card);
       if (card.multiverse_id == multiverseId) {
         card.quantity++;
       }
       return card;
     });
-
     setCards(newCards);
-    addCardToDeck(object);
+    // addCardToDeck(object);
   }
 
   function decreaseCardInDeckHandler(e) {
+    const multiverseId = e.currentTarget.value;
     const object = {
       deckId: deck_id,
-      multiverseId: e.currentTarget.value,
+      multiverseId: multiverseId,
     };
-    setCards((prevState) => {
-      return [...prevState];
-    });
-    removeCardFromDeck(object);
+    const newCards = cards
+      .map((card) => {
+        if (card.multiverse_id == multiverseId) {
+          card.quantity--;
+        }
+        return card;
+      })
+      .filter((card) => card.quantity > 0);
+    setCards(newCards);
+    // removeCardFromDeck(object);
   }
+
+  console.log(cards);
 
   if (!decksData) {
     return <></>;
   } else {
-    const cards = decksData.decks.find((deck) => deck.id === deck_id).cards;
     return (
       <React.Fragment>
         <Button onClick={execute}>Back To Decks</Button>
