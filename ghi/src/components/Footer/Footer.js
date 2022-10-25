@@ -1,4 +1,6 @@
+import SignUp from "../accounts/SignUp";
 import "./footer.css";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -10,9 +12,9 @@ function Footer() {
             <h5>Cards</h5>
             <hr className="divider"></hr>
             <ul className="list-unstyled">
-              <li>Collection</li>
               <li>Advanced Search</li>
               <li>Decks</li>
+              <li>Collection</li>
             </ul>
           </div>
           {/* Column2 */}
@@ -20,8 +22,9 @@ function Footer() {
             <h5>Links</h5>
             <hr className="divider"></hr>
             <ul className="list-unstyled">
-              <li>My Account</li>
               <li>Home</li>
+              <li>Sign up</li>
+              <li>Log in</li>
             </ul>
           </div>
           {/* Column3 */}

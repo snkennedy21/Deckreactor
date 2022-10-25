@@ -45,7 +45,7 @@ function HomePage() {
   return (
     <React.Fragment>
       <div className="main-page">
-        <Container className="px-4 py-5 mb-5 text-center">
+        <Container className="shadow banner px-4 py-5 mb-5 mt-5 text-center rounded">
           <h1 className="display-5 fw-bold color-primary">DeckReactor</h1>
           <div className="col-lg-6 mx-auto">
             <p className="lead mb-4">
