@@ -31,6 +31,7 @@ function DeckDetail() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(decksData);
     if (decksData === undefined) return;
     const currentDeck = decksData.decks.find((deck) => deck.id === deck_id);
     setCards(currentDeck.cards);
@@ -42,22 +43,25 @@ function DeckDetail() {
       deckId: deck_id,
       multiverseId: multiverseId,
     };
+
+    console.log(cards);
     const newCards = cards.map((card) => {
-      if (card.multiverse_id == multiverseId) {
-        card.quantity++;
+      let cardClone = { ...card };
+      if (cardClone.multiverse_id == multiverseId) {
+        cardClone.quantity++;
       }
-      return card;
+      return cardClone;
     });
     setCards(newCards);
-    // addCardToDeck(object);
+    addCardToDeck(object);
   }
 
   function decreaseCardInDeckHandler(e) {
     const multiverseId = e.currentTarget.value;
-    const object = {
-      deckId: deck_id,
-      multiverseId: multiverseId,
-    };
+    // const object = {
+    //   deckId: deck_id,
+    //   multiverseId: multiverseId,
+    // };
     const newCards = cards
       .map((card) => {
         if (card.multiverse_id == multiverseId) {

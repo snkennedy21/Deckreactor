@@ -34,7 +34,7 @@ export const myCardsApi = createApi({
         method: "put",
         credentials: "include",
       }),
-      invalidatesTags: ["DeckList"],
+      // invalidatesTags: ["DeckList"],
     }),
 
     removeOneCardFromDeck: builder.mutation({
