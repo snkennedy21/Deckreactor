@@ -26,7 +26,7 @@ async def create_deck(
 async def get_all_my_decks(
     repo: DeckQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
-):
+    ):
     account = AccountOut(**account_data)
     account_id = account.id
     return DeckList(decks=repo.get_all(account_id))
