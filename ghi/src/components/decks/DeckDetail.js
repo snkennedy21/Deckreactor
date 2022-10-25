@@ -58,20 +58,21 @@ function DeckDetail() {
 
   function decreaseCardInDeckHandler(e) {
     const multiverseId = e.currentTarget.value;
-    // const object = {
-    //   deckId: deck_id,
-    //   multiverseId: multiverseId,
-    // };
+    const object = {
+      deckId: deck_id,
+      multiverseId: multiverseId,
+    };
     const newCards = cards
       .map((card) => {
-        if (card.multiverse_id == multiverseId) {
-          card.quantity--;
+        let cardClone = { ...card };
+        if (cardClone.multiverse_id == multiverseId) {
+          cardClone.quantity--;
         }
-        return card;
+        return cardClone;
       })
       .filter((card) => card.quantity > 0);
     setCards(newCards);
-    // removeCardFromDeck(object);
+    removeCardFromDeck(object);
   }
 
   console.log(cards);
