@@ -17,7 +17,7 @@ import {
 import { useGetTokenQuery } from "../../store/accountApi";
 
 function DeckDetail() {
-  // const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState([]);
   const { deck_id } = useParams();
   const {
     data: decksData,
@@ -30,11 +30,21 @@ function DeckDetail() {
     useRemoveOneCardFromDeckMutation();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (decksData === undefined) return;
+    const currentDeck = decksData.decks.find((deck) => deck.id === deck_id);
+    setCards(currentDeck.cards);
+  }, [decksData]);
+
   function increaseCardInDeckHandler(e) {
     const object = {
       deckId: deck_id,
       multiverseId: e.currentTarget.value,
     };
+
+    setCards((prevState) => {
+      return [...prevState];
+    });
     addCardToDeck(object);
   }
 
@@ -43,7 +53,9 @@ function DeckDetail() {
       deckId: deck_id,
       multiverseId: e.currentTarget.value,
     };
-    console.log(object);
+    setCards((prevState) => {
+      return [...prevState];
+    });
     removeCardFromDeck(object);
   }
 
