@@ -4,32 +4,25 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
 import Spinner from "react-bootstrap/Spinner";
-import {Link} from 'react-router-dom';
+import {Link, Navigate, useNavigate} from 'react-router-dom';
 
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useGetCardsQuery } from "../../store/scryfallApi";
+import { useAddCardToCollectionMutation, useAddCardToDeckMutation, useGetMyDecksQuery } from "../../store/myCardsApi";
 
 function ContainerExample() {
   const [usersDecks, setUsersDecks] = useState([]);
+  const {data: decksData, error: decksError, isLoading: decksIsLoading} = useGetMyDecksQuery();
+  const [addCardToCollection] = useAddCardToCollectionMutation();
+  const [addCardToDeck] = useAddCardToDeckMutation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    async function getDecks() {
-      const decksUrl = "http://localhost:8000/decks/";
-      const fetchConfig = {
-        method: "get",
-        credentials: "include",
-      };
-      const decksResponse = await fetch(decksUrl, fetchConfig);
-      if (decksResponse.ok) {
-        const decksData = await decksResponse.json();
-        setUsersDecks(decksData.decks);
-      }
+    if (decksData) {
+      setUsersDecks(decksData.decks);
     }
-    getDecks();
-  }, []);
-
-  console.log(usersDecks);
+  }, [decksData]);
 
   const search = useSelector((state) => state.search);
   const { data, error, isLoading } = useGetCardsQuery(search);
@@ -43,7 +36,7 @@ function ContainerExample() {
   }
 
   if (data === undefined) {
-    return <div>Banana</div>;
+    return <div>No search results yet<br></br>Care for a Banana while you wait</div>;
   }
 
   if ("message" in data) {
@@ -55,19 +48,15 @@ function ContainerExample() {
     console.log(eventKeyObject);
     const multiverseId = eventKeyObject.multiverseId;
     if (eventKeyObject.placeToStore === "collection") {
-      const collectionUrl = `http://localhost:8000/collections/add/${multiverseId}`;
-      const response = await fetch(collectionUrl, {
-        method: "PUT",
-        credentials: "include",
-      });
+      addCardToCollection({multiverseId});
     } else {
       const deckId = eventKeyObject.placeToStore;
-      const deckUrl = `http://localhost:8000/decks/${deckId}/add/${multiverseId}`;
-      const response = await fetch(deckUrl, {
-        method: "PUT",
-        credentials: "include",
-      });
+      addCardToDeck({deckId, multiverseId});
     }
+  }
+
+  if (decksData !== undefined && data.cards.length === 1) {
+    navigate(`/card/${data.cards[0].multiverse_id}/`);
   }
 
   return (
