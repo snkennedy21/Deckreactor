@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Image from "react-bootstrap/Image";
@@ -38,7 +38,9 @@ function DeckDetail() {
                   sm="6"
                   xs="12"
                 >
+                  <Link to={`/card/${card.multiverse_id}`}>
                   <Image src={card.picture_url} style={{ width: "100%" }} />
+                  </Link>
                   <Button value={card.multiverse_id}>
                     <FaPlus></FaPlus>
                   </Button>

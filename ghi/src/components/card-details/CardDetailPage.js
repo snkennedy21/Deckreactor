@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Carousel from "react-bootstrap/Carousel";
-import AddToDeckForm from "../ui/AddToDeckForm";
+import AddToDeckForm from "./AddToDeckForm";
 import ParseSymbolsAndLineBreaks from "./ParseSymbolsAndLineBreaks";
 import { useDispatch, useSelector } from "react-redux";
 import getBackground from "./getBackground";
@@ -18,16 +18,11 @@ import getBackground from "./getBackground";
 function CardDetailPage() {
   const { multiverse_id } = useParams();
   const { data: card, error: cardError, isLoading: cardIsLoading } = useGetCardQuery(multiverse_id);
-  // const { data: symbols, error: symbolsError, isLoading: symbolsIsLoading } = useGetSymbolsQuery();
 
   let background_url = "";
-
   if (background_url.length === 0 && card) {
-    console.log(card)
     const color_id = (card.color_identity.length > 0 ? card.color_identity[0] : "None");
-    console.log('color_id', color_id)
     background_url = getBackground(color_id);
-    console.log(background_url)
   }
 
   if (cardIsLoading || cardError) {
@@ -48,7 +43,7 @@ function CardDetailPage() {
           <div className="card mb-4 box-shadow">
             <div className="card-body img-fluid">
             {
-              ["transform", "modal_dfc"].includes(card.layout) ? 
+              double_faced ? 
               <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
                 <Carousel className="img-fluid">
                     <Carousel.Item>
@@ -109,7 +104,8 @@ function CardDetailPage() {
             <div className="card-body">
               {double_faced ? <React.Fragment/> : <h3>{card.type_line}</h3>}
               {
-                double_faced ? 
+                double_faced
+                ? 
                 <React.Fragment>
                 <h2>{card.card_faces[0].name}</h2>
                 <h4>{card.card_faces[0].type_line}</h4>

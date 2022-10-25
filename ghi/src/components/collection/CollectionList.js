@@ -184,6 +184,7 @@ export default function MyCollection() {
                         <p className="mt-3">Card Price: {row.card_price}</p>
                       </td>
                       <td className="text-center">
+                        <Link to={`/card/${row.multiverse_id}/`}>
                         <img
                           className="p-1"
                           src={row.picture_url}
@@ -196,6 +197,7 @@ export default function MyCollection() {
                           alt="card_picture"
                           width="170px"
                         />
+                        </Link>
                         <br></br>
                         <Link to={`/card/${row.multiverse_id}`}>
                           <Button vaiant="success">See card details</Button>
@@ -229,12 +231,14 @@ export default function MyCollection() {
                         <p className="mt-3">Card Price: {row.card_price}</p>
                       </td>
                       <td className="text-center">
+                        <Link to={`/card/${row.multiverse_id}/`}>
                         <img
                           className="p-1"
                           src={row.picture_url}
                           alt="card_picture"
                           width="170px"
                         />
+                        </Link>
                         <br></br>
                         <Link to={`/card/${row.multiverse_id}`}>
                           <Button vaiant="success">See card details</Button>

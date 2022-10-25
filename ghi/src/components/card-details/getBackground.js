@@ -39,6 +39,9 @@ const colors_to_abbrevs = {
   "white": "W",
 }
 
+// getBackground accepts a color/abbreviation as a string, and 
+// returns a url of a background image matching the color theme
+
 function getBackground(color) {
   console.log(Object.keys(backgrounds))
   if (color.toLowerCase() in Object.keys(colors_to_abbrevs)) {
