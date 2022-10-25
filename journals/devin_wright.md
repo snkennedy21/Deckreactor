@@ -1,8 +1,18 @@
+# Week 17
+
+## October 24, 2022
+
+Today our team merged the most recent versions of our work from over the weekend, and I began integrating the RTK Query store that I set up with components in the app besides the card detail page. I also refactored much of the code in the card detail page into separate files to make the tools more reusable, such as parsing strings with symbol data or retrieving a themed background from a predetermined list.
+
 # Week 16
+
+# October 20, 2022
+
+Today I attempted to implement a store in Redux in order to store a logged in user's created decks. However, as I worked I realized I would need to implement async functions (such as when adding a new card to a deck, I would need to obtain that card's data from Scryfall's API). After reading errors that I would need custom middleware to handle my async methods within my query, I concluded that an API slice set up using RTK Query would make a better solution for data retrieval.
 
 # October 19, 2022
 
-Today I implemented formatting for displaying power, toughness, and loyalty stats for single- and double-faced cards on their detail page. Our group also worked together to finish the account authorization features. We were confronted with a bug that arose from the token 
+Today I implemented formatting for displaying power, toughness, and loyalty stats for single- and double-faced cards on their detail page. Our group also worked together to finish the account authorization features. We were confronted with a bug that arose from the token request completing too quickly for 
 
 ## October 18, 2022
 
