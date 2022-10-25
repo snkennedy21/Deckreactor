@@ -43,7 +43,6 @@ const colors_to_abbrevs = {
 // returns a url of a background image matching the color theme
 
 function getBackground(color) {
-  console.log(Object.keys(backgrounds))
   if (color.toLowerCase() in Object.keys(colors_to_abbrevs)) {
     color = colors_to_abbrevs[color.toLowerCase()];
   }

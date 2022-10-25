@@ -2,6 +2,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Carousel from 'react-bootstrap/Carousel';
+import Image from 'react-bootstrap/Image';
 import { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
@@ -135,18 +136,20 @@ export default function MyCollection2() {
             return (
               <Col key ={row.multiverse_id}>
                   <Card className="bg-white rounded shadow d-block mx-auto mb-4" style={{ width: '15rem' }}>
-                      <Link to={`/card/${row.multiverse_id}`}>
-                      <Card.Img variant="top" src={row.picture_url}/>
-                      </Link>
-                        <Card.Body>
-                          <Link to={`/card/${row.multiverse_id}`}>
-                          <Card.Title>{row.name}</Card.Title>
-                          </Link>
-                              <Card.Text >
-                                  <b>Card Price: {row.card_price}</b><br></br>
-                                  <b>Quantity: {row.quantity}</b><br></br>
-                              </Card.Text>
-                        </Card.Body>
+                      <div>
+                        <Link to={`/card/${row.multiverse_id}`}>
+                          <Card.Img as={Image} fluid={true} variant="top" className="" src={row.picture_url}/>
+                        </Link>
+                      </div>
+                      <Card.Body>
+                        <Link to={`/card/${row.multiverse_id}`}>
+                        <Card.Title>{row.name}</Card.Title>
+                        </Link>
+                            <Card.Text >
+                                <b>Card Price: {row.card_price}</b><br></br>
+                                <b>Quantity: {row.quantity}</b><br></br>
+                            </Card.Text>
+                      </Card.Body>
                   </Card>
                 </Col>
             );}
