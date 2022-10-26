@@ -57,13 +57,18 @@ function CardDetailPage() {
                     </Carousel.Item>
                 </Carousel>
               </Card> : 
+              card.layout === "flip"
+              ?
               <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
               <img className='img-fluid' src={card.image_uris.normal} style={{
                 transform: `rotate(${upsideDown === 'up' ? '0' : '180'}deg)`,
-                transition: 'all 0.75s 0.25s'
+                transition: 'all 0.4s 0.2s'
                 }} onClick={toggleUpsideDown} />
               </Card>
-
+              :
+              <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
+              <img className='img-fluid' src={card.image_uris.normal} />
+              </Card>
             }
             </div>
           </div>
