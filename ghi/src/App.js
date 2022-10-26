@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div className="page-container">
-      <div className="content-wrap">
+      <div className="content-wrap mb-3">
         <BrowserRouter basename={basename}>
           <Navbar />
           <Routes>

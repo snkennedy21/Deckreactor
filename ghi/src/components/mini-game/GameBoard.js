@@ -19,12 +19,12 @@ const GameBoard = () => {
     "oko-theif",
     "oko-theif",
     "tezzeret",
-    "tezzeret"
+    "tezzeret",
   ];
 
   // HELPER FUNCTION shuffle the list
 
-  const shuffle = array => {
+  const shuffle = (array) => {
     let currentIndex = array.length,
       temporaryValue,
       randomIndex;
@@ -46,7 +46,7 @@ const GameBoard = () => {
         id: index,
         name: name,
         flipped: false,
-        matched: false
+        matched: false,
       };
     })
   );
@@ -59,11 +59,11 @@ const GameBoard = () => {
   const handleClick = (name, index) => {
     let currentCard = {
       name,
-      index
+      index,
     };
 
     //update card is flipped
-    let updateCards = cardList.map(card => {
+    let updateCards = cardList.map((card) => {
       if (card.id === index) {
         card.flipped = true;
       }
@@ -82,7 +82,7 @@ const GameBoard = () => {
     }
   };
 
-  // logic to check card matches 
+  // logic to check card matches
 
   const check = () => {
     let updateCards = cardList;
@@ -101,16 +101,16 @@ const GameBoard = () => {
     setFlippedCards([]);
   };
 
-  // all cards matched 
+  // all cards matched
   const isGameOver = () => {
     let done = true;
-    cardList.forEach(card => {
+    cardList.forEach((card) => {
       if (!card.matched) done = false;
     });
     setGameOver(done);
   };
 
-// RESTART - REDO SETUP
+  // RESTART - REDO SETUP
   const restartGame = () => {
     setCardList(
       shuffle(cards).map((name, index) => {
@@ -118,7 +118,7 @@ const GameBoard = () => {
           id: index,
           name: name,
           flipped: false,
-          matched: false
+          matched: false,
         };
       })
     );
@@ -127,31 +127,35 @@ const GameBoard = () => {
     setGameOver(false);
   };
 
-//  DISPLAY
+  //  DISPLAY
 
   return (
-    <Container fluid="md" className="board-wrapper-scroll-y" style={{
-      padding: "25px",
-      backgroundImage: `url(https://media.magic.wizards.com/images/wallpaper/the_five_dragons-sl-background-1280x960.jpg)`,
-      backgroundRepeat: "no-repeat",
-      backgroundPositionY: "center",
-      backgroundSize: "cover",
-      height: "80vh"
-    }}>
-    <div className="game-board my-board-scrollbar">
-      {!gameOver &&
-        cardList.map((card, index) => (
-          <Card
-            key={index}
-            id={index}
-            name={card.name}
-            flipped={card.flipped}
-            matched={card.matched}
-            clicked={flippedCards.length === 2 ? () => {} : handleClick}
+    <Container
+      fluid="md"
+      className="board-wrapper-scroll-y"
+      style={{
+        padding: "25px",
+        backgroundImage: `url(https://media.magic.wizards.com/images/wallpaper/the_five_dragons-sl-background-1280x960.jpg)`,
+        backgroundRepeat: "no-repeat",
+        backgroundPositionY: "center",
+        backgroundSize: "cover",
+        height: "100%",
+      }}
+    >
+      <div className="game-board my-board-scrollbar">
+        {!gameOver &&
+          cardList.map((card, index) => (
+            <Card
+              key={index}
+              id={index}
+              name={card.name}
+              flipped={card.flipped}
+              matched={card.matched}
+              clicked={flippedCards.length === 2 ? () => {} : handleClick}
             />
-        ))}
-      {gameOver && <GameOver restartGame={restartGame} />}
-    </div>
+          ))}
+        {gameOver && <GameOver restartGame={restartGame} />}
+      </div>
     </Container>
   );
 };
