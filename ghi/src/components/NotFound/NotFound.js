@@ -16,7 +16,7 @@ function NotFoundPage() {
   const [found, setFound] = useState()
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+//   const handleShow = () => setShow(true);
 
   const image = {"fblthp" : "https://cards.scryfall.io/large/front/5/2/52558748-6893-4c72-a9e2-e87d31796b59.jpg?1559959349",
                 "access" : "https://cards.scryfall.io/normal/front/0/9/09aa7744-680f-4c2a-8fa0-9cb0c176ae8f.jpg?1562814444"}
@@ -26,14 +26,15 @@ function NotFoundPage() {
 
   window.addEventListener("click", function(e) {
         console.log(`clicked here   x:${e.x} | y:${e.y} `)
-        if(e.x > 335 && e.x < 610 && e.y > 247 && e.y < 447){
+        if(e.x > 335 && e.x < 700 && e.y > 230 && e.y < 530){
         setFound(true)
         setShow(true)
         }
         })
-        return ( 
+        return ( <div className='text-center fs-3'>
+                Find and click on Fblthp
                 <div className="p-4 img-fluid" style={{
-                background: `url("https://media.magic.wizards.com/images/wallpaper/where_fbithp_2560x1600.jpg") no-repeat center center fixed`,
+                background: `url("https://media.magic.wizards.com/images/wallpaper/where_fbithp_2560x1600.jpg") no-repeat center fixed`,
                 backgroundSize: "contain",
                 height: "100vh",
                 }}>                    
@@ -62,6 +63,7 @@ function NotFoundPage() {
                         </Modal.Footer>
                 </Modal>  
                 </div>     
+                </div>
         );
     }
 export default NotFoundPage;
