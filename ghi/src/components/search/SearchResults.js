@@ -37,8 +37,6 @@ function ContainerExample() {
   const search = useSelector((state) => state.search);
   const { data, error, isLoading } = useGetCardsQuery(search);
 
-  console.log(decksData);
-
   if (isLoading) {
     return (
       <Container>
@@ -70,11 +68,12 @@ function ContainerExample() {
     }
   }
 
-  console.log(location.pathname);
   if (data !== undefined && data.cards.length === 1) {
     dispatch(searchActions.updateSearch(""));
     navigate(`/card/${data.cards[0].multiverse_id}/`);
   }
+
+  console.log(decksData);
 
   return (
     <Container>
@@ -89,36 +88,40 @@ function ContainerExample() {
                   style={{ width: "100%" }}
                 />
               </Link>
-              <Dropdown className="mb-4" onSelect={addCard}>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  Add To
-                </Dropdown.Toggle>
+              {decksData === undefined ? (
+                <></>
+              ) : (
+                <Dropdown className="mb-4" onSelect={addCard}>
+                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    Add To
+                  </Dropdown.Toggle>
 
-                <Dropdown.Menu>
-                  <Dropdown.Item
-                    eventKey={JSON.stringify({
-                      placeToStore: "collection",
-                      multiverseId: card.multiverse_id,
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      eventKey={JSON.stringify({
+                        placeToStore: "collection",
+                        multiverseId: card.multiverse_id,
+                      })}
+                    >
+                      My Collection
+                    </Dropdown.Item>
+                    <Dropdown.Divider />
+                    {decksData.decks.map((deck) => {
+                      return (
+                        <Dropdown.Item
+                          key={deck.id}
+                          eventKey={JSON.stringify({
+                            placeToStore: deck.id,
+                            multiverseId: card.multiverse_id,
+                          })}
+                        >
+                          {deck.name}
+                        </Dropdown.Item>
+                      );
                     })}
-                  >
-                    My Collection
-                  </Dropdown.Item>
-                  <Dropdown.Divider />
-                  {decksData.decks.map((deck) => {
-                    return (
-                      <Dropdown.Item
-                        key={deck.id}
-                        eventKey={JSON.stringify({
-                          placeToStore: deck.id,
-                          multiverseId: card.multiverse_id,
-                        })}
-                      >
-                        {deck.name}
-                      </Dropdown.Item>
-                    );
-                  })}
-                </Dropdown.Menu>
-              </Dropdown>
+                  </Dropdown.Menu>
+                </Dropdown>
+              )}
             </Col>
           );
         })}
