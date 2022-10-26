@@ -7,16 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLogInMutation } from "../../store/accountApi";
 import { useCallback } from "react";
 import logo from "../../images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { updateField } from "../../store/accountSlice";
 import { useGetMyDecksQuery } from "../../store/myCardsApi";
-import {
-  eventTargetSelector as target,
-  preventDefault,
-} from "../../store/utils";
 
 function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { email, username, password } = useSelector((state) => state.account);
   const { deckData, deckError, deckIsLoading } = useGetMyDecksQuery();
   const [logIn, { error, isLoading: loginInLoading }] = useLogInMutation();
@@ -38,7 +35,12 @@ function Login() {
       <Form
         className="mt-3 mb-3 w-100 justify-content-center"
         method="POST"
-        onSubmit={preventDefault(logIn, target)}
+        onSubmit={ (e) => {
+          e.preventDefault()
+          logIn(e.target)
+          navigate('/')
+        }
+      }
       >
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Control
