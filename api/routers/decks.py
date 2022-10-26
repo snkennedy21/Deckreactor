@@ -81,7 +81,7 @@ async def add_card_to_deck(
   card_dict = {
     "name": content.get('name'),
     "multiverse_id": content.get('multiverse_ids')[0],
-    "mana": content.get('mana_cost'),
+    # "mana": content.get('mana_cost'),
     "card_type": content.get("type_line"),
     "cmc": content.get('cmc'),
     "formats": [legality for legality in content.get('legalities') if content.get('legalities')[legality] == "legal"]
@@ -92,9 +92,10 @@ async def add_card_to_deck(
     "transform",
     ]:
     card_dict["picture_url"] = content.get("card_faces")[0].get("image_uris").get("normal")
-  
+    card_dict["mana"] = content.get("card_faces")[0].get("mana_cost")
   else:
     card_dict["picture_url"] = content.get("image_uris").get("normal")
+    card_dict["mana"] = content.get("mana_cost")
 
   deck = repo.add_card_to_deck(card=card_dict, deck_id=deck_id)
 

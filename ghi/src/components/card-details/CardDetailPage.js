@@ -11,12 +11,17 @@ import { useGetCardQuery } from "../../store/scryfallWebApi";
 function CardDetailPage() {
   const { multiverse_id } = useParams();
   const { data: card, error: cardError, isLoading: cardIsLoading } = useGetCardQuery(multiverse_id);
+  const [upsideDown, setUpsideDown] = useState("up");
+  const [imageStyle, setImageStyle] = useState("");
+  const [backgroundUrl, setBackgroundUrl] = useState("")
 
-  let background_url = "";
-  if (background_url.length === 0 && card) {
-    const color_id = (card.color_identity.length > 0 ? card.color_identity[0] : "None");
-    background_url = getBackground(color_id);
-  }
+  useEffect(() => {
+    if (backgroundUrl === "" && card) {
+      const color_id = (card.color_identity.length > 0 ? card.color_identity[0] : "None");
+      setBackgroundUrl(getBackground(color_id));
+    }
+    setImageStyle(`{transform: rotate(${upsideDown === 'up' ? '0' : '180'}deg);}`);
+  }, [upsideDown, card])
 
   if (cardIsLoading || cardError) {
     return (<React.Fragment>Loading...</React.Fragment>)
@@ -24,10 +29,15 @@ function CardDetailPage() {
 
   const double_faced = ["transform", "modal_dfc"].includes(card.layout);
 
+  // handle flip layout cards (rotate 180º)
+  function toggleUpsideDown() {
+    setUpsideDown(upsideDown === "up" ? "down" : "up")
+  }
+
   return (
     <React.Fragment>
     <div className="p-4 img-fluid" style={{
-      background: `url(${background_url}) no-repeat center center fixed`,
+      background: `url(${backgroundUrl}) no-repeat center center fixed`,
       backgroundSize: "cover",
     }}>
       <div className="row">
@@ -48,7 +58,10 @@ function CardDetailPage() {
                 </Carousel>
               </Card> : 
               <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
-              <img className="img-fluid" src={card.image_uris.normal}/>
+              <img className='img-fluid' src={card.image_uris.normal} style={{
+                transform: `rotate(${upsideDown === 'up' ? '0' : '180'}deg)`,
+                transition: 'all 0.75s 0.25s'
+                }} onClick={toggleUpsideDown} />
               </Card>
 
             }
@@ -58,7 +71,7 @@ function CardDetailPage() {
           { "flavor_text" in card || ("card_faces" in card && ("flavor_text" in card.card_faces[0] || "flavor_text" in card.card_faces[1])) ?
           <div className="card mb-4 box-shadow p-4">
             {
-              double_faced ? 
+              Object.keys(card).includes("card_faces") ? 
               <React.Fragment>
               { 
               "flavor_text" in card.card_faces[0] ? 
@@ -95,9 +108,9 @@ function CardDetailPage() {
           <div className="card mb-4 box-shadow">
             <div className="card-header"><h1 className="my-2">{card.name}</h1></div>
             <div className="card-body">
-              {double_faced ? <React.Fragment/> : <h3>{card.type_line}</h3>}
+              {Object.keys(card).includes("card_faces") ? <React.Fragment/> : <h3>{card.type_line}</h3>}
               {
-                double_faced
+                Object.keys(card).includes("card_faces")
                 ? 
                 <React.Fragment>
                 <h2>{card.card_faces[0].name}</h2>
@@ -161,7 +174,7 @@ function CardDetailPage() {
                     <tr key="mana cost row">
                       <td>Mana cost:</td>
                       {
-                        double_faced ? 
+                        Object.keys(card).includes("card_faces") ? 
                         <td><ParseSymbolsAndLineBreaks string={card.card_faces[0].mana_cost} /></td>
                         :
                         <td><ParseSymbolsAndLineBreaks string={card.mana_cost} /></td> 
