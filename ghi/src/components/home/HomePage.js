@@ -12,7 +12,7 @@ function HomePage() {
 
   useEffect(() => {
     async function queryScryfall() {
-      const colorArray = ["wizard", "spider"];
+      const colorArray = ["werewolf", "vampire"];
 
       const randomIndex = Math.floor(Math.random() * 2);
       const search = colorArray[randomIndex];
