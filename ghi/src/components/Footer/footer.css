@@ -1,0 +1,22 @@
+.main-footer {
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+
+  color: black;
+  text-align: center;
+  height: auto;
+  padding: 20px;
+}
+
+.divider {
+  width: 40%;
+  margin: auto;
+  height: 6px;
+  color: black;
+}
+
+.list-unstyled {
+  text-align: center;
+}

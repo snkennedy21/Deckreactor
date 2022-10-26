@@ -1,4 +1,44 @@
+# Week 17
+
+## October 24, 2022
+
+Today our team merged the most recent versions of our work from over the weekend, and I began integrating the RTK Query store that I set up with components in the app besides the card detail page. I also refactored much of the code in the card detail page into separate files to make the tools more reusable, such as parsing strings with symbol data or retrieving a themed background from a predetermined list.
+
+# Week 16
+
+# October 20, 2022
+
+Today I attempted to implement a store in Redux in order to store a logged in user's created decks. However, as I worked I realized I would need to implement async functions (such as when adding a new card to a deck, I would need to obtain that card's data from Scryfall's API). After reading errors that I would need custom middleware to handle my async methods within my query, I concluded that an API slice set up using RTK Query would make a better solution for data retrieval.
+
+# October 19, 2022
+
+Today I implemented formatting for displaying power, toughness, and loyalty stats for single- and double-faced cards on their detail page. Our group also worked together to finish the account authorization features. We were confronted with a bug that arose from the token request completing too quickly for 
+
+## October 18, 2022
+
+Today I added mana symbols to the card detail page, with code that can be reused to parse any string with those symbols. Our team worked together to implement signup/login/logout functionality. I learned more about how data is sent to/retrieved from the Redux store, and began work on a form on the card detail page to allow users to send the card to their deck or collection.
+
+## October 17, 2022
+
+Today I worked on creating a card detail view page based on the card's multiverse ID which is passed into the component through the URL path using UseParams(). I was able to display the card's front/back images, its details, and a background that corresponds to the color of the card. I am trying to figure out how to convert the strings found in the card data (e.g., "{W}" refers to one white mana) into the actual card symbols using Scryfall's api call for symbols.
+
 # Week 15
+
+## October 14, 2022
+
+Today I experimented creating React components that could be reusable in different areas of our site, such as the card search results component. I also researched React Redux and the ways it might be applied to data that would be best stored in a global state, such as the nav search bar and a user's currently selected deck.
+
+## October 13, 2022
+
+Today our group began exploring options for which CSS framework would be best to use for our front end. We researched Material UI as a possible solution, but decided that Bootstrap would provide a more practical solution to fit with our timetable.
+
+## October 12, 2022
+
+Today I worked on bug fixes and added some extra routes to our backend API. We added routes for user collections, including creation of a user's collection on account creation, and adding/removing cards from collection. We also worked on adding cascade on account deletion functionality for a deleted user's decks and collection. We also noticed that certain API routes require input of a user's account_id to run, while certain others (e.g., create deck and view my decks) obtained the data from the current logged in user's token. We discussed the viability of each approach, and whether refactoring of certain routes was warranted for account security purposes.
+
+## October 11, 2022
+
+Today we nearly finished work on our API routes to communicate with our front end. These included routes to add/remove cards to a user's deck, as well as to remove all cards of particular name from the deck. We were unsure whether to also include a route for the Advanced Search page, and ultimately decided that what we had already made for the Nav bar search was sufficient. We reasoned that we could simply construct the required search query string using the values from the Advanced Search form fields on the front end, and that string could then be passed to Scryfall the exact same way as if the user had typed the properly formatted query string out themselves in the Nav search bar.
 
 ## October 10, 2022
 
