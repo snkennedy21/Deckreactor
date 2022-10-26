@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import Image from "react-bootstrap/esm/Image";
 import logo from "../../images/logo.png";
+import { Link } from "react-router-dom";
 
 function HomePage() {
   const [homepageCards, setHomepageCards] = useState([]);
@@ -62,32 +63,40 @@ function HomePage() {
                   <Carousel.Item key={cardObject["1"].multiverse_id}>
                     <div style={{ display: "flex" }}>
                       <span className="m-2" style={{ width: "100%" }}>
+                        <Link to={`/card/${cardObject["1"].multiverse_id}`}>
                         <img
                           className="d-block w-100"
                           src={cardObject["1"].picture_url}
                           style={{ width: "100%" }}
                         />
+                        </Link>
                       </span>
                       <span className="m-2" style={{ width: "100%" }}>
+                        <Link to={`/card/${cardObject["2"].multiverse_id}`}>
                         <img
                           className="d-block w-100"
                           src={cardObject["2"].picture_url}
                           style={{ width: "100%" }}
                         />
+                        </Link>
                       </span>
                       <span className="m-2" style={{ width: "100%" }}>
+                        <Link to={`/card/${cardObject["3"].multiverse_id}`}>
                         <img
                           className="d-block w-100"
                           src={cardObject["3"].picture_url}
                           style={{ width: "100%" }}
                         />
+                        </Link>
                       </span>
                       <span className="m-2" style={{ width: "100%" }}>
+                        <Link to={`/card/${cardObject["4"].multiverse_id}`}>
                         <img
                           className="d-block w-100"
                           src={cardObject["4"].picture_url}
                           style={{ width: "100%" }}
                         />
+                        </Link>
                       </span>
                     </div>
                   </Carousel.Item>
