@@ -1,21 +1,24 @@
+import styles from "./AdvancedSearch.module.css";
+import SearchResults from "./SearchResults";
+
+// Bootstrap Imports
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import styles from "./AdvancedSearch.module.css";
 
-import SearchResults from "./SearchResults";
+// React and Redux Imports
 import { useState } from "react";
 import { searchActions } from "../../store/store";
 import { useDispatch } from "react-redux";
 
 const colorsArray = [
-  { name: "White", checked: false, id: "0" },
-  { name: "Blue", checked: false, id: "1" },
-  { name: "Black", checked: false, id: "2" },
-  { name: "Red", checked: false, id: "3" },
-  { name: "Green", checked: false, id: "4" },
+  { name: "White", value: "w", checked: false, id: "0" },
+  { name: "Blue", value: "u", checked: false, id: "1" },
+  { name: "Black", value: "b", checked: false, id: "2" },
+  { name: "Red", value: "r", checked: false, id: "3" },
+  { name: "Green", value: "g", checked: false, id: "4" },
 ];
 
 function AdvancedSearch() {
@@ -28,15 +31,14 @@ function AdvancedSearch() {
   const [type, setType] = useState("");
   const [legalStatus, setLegalStatus] = useState("legal");
   const [format, setFormat] = useState("");
-
   const dispatch = useDispatch();
 
   function colorChangeHandler(e) {
     setColorlessChecked(false);
     const index = e.target.id;
-    const newArray = colorsArray;
-    newArray[index].checked = !newArray[index].checked;
-    setColors([...newArray]);
+    const colorsArrayCopy = [...colorsArray];
+    colorsArrayCopy[index].checked = !colorsArrayCopy[index].checked;
+    setColors(colorsArrayCopy);
   }
 
   function uncheckColorsHandler() {
@@ -52,59 +54,53 @@ function AdvancedSearch() {
     colors
       .filter((color) => color.checked === true)
       .forEach((color) => {
-        if (color.name === "Blue") {
-          selectedMagicColors.push("U");
-        } else selectedMagicColors.push(color.name[0]);
+        selectedMagicColors.push(color.value);
       });
     return selectedMagicColors.join("");
   }
 
-  function getUnselectedManaColors() {
-    const unselectedMagicColors = [];
-    colors
-      .filter((color) => color.checked === false)
-      .forEach((color) => {
-        if (color.name === "Blue") {
-          unselectedMagicColors.push("U");
-        } else unselectedMagicColors.push(color.name[0]);
-      });
+  function buildSearchString() {
+    let selectedManaColors = getSelectedManaColors();
 
-    return unselectedMagicColors.join("");
+    // Base Query
+    let searchString = manaCost === 20 ? "" : `cmc<=${manaCost}`;
+    if (name !== "") {
+      searchString += ` ${name}`;
+    }
+
+    // Add Selected Colors
+    if (selectedManaColors !== "") {
+      if (colorStatus === "exactly") {
+        searchString += ` color=${selectedManaColors}`;
+      } else if (colorStatus === "including") {
+        searchString += ` color>=${selectedManaColors}`;
+      } else if (colorStatus === "at most") {
+        searchString += ` color<=${selectedManaColors}`;
+      }
+    }
+
+    if (colorlessChecked) {
+      searchString += " color=c";
+    }
+
+    if (rarity !== "") {
+      searchString += ` rarity:${rarity}`;
+    }
+    if (type !== "") {
+      searchString += ` t:${type}`;
+    }
+    if (format !== "") {
+      searchString += ` ${legalStatus}:${format}`;
+    }
+
+    return searchString;
   }
 
   function submitHandler(e) {
     e.preventDefault();
-    let selectedManaColors = getSelectedManaColors();
-    let unselectedManaColors = getUnselectedManaColors();
-
-    // Base Query
-    let queryString = manaCost === 20 ? '' : `cmc<=${manaCost}`;
-    if (name !== "") {
-      queryString += ` ${name}`;
-    }
-
-    // Handle Colors
-    if (selectedManaColors !== "") {
-      if (colorStatus === "exactly") {
-        queryString += ` color=${selectedManaColors}`;
-      } else if (colorStatus === "including") {
-        queryString += ` color>=${selectedManaColors}`;
-      } else if (colorStatus === "at most") {
-        queryString += ` color<=${selectedManaColors}`;
-      }
-    }
-
-    if (rarity !== "") {
-      queryString += ` rarity:${rarity}`;
-    }
-    if (type !== "") {
-      queryString += ` t:${type}`;
-    }
-    if (format !== "") {
-      queryString += ` ${legalStatus}:${format}`;
-    }
-    
-    dispatch(searchActions.updateSearch(queryString));
+    const searchString = buildSearchString();
+    console.log(searchString);
+    dispatch(searchActions.updateSearch(searchString));
   }
 
   return (
@@ -152,7 +148,7 @@ function AdvancedSearch() {
                       <Form.Check
                         onChange={colorChangeHandler}
                         id={color.id}
-                        value={color.name}
+                        value={color.value}
                         label={color.name}
                         checked={color.checked}
                         type="checkbox"
@@ -187,7 +183,7 @@ function AdvancedSearch() {
                 aria-label="Default select example"
                 onChange={(e) => setRarity(e.target.value)}
               >
-                <option value="0">Open this select menu</option>
+                <option value="">Any</option>
                 <option value="c">Common</option>
                 <option value="u">Uncommon</option>
                 <option value="r">Rare</option>
@@ -201,7 +197,7 @@ function AdvancedSearch() {
                 aria-label="Default select example"
                 onChange={(e) => setType(e.target.value)}
               >
-                <option value="0">Open this select menu</option>
+                <option value="">Any</option>
                 <option value="artifact">Artifact</option>
                 <option value="creature">Creature</option>
                 <option value="enchantment">Enchantment</option>
@@ -231,7 +227,7 @@ function AdvancedSearch() {
                     aria-label="Default select example"
                     onChange={(e) => setFormat(e.target.value)}
                   >
-                    <option value="0">Open this select menu</option>
+                    <option value="">Any</option>
                     <option value="Standard">Standard</option>
                     <option value="Future Standard">Future Standard</option>
                     <option value="Historic">Historic</option>

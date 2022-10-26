@@ -6,7 +6,7 @@ import React from "react";
 function ParseSymbolsAndLineBreaks(props) {
   const string = props.string;
   const { data: symbols, error: symbolsError, isLoading: symbolsIsLoading } = useGetSymbolsQuery();
-  
+  if (string === undefined || string === "") {return(<></>)}
   const symbolUrls = {}
   if (symbols) {
     // assemble symbolUrls object {symbol: svg_uri}
