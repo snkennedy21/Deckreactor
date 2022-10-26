@@ -5,7 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Image from "react-bootstrap/Image";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import {
   useLogOutMutation,
@@ -26,9 +26,11 @@ function LogoutButton() {
   const [logOut, { data }] = useLogOutMutation();
 
   return (
-    <Link to="/"><Button onClick={logOut} variant="outline-danger mx-2">
-      Logout
-    </Button></Link>
+    <Link to="/">
+      <Button onClick={logOut} variant="outline-danger mx-2">
+        Logout
+      </Button>
+    </Link>
   );
 }
 

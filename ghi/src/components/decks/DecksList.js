@@ -26,7 +26,7 @@ function DecksList() {
   }
 
   if (decksIsLoading || decksError) {
-    return (<>banana</>)
+    return (<>Loading</>)
   }
 
   return (

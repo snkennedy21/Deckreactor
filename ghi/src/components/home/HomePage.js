@@ -1,6 +1,10 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
+import "./HomePage.css";
 import { useEffect, useState } from "react";
+import Container from "react-bootstrap/esm/Container";
+import Image from "react-bootstrap/esm/Image";
+import logo from "../../images/logo.png";
 
 function HomePage() {
   const [homepageCards, setHomepageCards] = useState([]);
@@ -20,7 +24,7 @@ function HomePage() {
         let index = 0;
         cardData.cards.forEach((card, i) => {
           slideObject[index] = card;
-          if (i % 3 === 0) {
+          if (i % 4 === 0) {
             array.push(slideObject);
             slideObject = {};
             index = 0;
@@ -39,39 +43,61 @@ function HomePage() {
   });
 
   return (
-    <div style={{ width: "75%" }}>
-      <Carousel style={{ width: "100%" }}>
-        {homepageCards.map((cardObject) => {
-          return (
-            <Carousel.Item key={cardObject["1"].multiverse_id}>
-              <div style={{ display: "flex" }}>
-                <span className="m-2" style={{ width: "100%" }}>
-                  <img
-                    className="d-block w-100"
-                    src={cardObject["1"].picture_url}
-                    style={{ width: "100%" }}
-                  />
-                </span>
-                <span className="m-2" style={{ width: "100%" }}>
-                  <img
-                    className="d-block w-100"
-                    src={cardObject["2"].picture_url}
-                    style={{ width: "100%" }}
-                  />
-                </span>
-                <span className="m-2" style={{ width: "100%" }}>
-                  <img
-                    className="d-block w-100"
-                    src={cardObject["3"].picture_url}
-                    style={{ width: "100%" }}
-                  />
-                </span>
-              </div>
-            </Carousel.Item>
-          );
-        })}
-      </Carousel>
-    </div>
+    <React.Fragment>
+      <div className="main-page">
+        <Container className="shadow banner px-4 py-5 mb-5 mt-5 text-center rounded">
+          <h1 className="display-5 fw-bold color-primary">DeckReactor</h1>
+          <div className="col-lg-6 mx-auto">
+            <p className="lead mb-4">
+              Manage your Magic the Gathering collection
+            </p>
+          </div>
+        </Container>
+
+        <div>
+          <Container className="card-carousel">
+            <Carousel style={{ width: "100%" }}>
+              {homepageCards.map((cardObject) => {
+                return (
+                  <Carousel.Item key={cardObject["1"].multiverse_id}>
+                    <div style={{ display: "flex" }}>
+                      <span className="m-2" style={{ width: "100%" }}>
+                        <img
+                          className="d-block w-100"
+                          src={cardObject["1"].picture_url}
+                          style={{ width: "100%" }}
+                        />
+                      </span>
+                      <span className="m-2" style={{ width: "100%" }}>
+                        <img
+                          className="d-block w-100"
+                          src={cardObject["2"].picture_url}
+                          style={{ width: "100%" }}
+                        />
+                      </span>
+                      <span className="m-2" style={{ width: "100%" }}>
+                        <img
+                          className="d-block w-100"
+                          src={cardObject["3"].picture_url}
+                          style={{ width: "100%" }}
+                        />
+                      </span>
+                      <span className="m-2" style={{ width: "100%" }}>
+                        <img
+                          className="d-block w-100"
+                          src={cardObject["4"].picture_url}
+                          style={{ width: "100%" }}
+                        />
+                      </span>
+                    </div>
+                  </Carousel.Item>
+                );
+              })}
+            </Carousel>
+          </Container>
+        </div>
+      </div>
+    </React.Fragment>
   );
 }
 

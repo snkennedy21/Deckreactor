@@ -4,12 +4,11 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
 import Spinner from "react-bootstrap/Spinner";
-import { Link } from "react-router-dom";
-
+import { Link, Navigate, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetCardsQuery } from "../../store/scryfallApi";
-
+import { searchActions } from "../../store/store";
 import {
   useGetMyDecksQuery,
   useAddCardToCollectionMutation,
@@ -18,6 +17,15 @@ import {
 
 function ContainerExample() {
   const [usersDecks, setUsersDecks] = useState([]);
+  const {
+    data: decksData,
+    error: decksError,
+    isLoading: decksIsLoading,
+  } = useGetMyDecksQuery();
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
 
   const [addCardToDeck, { addToDeckError, isLoading: addCardToDeckLoading }] =
     useAddCardToDeckMutation();
@@ -25,11 +33,6 @@ function ContainerExample() {
     addCardToCollection,
     { addToCollectionError, isLoading: addCardToCollectionLoading },
   ] = useAddCardToCollectionMutation();
-  const {
-    data: decksData,
-    getDeckError,
-    isLoading: decksLoading,
-  } = useGetMyDecksQuery();
 
   const search = useSelector((state) => state.search);
   const { data, error, isLoading } = useGetCardsQuery(search);
@@ -45,7 +48,11 @@ function ContainerExample() {
   }
 
   if (data === undefined) {
-    return <div>Banana</div>;
+    return (
+      <div>
+        No search results yet<br></br>Care for a Banana while you wait
+      </div>
+    );
   }
 
   if ("message" in data) {
@@ -61,6 +68,12 @@ function ContainerExample() {
       const deckId = eventKeyObject.placeToStore;
       addCardToDeck({ multiverseId, deckId });
     }
+  }
+
+  console.log(location.pathname);
+  if (data !== undefined && data.cards.length === 1) {
+    dispatch(searchActions.updateSearch(""));
+    navigate(`/card/${data.cards[0].multiverse_id}/`);
   }
 
   return (

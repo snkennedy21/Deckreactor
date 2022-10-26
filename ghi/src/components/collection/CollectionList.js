@@ -3,74 +3,77 @@ import { useEffect, useState, useReducer } from "react";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import "./collection.css";
+import { useGetMyCollectionQuery, useAddCardToCollectionMutation, useRemoveCardFromCollectionMutation } from "../../store/myCardsApi";
 
 export default function MyCollection() {
-  const [collection, setCollection] = useState([]);
+  let [collection, setCollection] = useState([]);
   const [filteredCollection, setFilteredCollection] = useState([]);
-  const [reducerValue, collectionUpdater] = useReducer((x) => x + 1, 0);
+  // const [reducerValue, collectionUpdater] = useReducer((x) => x + 1, 0);
+  const [search, setSearch] = useState("");
+  const [addCardToCollection] = useAddCardToCollectionMutation();
+  const [removeCardFromCollection] = useRemoveCardFromCollectionMutation();
+  const { data: collectionData, error: collectionError, isLoading: collectionIsLoading } = useGetMyCollectionQuery();
+
+  useEffect(() => {
+    if (collectionData) {
+      setCollection(collectionData.cards);
+    }
+    if (search === "") {
+      setFilteredCollection(collection);
+    } else if (search.length > 0) {
+      let cardMatches = [];
+      collection.forEach(card => {
+          if (card.name.toLowerCase().includes(search.toLowerCase())) {
+              cardMatches.push(card);
+          }
+      });
+      setFilteredCollection(cardMatches);
+    }
+  }, [collectionData, search]);
 
   const handleDelete = (multiverse_id) => {
-    fetch(
-      `${process.env.REACT_APP_API_HOST}/collections/remove_one/${multiverse_id}`,
-      {
-        method: "PUT",
-        credentials: "include",
-      }
-    );
-
-    for (var card of filteredCollection) {
-      if (card.multiverse_id === multiverse_id && card.quantity === 1) {
-        card.quantity = 0;
-      } else if (card.multiverse_id === multiverse_id && card.quantity >= 1) {
-        card.quantity = card.quantity -= 1;
-      }
-    }
-    collectionUpdater();
+    removeCardFromCollection({multiverseId: multiverse_id});
   };
 
   const handleIncrease = (multiverse_id) => {
-    fetch(
-      `${process.env.REACT_APP_API_HOST}/collections/add/${multiverse_id}`,
-      {
-        method: "PUT",
-        credentials: "include",
-      }
-    );
-    for (var card of filteredCollection) {
-      if (card.multiverse_id === multiverse_id) {
-        card.quantity = card.quantity += 1;
-      }
-    }
-    collectionUpdater();
+    addCardToCollection({multiverseId: multiverse_id});
   };
-
-  useEffect(() => {
-    async function getCollection() {
-      const url = `${process.env.REACT_APP_API_HOST}/collections/`;
-      const response = await fetch(url, {
-        method: "GET",
-        credentials: "include",
-      });
-      if (response.ok) {
-        const data = await response.json();
-        console.log(`${data.cards.length} card(s) rendered`);
-        setCollection(data.cards);
-        setFilteredCollection(data.cards);
-      }
-    }
-    getCollection();
-  }, []);
 
   const handleInputChange = (event) => {
-    let search = event.target.value.toLowerCase();
-    let cardMatches = [];
-    collection.forEach((card) => {
-      if (card.name.toLowerCase().includes(search)) {
-        cardMatches.push(card);
-      }
-    });
-    setFilteredCollection(cardMatches);
+    setSearch(event.target.value.toLowerCase());
   };
+
+
+
+  if (collectionIsLoading) {
+    return (
+      <div className="container-fluid">
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+          }}
+          id="search-collection-form"
+        >
+          <div className="input-group mb-3 p-4">
+            <input
+              onChange={handleInputChange}
+              className="form-control"
+              name="searchCOLLECTION"
+              id="searchCOLLECTION"
+              type="search"
+              placeholder="Search collection"
+            />
+          </div>
+        </form>
+        <div className="container">
+          <h1>Collection List</h1>
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  collection = collectionData.cards;
 
   let collection_value = 0;
   let collection_count = 0;
@@ -82,7 +85,7 @@ export default function MyCollection() {
     }
   }
 
-  if (filteredCollection.length === 0) {
+  if (filteredCollection.length === 0 && search !== "") {
     return (
       <div className="container-fluid">
         <form
@@ -163,7 +166,8 @@ export default function MyCollection() {
                   return (
                     <tr key={row.multiverse_id}>
                       <td className="text-center">
-                        {row.name} <br></br>
+                        <Link to={`/card/${row.multiverse_id}`}>{row.name}</Link>
+                        <br></br>
                         <p className="mt-3">Quantity: {row.quantity}</p>
                         <Button
                           className="mb-1"
@@ -184,6 +188,7 @@ export default function MyCollection() {
                         <p className="mt-3">Card Price: {row.card_price}</p>
                       </td>
                       <td className="text-center">
+                        <Link to={`/card/${row.multiverse_id}/`}>
                         <img
                           className="p-1"
                           src={row.picture_url}
@@ -196,10 +201,8 @@ export default function MyCollection() {
                           alt="card_picture"
                           width="170px"
                         />
-                        <br></br>
-                        <Link to={`/card/${row.multiverse_id}`}>
-                          <Button vaiant="success">See card details</Button>
                         </Link>
+                        <br></br>
                       </td>
                     </tr>
                   );
@@ -207,7 +210,8 @@ export default function MyCollection() {
                   return (
                     <tr key={row.multiverse_id}>
                       <td className="text-center">
-                        {row.name} <br></br>
+                      <Link to={`/card/${row.multiverse_id}`}>{row.name}</Link>
+                      <br></br>
                         <p className="mt-3">Quantity: {row.quantity}</p>
                         <Button
                           className="mb-1"
@@ -229,16 +233,15 @@ export default function MyCollection() {
                         <p className="mt-3">Card Price: {row.card_price}</p>
                       </td>
                       <td className="text-center">
+                        <Link to={`/card/${row.multiverse_id}/`}>
                         <img
                           className="p-1"
                           src={row.picture_url}
                           alt="card_picture"
                           width="170px"
                         />
-                        <br></br>
-                        <Link to={`/card/${row.multiverse_id}`}>
-                          <Button vaiant="success">See card details</Button>
                         </Link>
+                        <br></br>
                       </td>
                     </tr>
                   );
