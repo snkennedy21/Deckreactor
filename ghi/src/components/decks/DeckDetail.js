@@ -205,7 +205,54 @@ function DeckDetail() {
   }
 
   if (!decksData || !legalities) {
-    return <>Loading...</>;
+    return <><Button onClick={navigateToDecks}>Back To Decks</Button>
+    <p>Loading...</p></>;
+  // } else if (decksData) {
+  //   return(
+  //   <div className="p-4 img-fluid" style={{
+  //     background: `url(${backgroundUrl}) no-repeat center center fixed`,
+  //     backgroundSize: "cover",
+  //     }}>
+  //     <div className="row">
+  //       <div className="col-sm-6">
+  //         {/* DECK OVERVIEW */}
+  //         <div className="card mb-4 box-shadow">
+  //           <div className="card-header"><h1 className="my-2">{decksData.decks.find((deck) => deck.id === deck_id).name}</h1></div>
+  //           <div className="card-body">
+              
+  //             <div className="table-responsive">
+  //               <table className="table table-striped table-sm">
+  //                 <tbody>
+  //                   <tr key="mana symbols row">
+  //                     <td><ParseSymbolsAndLineBreaks string={dominantColors.length == 2 ? `{${dominantColors[0]}}{${dominantColors[1]}}` : dominantColors.length == 1 ? `{${dominantColors[0]}}` : ''}></ParseSymbolsAndLineBreaks></td>
+  //                     <td></td>
+  //                   </tr>
+  //                   <tr key="mana cost row">
+  //                     <td>Average mana cost:</td>
+  //                     <td>{averageCmc}</td>
+  //                   </tr>
+  //                   <tr key="formats row">
+  //                     <td>Legal formats:</td>
+  //                     <td>{legalities ? legalities.join(', ') : "None"}</td>
+  //                   </tr>
+  //                 </tbody>
+  //               </table>
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //       <div className="col-sm-6">
+  //         {/* DECK CARD DETAILS */}
+  //         <div className="card mb-4 box-shadow">
+  //           <div className="card-body img-fluid"> 
+  //             <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
+  //             </Card>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  //   )
   } else {
     return (
     <React.Fragment>
@@ -233,7 +280,7 @@ function DeckDetail() {
                     </tr>
                     <tr key="formats row">
                       <td>Legal formats:</td>
-                      <td>{legalities.join(', ')}</td>
+                      <td>{legalities ? legalities.join(', ') : "None"}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -252,8 +299,6 @@ function DeckDetail() {
         </div>
       </div>
       </div>
-
-
         <Button onClick={navigateToDecks}>Back To Decks</Button>
         <Container>
           <Row>
