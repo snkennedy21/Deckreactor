@@ -1,12 +1,15 @@
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+// Bootstrap Imports
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
 import Spinner from "react-bootstrap/Spinner";
-import { Link, Navigate, useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
+// RTK Query Imports
 import { useGetCardsQuery } from "../../store/scryfallApi";
 import { searchActions } from "../../store/store";
 import {
@@ -14,38 +17,32 @@ import {
   useAddCardToCollectionMutation,
   useAddCardToDeckMutation,
 } from "../../store/myCardsApi";
+import { useGetTokenQuery } from "../../store/accountApi";
 
-function ContainerExample() {
-  const [usersDecks, setUsersDecks] = useState([]);
-  const {
-    data: decksData,
-    error: decksError,
-    isLoading: decksIsLoading,
-  } = useGetMyDecksQuery();
-
+function SearchResults() {
+  // Hook Declarations
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
-
-  const [addCardToDeck, { addToDeckError, isLoading: addCardToDeckLoading }] =
-    useAddCardToDeckMutation();
-  const [
-    addCardToCollection,
-    { addToCollectionError, isLoading: addCardToCollectionLoading },
-  ] = useAddCardToCollectionMutation();
-
   const search = useSelector((state) => state.search);
-  const { data, error, isLoading } = useGetCardsQuery(search);
 
-  if (isLoading) {
+  // RTK Query Hook Declarations
+  const { data: decksData, isLoading: decksDataLoading } = useGetMyDecksQuery();
+  const [addCardToDeck] = useAddCardToDeckMutation();
+  const [addCardToCollection] = useAddCardToCollectionMutation();
+  const { data: accessToken } = useGetTokenQuery();
+  const { data: cardData, isLoading: cardDataLoading } =
+    useGetCardsQuery(search);
+
+  if (cardDataLoading || decksDataLoading) {
     return (
       <Container>
-        <Spinner animation="grow" />
+        <div>Loading Results</div>
+        <Spinner animation="border" />
       </Container>
     );
   }
 
-  if (data === undefined) {
+  if (cardData === undefined) {
     return (
       <div>
         No search results yet<br></br>Care for a Banana while you wait
@@ -53,8 +50,8 @@ function ContainerExample() {
     );
   }
 
-  if ("message" in data) {
-    return <div>{data.message}</div>;
+  if ("message" in cardData) {
+    return <div>{cardData.message}</div>;
   }
 
   async function addCard(selectedKey) {
@@ -68,17 +65,17 @@ function ContainerExample() {
     }
   }
 
-  if (data !== undefined && data.cards.length === 1) {
+  if (cardData !== undefined && cardData.cards.length === 1) {
     dispatch(searchActions.updateSearch(""));
-    navigate(`/card/${data.cards[0].multiverse_id}/`);
+    navigate(`/card/${cardData.cards[0].multiverse_id}/`);
   }
 
-  console.log(decksData);
+  console.log(accessToken);
 
   return (
     <Container>
       <Row>
-        {data.cards.map((card) => {
+        {cardData.cards.map((card) => {
           return (
             <Col key={card.multiverse_id} xxl="3" xl="4" l="5" md="6" sm="12">
               <Link to={`/card/${card.multiverse_id}`}>
@@ -88,7 +85,7 @@ function ContainerExample() {
                   style={{ width: "100%" }}
                 />
               </Link>
-              {decksData === undefined ? (
+              {accessToken === null || accessToken == undefined ? (
                 <></>
               ) : (
                 <Dropdown className="mb-4" onSelect={addCard}>
@@ -130,4 +127,4 @@ function ContainerExample() {
   );
 }
 
-export default ContainerExample;
+export default SearchResults;
