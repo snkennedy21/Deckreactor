@@ -17,7 +17,7 @@ function HomePage() {
 
       const randomIndex = Math.floor(Math.random() * 2);
       const search = colorArray[randomIndex];
-      const scryfallUrl = `http://localhost:8000/scryfall/${search}`;
+      const scryfallUrl = `${process.env.REACT_APP_API_HOST}/scryfall/type:${search}`;
       const response = await fetch(scryfallUrl);
       if (response.ok) {
         const cardData = await response.json();
@@ -120,6 +120,7 @@ function HomePage() {
               </Button>
             </div>
           </Container>
+          <div>hello</div>
         </div>
       </div>
     </React.Fragment>

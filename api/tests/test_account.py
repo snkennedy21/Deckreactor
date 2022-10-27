@@ -4,9 +4,11 @@ from queries.accounts import AccountQueries
 
 client = TestClient(app)
 
+
 class EmptyAccountRepository:
     def get_all(self):
         return []
+
 
 def test_get_all_accounts():
 
@@ -18,9 +20,7 @@ def test_get_all_accounts():
 
     # Clean up
     app.dependency_overrides = {}
-    
+
     # Assert
     assert response.status_code == 200
     assert response.json() == []
-
-
