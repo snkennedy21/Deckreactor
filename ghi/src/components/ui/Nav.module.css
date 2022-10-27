@@ -1,0 +1,9 @@
+.navbar {
+  background-color: #e8f1fe;
+  border-bottom: 1px solid #d1e4fc;
+  padding: 30px 0;
+}
+
+.button-primary {
+  background-color: pink;
+}

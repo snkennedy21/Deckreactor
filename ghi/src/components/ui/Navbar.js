@@ -6,7 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Image from "react-bootstrap/Image";
 import { Link } from "react-router-dom";
-
+import styles from "./Nav.module.css";
 import {
   useLogOutMutation,
   useGetTokenQuery,
@@ -27,7 +27,15 @@ function LogoutButton() {
 
   return (
     <Link to="/">
-      <Button onClick={logOut} variant="outline-danger mx-2">
+      <Button
+        className={`${styles["button-primary"]}`}
+        onClick={logOut}
+        style={{
+          backgroundColor: "#1877f2",
+          border: "none",
+          marginRight: "10px",
+        }}
+      >
         Logout
       </Button>
     </Link>
@@ -40,7 +48,15 @@ function LoginButton() {
     navigate("/login");
   };
   return (
-    <Button onClick={navigateToLogin} variant="outline-success mx-2">
+    <Button
+      className={`${styles["button-primary"]}`}
+      onClick={navigateToLogin}
+      style={{
+        backgroundColor: "#1877f2",
+        border: "none",
+        marginRight: "10px",
+      }}
+    >
       Login
     </Button>
   );
@@ -70,7 +86,7 @@ function NavScrollExample() {
   }
 
   return (
-    <Navbar bg="light">
+    <Navbar className={`${styles["navbar"]}`}>
       <Container fluid>
         <Navbar.Brand onClick={navigateToHome} style={{ cursor: "pointer" }}>
           <Image src={logo} style={{ width: "4rem" }} />
@@ -106,9 +122,16 @@ function NavScrollExample() {
               value={search}
             />
 
-            <Button type="submit" variant="outline-success">
+            {/* <Button
+              type="submit"
+              style={{
+                backgroundColor: "#d81159",
+                border: "none",
+                marginRight: "10px",
+              }}
+            >
               Search
-            </Button>
+            </Button> */}
           </Form>
         </Navbar.Collapse>
       </Container>
