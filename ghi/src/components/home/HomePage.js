@@ -5,11 +5,12 @@ import { useEffect, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import Image from "react-bootstrap/esm/Image";
 import logo from "../../images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
 
 function HomePage() {
   const [homepageCards, setHomepageCards] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function queryScryfall() {
@@ -43,6 +44,27 @@ function HomePage() {
   homepageCards.forEach((card) => {
     console.log(card);
   });
+
+  const handleGetStarted = () => {
+    navigate("/signup");
+  }
+
+  async function handleGetRandomCard() {
+    let multiverse_id = null;
+    const randomUrl = "https://api.scryfall.com/cards/random";
+
+    // while (multiverse_id === null) {
+    //   let response = await fetch(randomUrl);
+    //   if (response.ok) {
+    //     let cardData = response.json();
+    //     console.log(cardData)
+    //     if (cardData.multiverse_ids) {
+    //       navigate(`/card/${cardData.multiverse_ids[0]}`);
+    //     }
+    //   }
+    // }
+
+  }
 
   return (
     <React.Fragment>
@@ -107,8 +129,9 @@ function HomePage() {
           </Container>
           <Container>
             <div className="button-container">
-              <Button>Get Started</Button>
+              <Button onClick={handleGetStarted}>Get Started</Button>
               <Button
+                onClick={handleGetRandomCard}
                 style={{
                   backgroundColor: "#e8f1fe",
                   border: "solid 1px #1877f2",
