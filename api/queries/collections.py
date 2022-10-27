@@ -29,10 +29,10 @@ class CollectionQueries(Queries):
         self.collection.delete_one({"account_id": ObjectId(account_id)})
 
     def add_card_to_collection(
-        self, 
-        card: dict, 
+        self,
+        card: dict,
         account_id: str
-        ) -> CollectionOut:
+    ) -> CollectionOut:
         collection = self.collection.find_one({
             "account_id": ObjectId(account_id)
             })

@@ -22,7 +22,7 @@ async def search_scryfall(search: str):
             + " "
             + content["details"]
             }
-            
+
     def collect(cards):  # appends cards in input list to output["cards"]
         for card in cards:
             if (
