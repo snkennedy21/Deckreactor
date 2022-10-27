@@ -2,7 +2,7 @@ from bson.objectid import ObjectId
 from typing import List
 from .client import Queries
 from pymongo import ReturnDocument
-from models import DeckIn, DeckOut, DeckList, DeckDetailsIn, CardIn
+from models import DeckIn, DeckOut
 
 
 class DeckQueries(Queries):
@@ -78,7 +78,8 @@ class DeckQueries(Queries):
         # If the card being added already exists:
         # Increase the counter for that card by 1
         # Else:
-        # Add a new card object and append it to the list of cards in deck with name, picture_url, and multiverse_id
+        # Add a new card object and append it to the list of cards in 
+        # deck with name, picture_url, and multiverse_id
 
     # remove one card of specified multiverse_id from deck
     def remove_one_card_copy_from_deck(

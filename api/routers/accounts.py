@@ -118,7 +118,7 @@ async def create_account(
     )  # generates a token for the user when they create an account
     return AccountToken(
         account=account, **token.dict()
-    )  # returns an AccountToken based on the token and the account that was created in the previous section of the function
+    ) 
 
 
 @router.get("/api/accounts/", response_model=list[AccountOut])

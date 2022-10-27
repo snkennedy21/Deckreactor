@@ -1,5 +1,4 @@
 from bson.objectid import ObjectId
-from typing import List
 from .client import Queries
 from pymongo import ReturnDocument
 from models import CollectionIn, CollectionOut
@@ -19,16 +18,22 @@ class CollectionQueries(Queries):
         return CollectionOut(**collection_dict)
 
     def get_one(self, account_id: str) -> CollectionOut:
-        collection = self.collection.find_one({"account_id": ObjectId(account_id)})
+        collection = self.collection.find_one({
+            "account_id": ObjectId(account_id)
+            })
         collection["id"] = str(collection["_id"])
         collection["account_id"] = str(collection["account_id"])
         return collection
 
     def delete_collection(self, account_id: str) -> bool:
-        self.collection.delete_one({"account_id": ObjectId(account_id)})
+        self.collection.delete_one({
+            "account_id": ObjectId(account_id)
+            })
 
     def add_card_to_collection(self, card: dict, account_id: str) -> CollectionOut:
-        collection = self.collection.find_one({"account_id": ObjectId(account_id)})
+        collection = self.collection.find_one({
+            "account_id": ObjectId(account_id)
+            })
         card_list = collection.get("cards")
 
         found_in_collection = False
@@ -56,7 +61,9 @@ class CollectionQueries(Queries):
     def remove_one_card_copy_from_collection(
         self, multiverse_id: int, account_id: str
     ) -> CollectionOut:
-        collection = self.collection.find_one({"account_id": ObjectId(account_id)})
+        collection = self.collection.find_one({
+            "account_id": ObjectId(account_id)
+            })
         card_list = collection.get("cards")
 
         for card_item in card_list:
@@ -80,7 +87,9 @@ class CollectionQueries(Queries):
     def remove_all_card_copies_from_collection(
         self, multiverse_id: int, account_id: str
     ) -> CollectionOut:
-        collection = self.collection.find_one({"account_id": ObjectId(account_id)})
+        collection = self.collection.find_one({
+            "account_id": ObjectId(account_id)
+            })
         card_list = collection.get("cards")
 
         for card_item in card_list:
