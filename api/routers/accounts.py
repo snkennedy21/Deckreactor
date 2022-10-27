@@ -116,9 +116,7 @@ async def create_account(
     token = await authenticator.login(
         response, request, form, repo
     )  # generates a token for the user when they create an account
-    return AccountToken(
-        account=account, **token.dict()
-    ) 
+    return AccountToken(account=account, **token.dict())
 
 
 @router.get("/api/accounts/", response_model=list[AccountOut])

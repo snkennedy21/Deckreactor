@@ -78,7 +78,7 @@ class DeckQueries(Queries):
         # If the card being added already exists:
         # Increase the counter for that card by 1
         # Else:
-        # Add a new card object and append it to the list of cards in 
+        # Add a new card object and append it to the list of cards in
         # deck with name, picture_url, and multiverse_id
 
     # remove one card of specified multiverse_id from deck

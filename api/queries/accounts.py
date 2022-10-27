@@ -10,24 +10,20 @@ class DuplicateAccountError(ValueError):
     pass
 
 
-class AccountQueries(
-    Queries
-):  # Queries is a class that handles creation of a database 
-    #and the collection in the database
+class AccountQueries(Queries):  # Queries is a class that handles creation of a database
+    # and the collection in the database
     DB_NAME = (
         # Specifies which database we're querying or inserting data into
-        "deck_reactor"  
+        "deck_reactor"
     )
     COLLECTION = (
-         # specifies which collection we're querying or inserting data into
-        "accounts" 
+        # specifies which collection we're querying or inserting data into
+        "accounts"
     )
 
     def get(self, email: str) -> Account:
-        props = self.collection.find_one(
-            {"email": email}
-        )  
-        # Query the collection in the database 
+        props = self.collection.find_one({"email": email})
+        # Query the collection in the database
         # and look for an email that matches the email passed into the function
         if not props:
             return None
@@ -64,20 +60,12 @@ class AccountQueries(
     def create(
         self, info: AccountIn, hashed_password: str, roles=["patron"]
     ) -> Account:
-        props = (
-            info.dict()
-        )  
-        props[
-            "password"
-        ] = hashed_password  
-        props[
-            "roles"
-        ] = roles  
+        props = info.dict()
+        props["password"] = hashed_password
+        props["roles"] = roles
         try:
-            self.collection.insert_one(
-                props
-            )  
+            self.collection.insert_one(props)
         except DuplicateKeyError:
             raise DuplicateAccountError()
-        props["id"] = str(props["_id"])  
-        return Account(**props)  
+        props["id"] = str(props["_id"])
+        return Account(**props)

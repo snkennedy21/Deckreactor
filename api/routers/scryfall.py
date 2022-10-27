@@ -17,9 +17,7 @@ async def search_scryfall(search: str):
     if content.get("code") == "not_found" or content.get("total_cards") == 0:
         return error_msg
     if content.get("code") == "bad_request":
-        return {"message": " ".join(
-            content["warnings"]) + " "
-             + content["details"]}
+        return {"message": " ".join(content["warnings"]) + " " + content["details"]}
 
     def collect(cards):  # appends cards in input list to output["cards"]
         for card in cards:
