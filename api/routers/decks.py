@@ -84,7 +84,9 @@ async def add_card_to_deck(
     # "mana": content.get('mana_cost'),
     "card_type": content.get("type_line"),
     "cmc": content.get('cmc'),
-    "formats": [legality for legality in content.get('legalities') if content.get('legalities')[legality] == "legal"]
+    "formats": [legality for legality in content.get('legalities') if content.get('legalities')[legality] == "legal"],
+    # disclaimer: price determined at time of addition to deck
+    "price_usd": content.prices.get("usd"), 
   }
 
   if content.get("layout") in [

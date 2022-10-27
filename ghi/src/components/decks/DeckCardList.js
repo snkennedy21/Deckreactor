@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import ParseSymbolsAndLineBreaks from "../card-details/ParseSymbolsAndLineBreaks";
 
 // will sort a list of cards by their basic types, and arrange them
@@ -37,12 +38,11 @@ function DeckCardList(props) {
   const cards = props.cards;
   const types = cardsByTypeLine(cards);
   const typesEntries = Object.entries(types);
+  const navigate = useNavigate();
 
   return (
-    <div className="table">
+    <div>
       <h2>Cards</h2>
-      <table className="table table-sm">
-        <tbody>
           {
             typesEntries.map(entry => {
               let amount = 0;
@@ -57,28 +57,32 @@ function DeckCardList(props) {
                   <></>
                   :
                   <>
-                  <tr><h5>{entry[0]} ({amount})</h5></tr>
+                  <h5>{entry[0]} ({amount})</h5>
+                  <div className="table-responsive">
+                  <table className="table table-striped table-sm">
+                  <tbody>
                   {
                     entry[1].map(card => {
+                      console.log(card);
                       return (
                         <React.Fragment key={card.name}>
                           <tr>
-                            <td><span className="fw-bold">{card.quantity}</span> {card.name}</td>
+                            <td><span className="fw-bold">{card.quantity}</span> <Link to={`/card/${card.multiverse_id}`}>{card.name}</Link></td>
                             <td><ParseSymbolsAndLineBreaks string={card.mana === null ? "null" : card.mana}/></td>
                           </tr>
                         </React.Fragment>
                       )
                     })
                   }
+                  </tbody>
+                  </table>
+                  </div>
                   </>
                 }
                 </React.Fragment>
               )
             })
           }
-
-        </tbody>
-      </table>
     </div>
   )
 }
