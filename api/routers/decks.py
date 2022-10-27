@@ -87,7 +87,7 @@ async def add_card_to_deck(
     card_dict = {
         "name": content.get("name"),
         "multiverse_id": content.get("multiverse_ids")[0],
-        # "mana": content.get('mana_cost'),
+        "mana": content.get('mana_cost'),
         "card_type": content.get("type_line"),
         "cmc": content.get("cmc"),
         "formats": [

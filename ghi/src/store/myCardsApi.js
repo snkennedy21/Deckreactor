@@ -53,7 +53,15 @@ export const myCardsApi = createApi({
         body: data,
         credentials: "include",
       }),
+      invalidatesTags: ["DeckList"],
+    }),
 
+    deleteDeck: builder.mutation({
+      query: (data) => ({
+        url: `/decks/${data.deckId}`,
+        method: "delete",
+        credentials: "include",
+      }),
       invalidatesTags: ["DeckList"],
     }),
     // COLLECTION STUFF //
@@ -89,6 +97,7 @@ export const {
   useAddCardToDeckMutation,
   useRemoveOneCardFromDeckMutation,
   useCreateDeckMutation,
+  useDeleteDeckMutation,
   useGetMyCollectionQuery,
   useAddCardToCollectionMutation,
   useRemoveCardFromCollectionMutation,
