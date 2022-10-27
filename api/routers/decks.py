@@ -1,8 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from models import DeckOut, DeckIn, DeckList, AccountOut, DeckDetailsIn, CardIn
+from fastapi import APIRouter, Depends
+from models import DeckOut, DeckIn, DeckList, AccountOut, DeckDetailsIn
 from queries.decks import DeckQueries
 from .authenticator import authenticator
-from typing import List
 import requests
 import json
 
@@ -116,7 +115,10 @@ async def add_card_to_deck(
 
 
 # remove one card of specified multiverse_id from deck
-@router.put("/decks/{deck_id}/remove_one/{multiverse_id}", response_model=DeckOut)
+@router.put(
+    "/decks/{deck_id}/remove_one/{multiverse_id}",
+    response_model=DeckOut,
+)
 def remove_one_card_copy_from_deck(
     deck_id: str,
     multiverse_id: int,
@@ -130,7 +132,10 @@ def remove_one_card_copy_from_deck(
 
 
 # remove all cards of specified multiverse_id from deck
-@router.put("/decks/{deck_id}/remove_all/{multiverse_id}", response_model=DeckOut)
+@router.put(
+    "/decks/{deck_id}/remove_all/{multiverse_id}",
+    response_model=DeckOut,
+)
 def remove_all_card_copies_from_deck(
     deck_id: str,
     multiverse_id: int,

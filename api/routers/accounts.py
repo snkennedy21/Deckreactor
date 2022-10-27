@@ -14,7 +14,13 @@ from queries.accounts import (
     DuplicateAccountError,
 )
 from queries.collections import CollectionQueries
-from models import Account, AccountIn, AccountUpdateIn, AccountOut, CollectionIn
+from models import (
+    Account, 
+    AccountIn, 
+    AccountUpdateIn, 
+    AccountOut, 
+    CollectionIn,
+)
 
 
 class AccountForm(BaseModel):
@@ -48,7 +54,10 @@ async def get_token(
         return AccountToken(**token_data)
 
 
-@router.put("/api/account/{account_id}", response_model=AccountToken | HttpError)
+@router.put(
+    "/api/account/{account_id}",
+    response_model=AccountToken | HttpError,
+)
 async def update_account(
     account_id: str,
     info: AccountUpdateIn,
@@ -88,7 +97,9 @@ async def create_account(
     collection: CollectionQueries = Depends(),
 ):
 
-    # This section of the function takes care of basic account creation. It does not deal with authentication. It just makes an account and puts it in the database
+    # This section of the function takes care of basic account 
+    # creation. It does not deal with authentication. It just 
+    # makes an account and puts it in the database
     hashed_password = authenticator.hash_password(
         info.password
     )  # authenicator.hash_password is a security measure for create password
@@ -100,25 +111,33 @@ async def create_account(
         #   )
         account = repo.create(
             info, hashed_password
-        )  # calls the function in queries.accounts in order to create a new account. account has an id and a list of roles
+        )
+        # calls the function in queries.accounts in order to create 
+        # a new account. account has an id and a list of roles
+
         collection_info = CollectionIn(account_id=account.dict()["id"])
-        user_collection = collection.create(collection_info)
+        collection.create(collection_info)
     except DuplicateAccountError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Cannot Create An Account With Those Credentials",
         )
 
-    # This is stuff we have not learned yet. This is the section of the function that takes care of authentication
     form = AccountForm(
         username=info.email, password=info.password
-    )  # generates a form for the submitted account details to create a username and password
+    )
+    # generates a form for the submitted account details to 
+    # create a username and password
+
     token = await authenticator.login(
         response, request, form, repo
     )  # generates a token for the user when they create an account
     return AccountToken(
         account=account, **token.dict()
-    )  # returns an AccountToken based on the token and the account that was created in the previous section of the function
+    )
+    # returns an AccountToken based on the token and 
+    # the account that was created in the previous section 
+    # of the function
 
 
 @router.get("/api/accounts/", response_model=list[AccountOut])
