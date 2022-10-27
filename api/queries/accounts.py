@@ -12,18 +12,23 @@ class DuplicateAccountError(ValueError):
 
 class AccountQueries(
     Queries
-):  # Queries is a class that handles creation of a database and the collection in the database
+):  # Queries is a class that handles creation of a database 
+    #and the collection in the database
     DB_NAME = (
-        "deck_reactor"  # Specifies which database we're querying or inserting data into
+        # Specifies which database we're querying or inserting data into
+        "deck_reactor"  
     )
     COLLECTION = (
-        "accounts"  # specifies which collection we're querying or inserting data into
+         # specifies which collection we're querying or inserting data into
+        "accounts" 
     )
 
     def get(self, email: str) -> Account:
         props = self.collection.find_one(
             {"email": email}
-        )  # Query the collection in the database and look for an email that matches the email passed into the function
+        )  
+        # Query the collection in the database 
+        # and look for an email that matches the email passed into the function
         if not props:
             return None
         props["id"] = str(props["_id"])
@@ -61,18 +66,18 @@ class AccountQueries(
     ) -> Account:
         props = (
             info.dict()
-        )  # Takes the AccountIn data passed in by use and transforms it into a dictionary called props
+        )  
         props[
             "password"
-        ] = hashed_password  # Replaces the unhashed password that's currently in the dictionary witht he hashed password that was created in routers.accounts.py
+        ] = hashed_password  
         props[
             "roles"
-        ] = roles  #  Sets the type of user that is being created. In this case it is a patron, which will limit the users access in the website
+        ] = roles  
         try:
             self.collection.insert_one(
                 props
-            )  # adds the user with the information in the props dictionary to the "accounts" collectin in the database
+            )  
         except DuplicateKeyError:
             raise DuplicateAccountError()
-        props["id"] = str(props["_id"])  # takes the
-        return Account(**props)  # returns the Account
+        props["id"] = str(props["_id"])  
+        return Account(**props)  
