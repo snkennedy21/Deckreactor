@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 
 # from models import SearchScryfallOut
 import requests
@@ -17,7 +17,9 @@ async def search_scryfall(search: str):
     if content.get("code") == "not_found" or content.get("total_cards") == 0:
         return error_msg
     if content.get("code") == "bad_request":
-        return {"message": " ".join(content["warnings"]) + " " + content["details"]}
+        return {"message": " ".join(
+            content["warnings"]) + " "
+             + content["details"]}
 
     def collect(cards):  # appends cards in input list to output["cards"]
         for card in cards:
@@ -25,7 +27,7 @@ async def search_scryfall(search: str):
                 len(card.get("multiverse_ids")) == 0
                 or card.get("layout") == "art_series"
             ):
-                continue  # we don't care about tokens, alchemy cards, art series, anything without a multiverse id
+                continue
 
             if card.get("layout") in [
                 "modal_dfc",
