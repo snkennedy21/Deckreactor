@@ -104,6 +104,7 @@ function HomePage() {
               })}
             </Carousel>
           </Container>
+          <div>hello</div>
         </div>
       </div>
     </React.Fragment>
