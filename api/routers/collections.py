@@ -18,7 +18,6 @@ async def get_user_collection(
     collection = repo.get_one(account_id)
     return collection
 
-
 @router.put("/collections/add/{multiverse_id}", response_model=CollectionOut)
 async def add_card_to_collection(
     multiverse_id: int,
@@ -28,7 +27,6 @@ async def add_card_to_collection(
     url = f"https://api.scryfall.com/cards/multiverse/{multiverse_id}"
     response = requests.get(url)
     content = json.loads(response.content)
-
     card_dict = {
         "name": content.get("name"),
         "multiverse_id": content.get("multiverse_ids")[0],
@@ -50,12 +48,15 @@ async def add_card_to_collection(
 
     account = AccountOut(**account_data)
     account_id = account.id
-    collection = repo.add_card_to_collection(card=card_dict, account_id=account_id)
+    collection = repo.add_card_to_collection(
+        card=card_dict, account_id=account_id
+        )
 
     return CollectionOut(**collection)
 
-
-@router.put("/collections/remove_one/{multiverse_id}", response_model=CollectionOut)
+@router.put(
+    "/collections/remove_one/{multiverse_id}", response_model=CollectionOut
+    )
 def remove_one_card_from_collection(
     multiverse_id: int,
     repo: CollectionQueries = Depends(),
@@ -69,11 +70,15 @@ def remove_one_card_from_collection(
     return collection
 
 
-@router.put("/collections/remove_all/{multiverse_id}", response_model=CollectionOut)
+@router.put(
+    "/collections/remove_all/{multiverse_id}", response_model=CollectionOut
+    )
 def remove_all_card_copies_from_collection(
     multiverse_id: int,
     repo: CollectionQueries = Depends(),
-    account_data: dict = Depends(authenticator.get_current_account_data),
+    account_data: dict = Depends(
+        authenticator.get_current_account_data
+        ),
 ):
     account = AccountOut(**account_data)
     account_id = account.id

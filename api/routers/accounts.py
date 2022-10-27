@@ -15,10 +15,10 @@ from queries.accounts import (
 )
 from queries.collections import CollectionQueries
 from models import (
-    Account, 
-    AccountIn, 
-    AccountUpdateIn, 
-    AccountOut, 
+    Account,
+    AccountIn,
+    AccountUpdateIn,
+    AccountOut,
     CollectionIn,
 )
 
@@ -97,24 +97,11 @@ async def create_account(
     collection: CollectionQueries = Depends(),
 ):
 
-    # This section of the function takes care of basic account 
-    # creation. It does not deal with authentication. It just 
-    # makes an account and puts it in the database
     hashed_password = authenticator.hash_password(
         info.password
-    )  # authenicator.hash_password is a security measure for create password
+    )
     try:
-        # if info.email in [document.email for document in repo.get_all()]:
-        #   raise HTTPException(
-        #   status_code=status.HTTP_400_BAD_REQUEST,
-        #   detail="Account with that email already exists"
-        #   )
-        account = repo.create(
-            info, hashed_password
-        )
-        # calls the function in queries.accounts in order to create 
-        # a new account. account has an id and a list of roles
-
+        account = repo.create(info, hashed_password)
         collection_info = CollectionIn(account_id=account.dict()["id"])
         collection.create(collection_info)
     except DuplicateAccountError:
@@ -123,27 +110,16 @@ async def create_account(
             detail="Cannot Create An Account With Those Credentials",
         )
 
-    form = AccountForm(
-        username=info.email, password=info.password
-    )
-    # generates a form for the submitted account details to 
-    # create a username and password
+    form = AccountForm(username=info.email, password=info.password)
 
     token = await authenticator.login(
         response, request, form, repo
-    )  # generates a token for the user when they create an account
-    return AccountToken(
-        account=account, **token.dict()
-    )
-    # returns an AccountToken based on the token and 
-    # the account that was created in the previous section 
-    # of the function
-
+        )
+    return AccountToken(account=account, **token.dict())
 
 @router.get("/api/accounts/", response_model=list[AccountOut])
 async def get_accounts(repo: AccountQueries = Depends()):
     return repo.get_all()
-
 
 @router.delete("/api/accounts/{account_id}", response_model=bool)
 async def delete_account(

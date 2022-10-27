@@ -1,8 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from models import AccountOut, CardIn, CardList, CardOut
+from fastapi import APIRouter, Depends
+from models import CardIn, CardList, CardOut
 from queries.cards import CardQueries
-from .authenticator import authenticator
-from typing import List
 
 router = APIRouter(tags=["cards"])
 
