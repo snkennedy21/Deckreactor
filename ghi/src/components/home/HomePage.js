@@ -120,7 +120,6 @@ function HomePage() {
               </Button>
             </div>
           </Container>
-          <div>hello</div>
         </div>
       </div>
     </React.Fragment>
