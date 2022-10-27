@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <div className="bg-light main-footer border-bottom-5">
+    <div className="main-footer border-bottom-5">
       <div className="container">
         <div className="row">
           <div className="h5 text-muted">DeckReactor</div>

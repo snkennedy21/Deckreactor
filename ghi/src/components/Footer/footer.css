@@ -3,11 +3,12 @@
   left: 0;
   bottom: 0;
   width: 100%;
-
+  background-color: #eaf1f8;
   color: black;
   text-align: center;
   height: auto;
-  padding: 20px;
+  padding: 30px 20px 30px 20px;
+  border-top: 1px solid #d1e4fc;
 }
 
 .divider {

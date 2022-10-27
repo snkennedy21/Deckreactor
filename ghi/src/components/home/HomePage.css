@@ -10,7 +10,15 @@
 
 .banner {
   width: 100%;
-  background-color: floralwhite;
+  background-color: #e8f1fe;
   color: rgb(56, 56, 56);
   text-align: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+  background-color: #e8f1fe;
+  gap: 20px;
 }

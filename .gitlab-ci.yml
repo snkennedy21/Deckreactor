@@ -3,6 +3,8 @@ stages:
   - build
   - deploy
 
+variables:
+  MONGO_URL: fake
 
 ## TEST
 
@@ -30,7 +32,7 @@ build-front-end-job:
   image: node:lts-bullseye
   needs: # tests that must pass for this build-job to run
     - api-unit-test-job
-    - lint-test-job 
+    - lint-test-job
   variables:
     PUBLIC_URL: https://sjp19-public-resources.gitlab.io/project_templates/module3-project-gamma
     REACT_APP_API_HOST: https://apis-with-sql.herokuapp.com
@@ -44,7 +46,7 @@ build-front-end-job:
     paths: # save all files in the build path
       - ghi/build/
 
-build-fastapi-api-image-job:  # RENAME THIS
+build-fastapi-api-image-job: # RENAME THIS
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   stage: build
@@ -61,7 +63,7 @@ build-fastapi-api-image-job:  # RENAME THIS
 
 ## DEPLOY
 
-deploy-fastapi-api-image-job:  # RENAME THIS
+deploy-fastapi-api-image-job: # RENAME THIS
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   stage: deploy
@@ -77,7 +79,7 @@ deploy-fastapi-api-image-job:  # RENAME THIS
     - docker tag ${CI_REGISTRY_IMAGE}/fastapi_api:latest registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
     - docker push registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
 
-release-fastapi-api-image-job:  # RENAME THIS
+release-fastapi-api-image-job: # RENAME THIS
   stage: deploy
   image: node:10.17-alpine
   needs:
@@ -90,10 +92,8 @@ release-fastapi-api-image-job:  # RENAME THIS
   script:
     - heroku container:release web --app $HEROKU_FASTAPI_APP
 
-
-
 ## DEPLOY THE UI
-pages:  # THIS STEP MUST BE NAME PAGES
+pages: # THIS STEP MUST BE NAME PAGES
   stage: deploy
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
@@ -102,9 +102,9 @@ pages:  # THIS STEP MUST BE NAME PAGES
   needs:
     - build-front-end-job
   script:
-     # THE FIRST PART OF THIS COMMAND MUST BE THE DIRECTORY
-     # THAT YOU cd INTO TO BUILD IT PLUS THE build/ AT THE
-     # END
+    # THE FIRST PART OF THIS COMMAND MUST BE THE DIRECTORY
+    # THAT YOU cd INTO TO BUILD IT PLUS THE build/ AT THE
+    # END
     - mv ghi/build/ public
   artifacts:
     paths:
