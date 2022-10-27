@@ -6,6 +6,7 @@ import Container from "react-bootstrap/esm/Container";
 import Image from "react-bootstrap/esm/Image";
 import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
+import Button from "react-bootstrap/esm/Button";
 
 function HomePage() {
   const [homepageCards, setHomepageCards] = useState([]);
@@ -103,6 +104,21 @@ function HomePage() {
                 );
               })}
             </Carousel>
+          </Container>
+          <Container>
+            <div className="button-container">
+              <Button>Get Started</Button>
+              <Button
+                style={{
+                  backgroundColor: "#e8f1fe",
+                  border: "solid 1px #1877f2",
+                  color: "#1877f2",
+                  marginRight: "10px",
+                }}
+              >
+                Random Card
+              </Button>
+            </div>
           </Container>
         </div>
       </div>
