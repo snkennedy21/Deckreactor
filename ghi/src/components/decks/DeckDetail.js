@@ -18,6 +18,7 @@ import {
 import { useGetTokenQuery } from "../../store/accountApi";
 import getBackground from "../card-details/getBackground";
 import ParseSymbolsAndLineBreaks from "../card-details/ParseSymbolsAndLineBreaks";
+import DeckCardList from "./DeckCardList";
 
 function DeckDetail() {
   const [cards, setCards] = useState([]);
@@ -37,6 +38,7 @@ function DeckDetail() {
   const [dominantColors, setDominantColors] = useState("");
   const [primaryColor, setPrimaryColor] = useState("");
   const [averageCmc, setAverageCmc] = useState("");
+  const [deckValue, setDeckValue] = useState("");
   const [legalities, setLegalities] = useState([]);
   const [lostLegalities, setLostLegalities] = useState([]);
 
@@ -44,24 +46,31 @@ function DeckDetail() {
     if (decksData === undefined) return;
     
     const newCurrentDeck = decksData.decks.find((deck) => deck.id === deck_id);
+
     setCurrentDeck(newCurrentDeck)
+
     setAverageCmc(getAverageCmc(newCurrentDeck));
 
     if (Object.keys(newCurrentDeck).includes("cards")) {
       setCards(newCurrentDeck.cards);
+      // const newDeckValue = getDeckValue(newCurrentDeck);
+      // console.log(newDeckValue);
+      // setDeckValue(newDeckValue)     // get this working
     }
     
-    if (cards) {
-      let colors = getDominantColors({cards});
-      let primary = (colors ? colors[0] : "");
+    let colors = getDominantColors(newCurrentDeck);
+    let primary = (colors ? colors[0] : "");
+
+    if (colors) {
       setDominantColors(colors);
       setPrimaryColor(primary);
-      if (backgroundUrl === "") {
-        setBackgroundUrl(getBackground(primary));
-      }
-      const newLegalities = getLegalities({cards});
-      setLegalities(newLegalities);
     }
+    if ((cards && backgroundUrl === "")) {
+      setBackgroundUrl(getBackground(primary));
+    }
+    const newLegalities = getLegalities({cards});
+    setLegalities(newLegalities);
+    
     // if (legalities) {
     //   const newLostLegalities = legalities.filter(legality => !(newLegalities.includes(legality)))
   
@@ -147,10 +156,23 @@ function DeckDetail() {
     return average.toFixed(2)
   }
 
-  // returns a string of the total price of deck
-  function getDeckValue(deck) {
-    return deck.cards.reduce((a, b) => a + (b.price * b.quantity))
-  }
+  // will eventually return a string of the total price of deck
+
+  // function getDeckValue(deck) {
+  //   let sum = 0;
+  //   if (!Object.keys(deck).includes("cards")) {
+  //     return (0).toFixed(2);
+  //   }
+
+  //   for (let card of deck.cards) {
+  //     if (card.prices.usd === null) {
+  //       continue;
+  //     } else {
+  //       sum += card.prices.usd;
+  //     }
+  //   }
+  //   return (sum).toFixed(2);
+  // }
 
   function increaseCardInDeckHandler(e) {
     const multiverseId = e.currentTarget.value;
@@ -213,7 +235,7 @@ function DeckDetail() {
     navigate("/decks");
   }
 
-  if (decksData && currentDeck && !cards) {
+  if (decksData && currentDeck && cards.length === 0) {
     return (
     <div className="p-4 img-fluid" style={{
       background: `url(${backgroundUrl}) no-repeat center center fixed`,
@@ -286,6 +308,10 @@ function DeckDetail() {
                       <td><ParseSymbolsAndLineBreaks string={dominantColors.length == 2 ? `{${dominantColors[0]}}{${dominantColors[1]}}` : dominantColors.length == 1 ? `{${dominantColors[0]}}` : ''}></ParseSymbolsAndLineBreaks></td>
                       <td></td>
                     </tr>
+                    <tr key="deck value row">
+                      <td>Deck value:</td>
+                      <td className="text-success">$TBD</td>
+                    </tr>
                     <tr key="mana cost row">
                       <td>Average mana cost:</td>
                       <td>{averageCmc}</td>
@@ -304,8 +330,7 @@ function DeckDetail() {
           {/* DECK CARD DETAILS */}
           <div className="card mb-4 box-shadow">
             <div className="card-body img-fluid"> 
-              <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
-              </Card>
+                <DeckCardList cards={cards}/>
             </div>
           </div>
         </div>

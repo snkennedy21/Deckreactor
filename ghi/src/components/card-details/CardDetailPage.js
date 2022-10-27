@@ -66,6 +66,12 @@ function CardDetailPage() {
                 }} onClick={toggleUpsideDown} />
               </Card>
               :
+              card.type_line === "Phenomenon"
+              ?
+              <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
+              <img className='img-fluid' style={{transform: `rotate(90deg)`}} src={card.image_uris.normal} />
+              </Card>
+              :
               <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
               <img className='img-fluid' src={card.image_uris.normal} />
               </Card>
