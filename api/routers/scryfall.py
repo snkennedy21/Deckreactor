@@ -19,10 +19,10 @@ async def search_scryfall(search: str):
     if content.get("code") == "bad_request":
         return {
             "message": " ".join(content["warnings"])
-            + " " 
+            + " "
             + content["details"]
             }
-
+            
     def collect(cards):  # appends cards in input list to output["cards"]
         for card in cards:
             if (

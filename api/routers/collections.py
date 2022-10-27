@@ -18,6 +18,7 @@ async def get_user_collection(
     collection = repo.get_one(account_id)
     return collection
 
+
 @router.put("/collections/add/{multiverse_id}", response_model=CollectionOut)
 async def add_card_to_collection(
     multiverse_id: int,
@@ -53,6 +54,7 @@ async def add_card_to_collection(
         )
 
     return CollectionOut(**collection)
+
 
 @router.put(
     "/collections/remove_one/{multiverse_id}", response_model=CollectionOut

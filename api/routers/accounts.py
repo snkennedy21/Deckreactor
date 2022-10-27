@@ -117,9 +117,11 @@ async def create_account(
         )
     return AccountToken(account=account, **token.dict())
 
+
 @router.get("/api/accounts/", response_model=list[AccountOut])
 async def get_accounts(repo: AccountQueries = Depends()):
     return repo.get_all()
+
 
 @router.delete("/api/accounts/{account_id}", response_model=bool)
 async def delete_account(
