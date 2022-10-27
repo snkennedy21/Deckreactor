@@ -8,6 +8,8 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
 import Spinner from "react-bootstrap/Spinner";
+import logo from "../../images/logo.png";
+import "./LogoSpinner.css";
 
 // RTK Query Imports
 import { useGetCardsQuery } from "../../store/scryfallApi";
@@ -36,8 +38,8 @@ function SearchResults() {
   if (cardDataLoading || decksDataLoading) {
     return (
       <Container>
-        <div>Loading Results</div>
-        <Spinner animation="border" />
+        <Image src={logo} className="logo-spinner" style={{ width: "6rem" }} />
+        <div>Loading results...</div>
       </Container>
     );
   }
