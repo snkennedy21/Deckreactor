@@ -1,46 +1,111 @@
-# Module3 Project Gamma
+# DeckReactor
 
-## Getting started
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
 
-You have a project repository, now what? The next section lists all of the deliverables that are due at the end of the week. Below is some guidance for getting started on the tasks for this week.
+  <h3 align="center">DeckReactor</h3>
 
-## Deliverables
-- [ ] Wire-frame diagrams
-- [ ] API documentation
-- [ ] Project is deployed to Heroku/GitLab-pages
-- [ ] GitLab issue board is setup and in use
+  <p align="center">
+    A website to search for Magic cards, manage your card collection, and build your favorite decks.
+</div>
 
-## Project layout
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#about-deckreactor">About DeckReactor</a></li>
+    <li><a href="#target-audience">Target Audience</a></li>
+    <li><a href="#functionality">Functionality</a>
+    <li><a href="#content">Content</a></li>
+  </ol>
 
-The layout of the project is just like all of the projects you did with `docker-compose` in module #2. You will create a directory in the root of the repository for each service that you add to your project just like those previous projects were setup.
+<!-- ABOUT THE PROJECT -->
 
-### Directories
+## About DeckReactor
 
-Several directories have been added to your project. The directories `docs` and `journals` are places for you and your team-mates to, respectively, put any documentation about your project that you create and to put your project-journal entries. See the README file in each directory for more info.
+DeckReactor is a simple card search and deck/collection management application for Magic the Gathering cards. Visitors to the site can find cards using a number of different search criteria. Additionally, users that sign up/login can create and track their collection of cards they physically own, as well as create and customize decks of cards for regular play.
 
-The other directories, `ghi` and `sample_service`, are sample services, that you can start building off of or use as a reference point.
+## Target Audience
 
-Inside of `ghi` is a minimal React app that has an "under construction" page. It is setup similarly to all of the other React projects that you have worked on.
+Our target audience is fans of the Magic the Gathering card game of all skill levels who are looking to learn more about the game's cards, organize their personal collections, or assemble card decks.
 
-Inside of `sample_service` is a minimal FastAPI application. "Where are all the files?" you might ask? Well, the `main.py` file is the whole thing, and go take look inside of it... There's not even much in there..., hmm? That is FastAPI, we'll learn more about it in the coming days. Can you figure out what this little web-application does even though you haven't learned about FastAPI yet?
+## Functionality
 
-### Other files
+### Home
 
-The following project files have created as a minimal starting point. Please follow the guidance for each one for a most successful project.
+Home Page:
 
-- `docker-compose.yaml`: there isn't much in here, just a **really** simple UI. Add services to this file as you did with previous projects in module #2.
-- `.gitlab-ci.yml`: This is your "ci/cd" file where you will configure
-  automated unit tests, code quality checks, and the building and deployment
-  of your production system. Currently, all it does is deploy an
-  "under construction" page to your production UI on GitLab. We will learn
-  much more about this file
-- `.gitignore`: don't keep track of things you don't need to like
-  `node_modules`, `__pycache__`, etc.
+- link to the login/signup page
+- image carousel with clickable images of a site-determined set of cards (currently vampires/werewolves)
 
-## How to complete the initial deploy
+Nav Bar:
 
-There will be further guidance on completing the initial deployment, but it just consists of these steps:
+- Link to Advanced Search for newer users to narrow down their search
+- More experienced users can type Scryfall's query syntax to accomplish even more precise searches using only the nav search bar.
+- Logged-in users have access to links to view their decks and collection
 
-- setup Heroku account and app
-- setup 2 CI/CD variables in GitLab
-- push to main
+### Search
+
+Basic Search:
+
+- Searches for cards based on letters in the name of the card. Can also use any of Scryfall's syntax.
+- When searching for a specfic card, basic search will take you directly to that card's detail page.
+
+Advanced Search:
+
+- A feature to help you find **exactly** what you're looking for. This feature allows you to search by not only the cards name, but also by converted mana cost, color, rarity, type, and format legality.
+
+### Collection
+
+Card Collection Page:
+
+- Visiting the Collection page requires the use to be authenticated (logged in)
+- When Authenticated the user can view all cards added to their collection.
+- The collection page will display the users estimated value, total cards, and quantity of each card.
+- Each card in the collection will have a link to the details of that card.
+- Inside the collection page the user can find a mini game located inside the collection.
+  The mini game is a card matching game with 6 MTG cards that get randomly generated into different locations on the board.
+
+Edit Collection Page:
+
+- Similar to the Collection page this page will be displayed in a table format with the ability to add and remove cards from their collection.
+
+### Decks
+
+Deck List Page:
+
+- Visiting the Decks page requires the user to be authenticated (logged in)
+- Authenticated users can create new decks on the My Decks page by clicking "Create Deck" and filling out the modal form
+- Authenticated users can click on the "View Deck" button to view a page that has all of the details for the selected deck
+
+Deck Detail Page:
+
+- The deck detail page contains a list of all of the users cards and other relevant deck data (average mana cost, legal formats, and mana colors)
+- Authenticated users can increase or decrease the number any card that exists in their deck
+- Authenticated users can click on a card in their deck to navigate to the detail view page for the selected card
+- Authenticated users can also add cards to their deck from the search results page and the card detail page
+
+<!-- Getting Started -->
+
+Please follow these steps to deploy and use this application on your local machine:
+
+1. Clone repository to your local machine
+2. CD into the project directory
+3. Run `docker volume create deck-reactor-node-modules`
+4. Run `docker volume create deck-reactor-mongo-data`
+5. Run `docker compose build`
+6. Run `docker compose up`
+7. Enjoy searching for your favorite cards and managing your collection!
+
+<!-- Contact -->
+
+## Contact
+
+Devin Wright | <devin.wright.software@gmail.com> | <https://gitlab.com/dtw2111>
+
+Mike Salvo | <msalvo.dev@gmail.com> | <https://gitlab.com/mbsalvo1>
+
+Sean Kennedy | <snkennedy21@gmail.com> | <https://gitlab.com/snkennedy21>
+
+Thomas Brand | <tbrand61@gmail.com> | <https://gitlab.com/CptSyrup>
