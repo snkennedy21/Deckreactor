@@ -138,7 +138,7 @@ const GameBoard = () => {
         backgroundImage: `url(https://media.magic.wizards.com/images/wallpaper/the_five_dragons-sl-background-1280x960.jpg)`,
         backgroundRepeat: "no-repeat",
         backgroundPositionY: "center",
-        backgroundSize: "cover",
+        backgroundSize: "auto",
         height: "100%",
       }}
     >

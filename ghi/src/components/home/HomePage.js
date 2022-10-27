@@ -12,11 +12,11 @@ function HomePage() {
 
   useEffect(() => {
     async function queryScryfall() {
-      const colorArray = ["wizard", "spider"];
+      const colorArray = ["werewolf", "vampire"];
 
       const randomIndex = Math.floor(Math.random() * 2);
       const search = colorArray[randomIndex];
-      const scryfallUrl = `http://localhost:8000/scryfall/type:${search}`;
+      const scryfallUrl = `http://localhost:8000/scryfall/${search}`;
       const response = await fetch(scryfallUrl);
       if (response.ok) {
         const cardData = await response.json();
@@ -46,7 +46,7 @@ function HomePage() {
   return (
     <React.Fragment>
       <div className="main-page">
-        <Container className="shadow banner px-4 py-5 mb-5 mt-5 text-center rounded">
+        <Container className="banner px-4 py-5 mb-5 mt-5 text-center rounded">
           <h1 className="display-5 fw-bold color-primary">DeckReactor</h1>
           <div className="col-lg-6 mx-auto">
             <p className="lead mb-4">
@@ -64,38 +64,38 @@ function HomePage() {
                     <div style={{ display: "flex" }}>
                       <span className="m-2" style={{ width: "100%" }}>
                         <Link to={`/card/${cardObject["1"].multiverse_id}`}>
-                        <img
-                          className="d-block w-100"
-                          src={cardObject["1"].picture_url}
-                          style={{ width: "100%" }}
-                        />
+                          <img
+                            className="d-block w-100"
+                            src={cardObject["1"].picture_url}
+                            style={{ width: "100%" }}
+                          />
                         </Link>
                       </span>
                       <span className="m-2" style={{ width: "100%" }}>
                         <Link to={`/card/${cardObject["2"].multiverse_id}`}>
-                        <img
-                          className="d-block w-100"
-                          src={cardObject["2"].picture_url}
-                          style={{ width: "100%" }}
-                        />
+                          <img
+                            className="d-block w-100"
+                            src={cardObject["2"].picture_url}
+                            style={{ width: "100%" }}
+                          />
                         </Link>
                       </span>
                       <span className="m-2" style={{ width: "100%" }}>
                         <Link to={`/card/${cardObject["3"].multiverse_id}`}>
-                        <img
-                          className="d-block w-100"
-                          src={cardObject["3"].picture_url}
-                          style={{ width: "100%" }}
-                        />
+                          <img
+                            className="d-block w-100"
+                            src={cardObject["3"].picture_url}
+                            style={{ width: "100%" }}
+                          />
                         </Link>
                       </span>
                       <span className="m-2" style={{ width: "100%" }}>
                         <Link to={`/card/${cardObject["4"].multiverse_id}`}>
-                        <img
-                          className="d-block w-100"
-                          src={cardObject["4"].picture_url}
-                          style={{ width: "100%" }}
-                        />
+                          <img
+                            className="d-block w-100"
+                            src={cardObject["4"].picture_url}
+                            style={{ width: "100%" }}
+                          />
                         </Link>
                       </span>
                     </div>
