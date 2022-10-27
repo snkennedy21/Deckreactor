@@ -6,6 +6,7 @@ import Container from "react-bootstrap/esm/Container";
 import Image from "react-bootstrap/esm/Image";
 import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
+import Button from "react-bootstrap/esm/Button";
 
 function HomePage() {
   const [homepageCards, setHomepageCards] = useState([]);
@@ -16,7 +17,7 @@ function HomePage() {
 
       const randomIndex = Math.floor(Math.random() * 2);
       const search = colorArray[randomIndex];
-      const scryfallUrl = `http://localhost:8000/scryfall/${search}`;
+      const scryfallUrl = `${process.env.REACT_APP_API_HOST}/scryfall/type:${search}`;
       const response = await fetch(scryfallUrl);
       if (response.ok) {
         const cardData = await response.json();
@@ -103,6 +104,21 @@ function HomePage() {
                 );
               })}
             </Carousel>
+          </Container>
+          <Container>
+            <div className="button-container">
+              <Button>Get Started</Button>
+              <Button
+                style={{
+                  backgroundColor: "#e8f1fe",
+                  border: "solid 1px #1877f2",
+                  color: "#1877f2",
+                  marginRight: "10px",
+                }}
+              >
+                Random Card
+              </Button>
+            </div>
           </Container>
         </div>
       </div>

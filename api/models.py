@@ -13,9 +13,10 @@ class PydanticObjectId(ObjectId):
         if value:
             try:
                 ObjectId(value)
-            except:
+            except ValueError:
                 raise ValueError(f"Not a valid object id: {value}")
         return value
+
 
 ##################
 # Account Models #
@@ -24,6 +25,7 @@ class AccountIn(BaseModel):
     email: str
     password: str
     full_name: str
+
 
 class AccountUpdateIn(BaseModel):
     email: Optional[str]
@@ -35,6 +37,7 @@ class AccountUpdateIn(BaseModel):
 class Account(AccountIn):
     id: PydanticObjectId
     roles: List[str]
+
 
 class AccountOut(BaseModel):
     id: str
@@ -55,11 +58,14 @@ class CardIn(BaseModel):
     cmc: int
     formats: List[str]
 
+
 class Card(CardIn):
     id: PydanticObjectId
 
+
 class CardOut(CardIn):
     id: str
+
 
 class CardList(BaseModel):
     cards: List[CardOut]
@@ -72,10 +78,12 @@ class DeckDetailsIn(BaseModel):
     name: str
     description: str
 
+
 class DeckIn(BaseModel):
     account_id: str
     name: str
     description: str
+
 
 class DeckOut(DeckIn):
     id: str
@@ -84,11 +92,14 @@ class DeckOut(DeckIn):
     description: str
     cards: list
 
+
 class Deck(DeckIn):
     id: PydanticObjectId
 
+
 class DeckList(BaseModel):
     decks: List[DeckOut]
+
 
 #################
 # Search Models #
@@ -97,11 +108,14 @@ class DeckList(BaseModel):
 # class SearchScryfallIn(BaseModel):
 #     query: str
 
+
 class SearchScryfallOut(CardList):
     pass
 
+
 class CollectionIn(BaseModel):
     account_id: str
+
 
 class CollectionOut(CollectionIn):
     cards: list
