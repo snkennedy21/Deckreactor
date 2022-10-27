@@ -1,8 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from models import CollectionIn, CollectionOut, AccountOut
+from fastapi import APIRouter, Depends
+from models import CollectionOut, AccountOut
 from queries.collections import CollectionQueries
 from .authenticator import authenticator
-from typing import List
 import requests
 import json
 
@@ -18,7 +17,6 @@ async def get_user_collection(
     account_id = account.id
     collection = repo.get_one(account_id)
     return collection
-  
 
 
 @router.put("/collections/add/{multiverse_id}", response_model=CollectionOut)
