@@ -21,4 +21,6 @@ def test_get_card_from_scryfall():
     app.dependency_overrides = {}
 
     assert response.status_code == 200
-    assert response.json() == {"message": "No cards were found matching your query."}
+    assert response.json() == {
+        "message": "No cards were found matching your query."
+        }
