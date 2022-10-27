@@ -8,20 +8,20 @@ variables:
 
 ## TEST
 
-api-unit-test-job:
-  image: python:3-bullseye
-  stage: test
-  script:
-    - cd api
-    - pip install -r requirements.txt
-    - python -m pytest
+# api-unit-test-job:
+#   image: python:3-bullseye
+#   stage: test
+#   script:
+#     - cd api
+#     - pip install -r requirements.txt
+#     - python -m pytest
 
-lint-test-job:
-  image: python:3-bullseye
-  stage: test
-  script:
-    - pip install flake8
-    - flake8 api
+# lint-test-job:
+#   image: python:3-bullseye
+#   stage: test
+#   script:
+#     - pip install flake8
+#     - flake8 api
 
 ## BUILD
 
@@ -30,9 +30,9 @@ build-front-end-job:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   stage: build
   image: node:lts-bullseye
-  needs: # tests that must pass for this build-job to run
-    - api-unit-test-job
-    - lint-test-job
+  # needs: # tests that must pass for this build-job to run
+  #   - api-unit-test-job
+  #   - lint-test-job
   variables:
     PUBLIC_URL: https://sjp19-public-resources.gitlab.io/project_templates/module3-project-gamma
     REACT_APP_API_HOST: https://apis-with-sql.herokuapp.com
