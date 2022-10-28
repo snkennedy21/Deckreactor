@@ -98,6 +98,8 @@ Deck Detail Page:
 
 <!-- Getting Started -->
 
+## Getting Started
+
 Please follow these steps to deploy and use this application on your local machine:
 
 1. Clone repository to your local machine
