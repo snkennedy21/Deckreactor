@@ -35,7 +35,7 @@ function SearchResults() {
   const { data: cardData, isLoading: cardDataLoading } =
     useGetCardsQuery(search);
 
-  if (true || cardDataLoading || decksDataLoading) {
+  if (cardDataLoading || decksDataLoading) {
     return (
       <div style={{
         display: 'grid',
