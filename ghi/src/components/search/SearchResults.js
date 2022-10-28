@@ -54,7 +54,7 @@ function SearchResults() {
   if (cardData === undefined) {
     return (
       <div>
-        No search results yet<br></br>Care for a Banana while you wait
+        No search results yet<br/>Care for a Banana while you wait
       </div>
     );
   }

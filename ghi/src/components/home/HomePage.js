@@ -7,15 +7,21 @@ import Image from "react-bootstrap/esm/Image";
 import logo from "../../images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
+import { useGetCardNamesQuery } from "../../store/scryfallWebApi";
+import { useDispatch } from "react-redux";
+import { searchActions, store } from "../../store/store";
 
 function HomePage() {
   const [homepageCards, setHomepageCards] = useState([]);
+  const {data: cardNames} = useGetCardNamesQuery();
+  const [randomCardName, setRandomCardName] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function queryScryfall() {
+      // get carousel data
       const colorArray = ["werewolf", "vampire"];
-
       const randomIndex = Math.floor(Math.random() * 2);
       const search = colorArray[randomIndex];
       const scryfallUrl = `${process.env.REACT_APP_API_HOST}/scryfall/type:${search}`;
@@ -39,7 +45,12 @@ function HomePage() {
       }
     }
     queryScryfall();
-  }, []);
+
+    if (!randomCardName && !(cardNames === undefined)){
+      const allCardNames = cardNames.data;
+      setRandomCardName(allCardNames[Math.floor(Math.random()*allCardNames.length)])
+    }
+  }, [cardNames, randomCardName]);
 
   homepageCards.forEach((card) => {
     console.log(card);
@@ -49,32 +60,55 @@ function HomePage() {
     navigate("/signup");
   }
 
-  async function handleGetRandomCard() {
-    let multiverse_id = null;
-    const randomUrl = "https://api.scryfall.com/cards/random";
-
-    // while (multiverse_id === null) {
-    //   let response = await fetch(randomUrl);
-    //   if (response.ok) {
-    //     let cardData = response.json();
-    //     console.log(cardData)
-    //     if (cardData.multiverse_ids) {
-    //       navigate(`/card/${cardData.multiverse_ids[0]}`);
-    //     }
-    //   }
-    // }
-
+  function handleGetRandomCard(e) {
+    e.preventDefault();
+    dispatch(searchActions.updateSearch(randomCardName));
+    navigate("/search");
   }
 
   return (
     <React.Fragment>
       <div className="main-page">
-        <Container className="banner px-4 py-5 mb-5 mt-5 text-center rounded">
+        <Container className="banner px-4  mt-5 text-center rounded">
           <h1 className="display-5 fw-bold color-primary">DeckReactor</h1>
           <div className="col-lg-6 mx-auto">
-            <p className="lead mb-4">
+            <p className="lead">
               Manage your Magic the Gathering collection
             </p>
+          </div>
+        </Container>
+        <Container className="mb-5">
+          <div className="button-container">
+            <Button onClick={handleGetStarted}>Get Started</Button>
+            {
+              randomCardName === ""
+              ?
+              <Button
+                onClick={handleGetRandomCard}
+                disabled
+                style={{
+                  backgroundColor: "#e8f1fe",
+                  border: "solid 1px #1877f2",
+                  color: "#1877f2",
+                  marginRight: "10px",
+                }}
+              >
+                Random Card
+              </Button>
+              :
+              <Button
+                onClick={handleGetRandomCard}
+                value={randomCardName}
+                style={{
+                  backgroundColor: "#e8f1fe",
+                  border: "solid 1px #1877f2",
+                  color: "#1877f2",
+                  marginRight: "10px",
+                }}
+              >
+                Random Card
+              </Button>
+            }
           </div>
         </Container>
 
@@ -126,22 +160,6 @@ function HomePage() {
                 );
               })}
             </Carousel>
-          </Container>
-          <Container>
-            <div className="button-container">
-              <Button onClick={handleGetStarted}>Get Started</Button>
-              <Button
-                onClick={handleGetRandomCard}
-                style={{
-                  backgroundColor: "#e8f1fe",
-                  border: "solid 1px #1877f2",
-                  color: "#1877f2",
-                  marginRight: "10px",
-                }}
-              >
-                Random Card
-              </Button>
-            </div>
           </Container>
         </div>
       </div>
