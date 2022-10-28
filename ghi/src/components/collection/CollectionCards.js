@@ -138,7 +138,7 @@ export default function MyCollection2() {
         <div>
           <Container
             fluid="md"
-            className="table-wrapper-scroll-y"
+            className="table-wrapper-scroll-y fade-in"
             style={{
               padding: "25px",
               backgroundImage: `url(https://media.magic.wizards.com/images/wallpaper/tasha-the-witch-queen-clb-background-1280x960.jpg)`,

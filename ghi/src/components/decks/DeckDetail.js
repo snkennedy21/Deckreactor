@@ -330,7 +330,7 @@ function DeckDetail() {
   } else if (decksData && currentDeck && cards) {
     return (
     <React.Fragment>
-      <div className="p-4 img-fluid" style={{
+      <div className="p-4 img-fluid fade-in" style={{
       background: `url(${backgroundUrl}) no-repeat center center fixed`,
       backgroundSize: "cover",
       }}>
