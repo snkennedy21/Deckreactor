@@ -2,7 +2,7 @@
 
 ## October 28, 2022
 
-Today our group continued resolving build job deployment errors on the front end. In preparation for deploying and submitting our project, we continued to work on minor CSS styling, 
+Today our group continued resolving build job deployment errors on the front end. In preparation for deploying and submitting our project, we continued to work on minor CSS styling, readme, and render bugs.
 
 ## October 27, 2022
 
