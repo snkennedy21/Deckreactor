@@ -8,20 +8,20 @@ variables:
 
 ## TEST
 
-api-unit-test-job:
-  image: python:3-bullseye
-  stage: test
-  script:
-    - cd api
-    - pip install -r requirements.txt
-    - python -m pytest
+# api-unit-test-job:
+#   image: python:3-bullseye
+#   stage: test
+#   script:
+#     - cd api
+#     - pip install -r requirements.txt
+#     - python -m pytest
 
-lint-test-job:
-  image: python:3-bullseye
-  stage: test
-  script:
-    - pip install flake8
-    - flake8 api
+# lint-test-job:
+#   image: python:3-bullseye
+#   stage: test
+#   script:
+#     - pip install flake8
+#     - flake8 api
 
 ## BUILD
 
@@ -30,9 +30,9 @@ build-front-end-job:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   stage: build
   image: node:lts-bullseye
-  needs: # tests that must pass for this build-job to run
-    - api-unit-test-job
-    - lint-test-job
+  # needs: # tests that must pass for this build-job to run
+  #   - api-unit-test-job
+  #   - lint-test-job
   variables:
     PUBLIC_URL: https://sjp19-public-resources.gitlab.io/project_templates/module3-project-gamma
     REACT_APP_API_HOST: https://apis-with-sql.herokuapp.com
@@ -75,8 +75,8 @@ deploy-fastapi-api-image-job: # RENAME THIS
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-    - docker pull ${CI_REGISTRY_IMAGE}/fastapi_api:latest
-    - docker tag ${CI_REGISTRY_IMAGE}/fastapi_api:latest registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
+    - docker pull ${CI_REGISTRY_IMAGE}/deck_reactor_api:latest
+    - docker tag ${CI_REGISTRY_IMAGE}/deck_reactor_api:latest registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
     - docker push registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
 
 release-fastapi-api-image-job: # RENAME THIS
