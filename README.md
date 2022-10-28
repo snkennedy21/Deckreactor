@@ -20,7 +20,7 @@
       <a href="#functionality">Functionality</a>
       <ul>
         <li><a href="#home">Home</a></li>
-        <li><a href="#search">Search</a></li>
+        <li><a href="#search-features">Search Features</a></li>
         <li><a href="#collection">Collection</a></li>
         <li><a href="#decks">Decks</a></li>
       </ul>
@@ -55,7 +55,7 @@ Nav Bar:
 - More experienced users can type Scryfall's query syntax to accomplish even more precise searches using only the nav search bar.
 - Logged-in users have access to links to view their decks and collection
 
-### Search
+### Search Features
 
 Basic Search:
 
