@@ -111,7 +111,19 @@ Please follow these steps to deploy and use this application on your local machi
 6. Run `docker compose up`
 7. Enjoy searching for your favorite cards and managing your collection!
 
+<!-- Testing -->
+
+## Testing
+
+Unit tests are for:
+- Getting all accounts - Sean Kennedy
+- Getting all decks for a specific user - Mike Salvo
+- Getting the collection for a specific user - Devin Wright
+- Gettng a single deck for a single user - Thomas Brand 
+- Hitting our external API with an empty search query - Group
+
 <!-- Contact -->
+
 
 ## Contact
 
