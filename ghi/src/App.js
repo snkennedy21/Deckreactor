@@ -16,7 +16,7 @@ import NotFoundPage from "./components/NotFound/NotFound";
 import GameBoard from "./components/mini-game/GameBoard";
 import "./App.css";
 
-function App() {
+function App(){
   const domain = /https:\/\/[^/]+/;
   const basename = process.env.PUBLIC_URL.replace(domain, "");
 
