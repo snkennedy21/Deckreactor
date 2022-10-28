@@ -25,6 +25,8 @@
         <li><a href="#decks">Decks</a></li>
       </ul>
     </li>
+    <li><a href="#getting-started">Getting</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
