@@ -1,16 +1,40 @@
 # Week 17
 
+## October 28, 2022
+
+Today our group continued resolving build job deployment errors on the front end. In preparation for deploying and submitting our project, we continued to work on minor CSS styling, readme, and render bugs.
+
+## October 27, 2022
+
+Today I added a new main logo, which can also be used as a spinner loading icon. I added the CSS to achieve this, and began working on a deck deletion modal that will appear when clicking a delete button on the deck's detail page. I also added a "Random Card" button on the home page, inspired by Google's "I'm Feeling Lucky" button.
+
+As a group, we continued to work on deployment of our website. We wrote tests for our backend, and formatted our code to pass our build tests. We also began writing our readme.
+
+## October 26, 2022
+
+Today I finished an initial draft of a deck cards list that will display at the top of the deck's detail page. Our group also began reviewing the steps needed for CI/CD and configuring environment variables/our .gitlab-ci YML file. We continued to write tests for our backend.
+
+Lastly, I worked on fixing rendering bugs on the deck detail page. The background is supposed to render only once on page load, and reload the correct theme any time the details of that deck change its dominant color. There remains a rendering bug with the numbers of cards displayed in the deck when clicking the add/remove buttons, however.
+
+## October 25, 2022
+
+Today I finished incorporating RTK query into most of our components to minimize lines of code and number of refetches back to the database for the same information. We discussed a means of shrinking the size of the data being passed between the front and back end by using more complex validation tags (i.e., one for each deck so it is only refetched if a change is made to that deck, rather than fetching all of a user's decks each time any change is made to any of them).
+
+We also began to work on writing database tests for deployment. However, we ran into an issue regarding authentication for some of the routes we were hoping to test. For example, when a user creates their account, the same route also adds a user's collection to the database. We would need to provide valid token data (or fake token data) as the expected output, but would also need to create a fake collections database to see if a new document is made there.
+
+Lastly, I worked on several display bugs as we pushed our most recent branches to development-branch, such as allowing flip-layout cards to be rotated 180º on click, not refetching random background image data upon multiple renders, and redirecting the user to a card's detail page if that card is the only search result.
+
 ## October 24, 2022
 
 Today our team merged the most recent versions of our work from over the weekend, and I began integrating the RTK Query store that I set up with components in the app besides the card detail page. I also refactored much of the code in the card detail page into separate files to make the tools more reusable, such as parsing strings with symbol data or retrieving a themed background from a predetermined list.
 
 # Week 16
 
-# October 20, 2022
+## October 20, 2022
 
 Today I attempted to implement a store in Redux in order to store a logged in user's created decks. However, as I worked I realized I would need to implement async functions (such as when adding a new card to a deck, I would need to obtain that card's data from Scryfall's API). After reading errors that I would need custom middleware to handle my async methods within my query, I concluded that an API slice set up using RTK Query would make a better solution for data retrieval.
 
-# October 19, 2022
+## October 19, 2022
 
 Today I implemented formatting for displaying power, toughness, and loyalty stats for single- and double-faced cards on their detail page. Our group also worked together to finish the account authorization features. We were confronted with a bug that arose from the token request completing too quickly for 
 
