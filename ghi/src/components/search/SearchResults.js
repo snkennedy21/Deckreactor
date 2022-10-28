@@ -1,3 +1,5 @@
+// React Imports
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -7,9 +9,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
-import Spinner from "react-bootstrap/Spinner";
-import logo from "../../images/logo.png";
-import "./Loading.css";
 
 // RTK Query Imports
 import { useGetCardsQuery } from "../../store/scryfallApi";
@@ -20,12 +19,14 @@ import {
   useAddCardToDeckMutation,
 } from "../../store/myCardsApi";
 import { useGetTokenQuery } from "../../store/accountApi";
+import Loading from "../ui/Loading";
 
 function SearchResults() {
   // Hook Declarations
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const search = useSelector((state) => state.search);
+  const searching = useState(false);
 
   // RTK Query Hook Declarations
   const { data: decksData, isLoading: decksDataLoading } = useGetMyDecksQuery();
@@ -35,19 +36,13 @@ function SearchResults() {
   const { data: cardData, isLoading: cardDataLoading } =
     useGetCardsQuery(search);
 
+  // useEffect(() => {
+
+  // }, [])
+
   if (cardDataLoading || decksDataLoading) {
     return (
-      <div style={{
-        display: 'grid',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '80vh',
-      }}>
-        <div>
-          <Image src={logo} className="logo-spinner" style={{ width: "6rem" }} />
-          <div className="loading my-5">&nbsp; &nbsp; Loading</div>
-        </div>
-      </div>
+      <Loading />
     );
   }
 

@@ -7,6 +7,7 @@ import ParseSymbolsAndLineBreaks from "./ParseSymbolsAndLineBreaks";
 import { useDispatch, useSelector } from "react-redux";
 import getBackground from "./getBackground";
 import { useGetCardQuery } from "../../store/scryfallWebApi";
+import Loading from "../ui/Loading";
 
 function CardDetailPage() {
   const { multiverse_id } = useParams();
@@ -24,7 +25,7 @@ function CardDetailPage() {
   }, [upsideDown, card])
 
   if (cardIsLoading || cardError) {
-    return (<React.Fragment>Loading...</React.Fragment>)
+    return (<Loading/>)
   }
 
   const double_faced = ["transform", "modal_dfc"].includes(card.layout);

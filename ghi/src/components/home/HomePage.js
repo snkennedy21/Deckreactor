@@ -79,19 +79,19 @@ function HomePage() {
         </Container>
         <Container className="mb-5">
           <div className="button-container">
-            <Button onClick={handleGetStarted}>Get Started</Button>
+            <Button 
+              onClick={handleGetStarted}
+              className="button-start"
+            >
+              Get Started
+            </Button>
             {
               randomCardName === ""
               ?
               <Button
                 onClick={handleGetRandomCard}
                 disabled
-                style={{
-                  backgroundColor: "#e8f1fe",
-                  border: "solid 1px #1877f2",
-                  color: "#1877f2",
-                  marginRight: "10px",
-                }}
+                variant="outline-primary"
               >
                 Random Card
               </Button>
@@ -99,12 +99,7 @@ function HomePage() {
               <Button
                 onClick={handleGetRandomCard}
                 value={randomCardName}
-                style={{
-                  backgroundColor: "#e8f1fe",
-                  border: "solid 1px #1877f2",
-                  color: "#1877f2",
-                  marginRight: "10px",
-                }}
+                className="button-find"
               >
                 Random Card
               </Button>
@@ -122,7 +117,7 @@ function HomePage() {
                       <span className="m-2" style={{ width: "100%" }}>
                         <Link to={`/card/${cardObject["1"].multiverse_id}`}>
                           <img
-                            className="d-block w-100"
+                            className="fade-in d-block w-100"
                             src={cardObject["1"].picture_url}
                             style={{ width: "100%" }}
                           />
@@ -131,7 +126,7 @@ function HomePage() {
                       <span className="m-2" style={{ width: "100%" }}>
                         <Link to={`/card/${cardObject["2"].multiverse_id}`}>
                           <img
-                            className="d-block w-100"
+                            className="fade-in d-block w-100"
                             src={cardObject["2"].picture_url}
                             style={{ width: "100%" }}
                           />
@@ -140,7 +135,7 @@ function HomePage() {
                       <span className="m-2" style={{ width: "100%" }}>
                         <Link to={`/card/${cardObject["3"].multiverse_id}`}>
                           <img
-                            className="d-block w-100"
+                            className="fade-in d-block w-100"
                             src={cardObject["3"].picture_url}
                             style={{ width: "100%" }}
                           />
@@ -149,7 +144,7 @@ function HomePage() {
                       <span className="m-2" style={{ width: "100%" }}>
                         <Link to={`/card/${cardObject["4"].multiverse_id}`}>
                           <img
-                            className="d-block w-100"
+                            className="fade-in d-block w-100"
                             src={cardObject["4"].picture_url}
                             style={{ width: "100%" }}
                           />

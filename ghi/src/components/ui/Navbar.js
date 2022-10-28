@@ -99,7 +99,7 @@ function NavScrollExample() {
             navbarScroll
             onSelect={(selectedKey) => navigate(selectedKey)}
           >
-            <Nav.Link eventKey="/advanced-search">AdvancedSearch</Nav.Link>
+            <Nav.Link eventKey="/advanced-search">Advanced Search</Nav.Link>
             {token ? (
               <Nav.Link eventKey="/collection">My Collection</Nav.Link>
             ) : (

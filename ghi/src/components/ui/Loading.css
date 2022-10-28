@@ -2,13 +2,13 @@
 .logo-spinner {
   top: 50%;
   left: 50%;
-  -webkit-animation:spin 1.5s ease-in-out infinite;
-  -moz-animation:spin 1.5s ease-in-out infinite;
-  animation:spin 1.5s ease-in-out infinite;
+  -webkit-animation:spin 1.3s ease-in-out infinite;
+  -moz-animation:spin 1.3s ease-in-out infinite;
+  animation:spin 1.3s ease-in-out infinite;
 }
-@-moz-keyframes spin { 100% { -moz-transform: rotate(-1080deg); } }
-@-webkit-keyframes spin { 100% { -webkit-transform: rotate(-1080deg); } }
-@keyframes spin { 100% { -webkit-transform: rotate(-1080deg); transform:rotate(-1080deg); } }
+@-moz-keyframes spin { 100% { -moz-transform: rotate(-1440deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(-1440deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(-1440deg); transform:rotate(-1440deg); } }
 
 
 /* animates ellipsis after loading message */

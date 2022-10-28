@@ -1,24 +1,132 @@
+// react imports
 import React from "react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { FaPlus, FaMinus } from "react-icons/fa";
 
+// bootstrap imports
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import { FaPlus, FaMinus } from "react-icons/fa";
+
+// store imports
 import {
   useGetMyDecksQuery,
   useAddCardToDeckMutation,
   useRemoveOneCardFromDeckMutation,
 } from "../../store/myCardsApi";
 import { useGetTokenQuery } from "../../store/accountApi";
+
+// other imports
 import getBackground from "../card-details/getBackground";
 import ParseSymbolsAndLineBreaks from "../card-details/ParseSymbolsAndLineBreaks";
-import DeckCardList from "./DeckCardList";
+import DeckCardList, { getDeckCardQuantity } from "./DeckCardList";
+import Loading from "../ui/Loading";
+import DeleteDeckModal from "./DeleteDeckModal";
+import CreateDeckModal from "./CreateDeckModal";
+
+// when passed a deck object with "cards" attribute, returns a 1-2 char string
+// with 2 mana colors most commonly found in card mana costs
+export function getDominantColors(deck) {
+  const colorCounts = {};
+
+  // generate string combining mana cost of all cards
+  let manaString = "";
+  for (let card of deck.cards) {
+    if (card.mana !== null) {
+      let currentMana = card.mana;
+      manaString += currentMana.repeat(card.quantity);
+    }
+  }
+
+  // count up instances of colored mana cost
+  for (let i = 0; i < manaString.length - 2; i++) {
+    if (manaString[i] === "{" && manaString[i + 2] === "}") {
+      if ("RGBUW".includes(manaString[i + 1])) {
+        let color = manaString[i + 1];
+        if (!Object.keys(colorCounts).includes(color)) {
+          colorCounts[color] = 0;
+        }
+        colorCounts[color]++;
+      }
+    }
+  }
+
+  // set outputs by checking which colors occurred most frequently
+  let color1 = "";
+  let color2 = "";
+  let amount1 = 0;
+  let amount2 = 0;
+
+  const sortedCounts = Object.entries(colorCounts).sort(
+    (a, b) => b[1] - a[1]
+  );
+
+  if (sortedCounts.length > 0) {
+    color1 = sortedCounts[0][0];
+    if (sortedCounts.length > 1) {
+      color2 = sortedCounts[1][0];
+    }
+  }
+
+  return color1 + color2;
+}
+
+// when passed a deck object with "cards" attribute, returns an array of
+// only formats legal for all cards in deck
+export function getLegalities(deck) {
+  if (!Object.keys(deck).includes("cards") && deck.cards.length > 0) {
+    return;
+  }
+  const formatsArray = deck.cards.map((card) => card.formats);
+  let outputFormats = formatsArray[0];
+  for (let cardFormats of formatsArray) {
+    outputFormats = outputFormats.filter((format) =>
+      cardFormats.includes(format)
+    );
+  }
+  return outputFormats;
+}
+
+// returns a string of the average CMC (converted mana cost)
+// of input deck object, rounded to 2 places
+export function getAverageCmc(deck) {
+  if (deck.cards === undefined || deck.cards.length === 0) {
+    return (0).toFixed(2);
+  }
+
+  let cmcSum = 0;
+  let cardQuantity = 0;
+  for (let card of deck.cards) {
+    cmcSum += card.cmc * card.quantity;
+    cardQuantity += card.quantity;
+  }
+
+  const average = cmcSum / cardQuantity;
+  return average.toFixed(2);
+}
+
+// will eventually return a string of the total price of deck
+
+// export function getDeckValue(deck) {
+//   let sum = 0;
+//   if (!Object.keys(deck).includes("cards")) {
+//     return (0).toFixed(2);
+//   }
+
+//   for (let card of deck.cards) {
+//     if (card.prices.usd === null) {
+//       continue;
+//     } else {
+//       sum += card.prices.usd;
+//     }
+//   }
+//   return (sum).toFixed(2);
+// }
 
 function DeckDetail() {
   const [cards, setCards] = useState([]);
@@ -39,7 +147,7 @@ function DeckDetail() {
   const [dominantColors, setDominantColors] = useState("");
   const [primaryColor, setPrimaryColor] = useState("");
   const [averageCmc, setAverageCmc] = useState("");
-  const [deckValue, setDeckValue] = useState("");
+  // const [deckValue, setDeckValue] = useState("");
   const [legalities, setLegalities] = useState([]);
   const [lostLegalities, setLostLegalities] = useState([]);
 
@@ -80,105 +188,6 @@ function DeckDetail() {
     //   }
     // }
   }, [decksData, primaryColor, cards, currentDeck, backgroundUrl]);
-
-  // when passed a deck object with "cards" attribute, returns a 1-2 char string
-  // with 2 mana colors most commonly found in card mana costs
-  function getDominantColors(deck) {
-    const colorCounts = {};
-
-    // generate string combining mana cost of all cards
-    let manaString = "";
-    for (let card of deck.cards) {
-      if (card.mana !== null) {
-        let currentMana = card.mana;
-        manaString += currentMana.repeat(card.quantity);
-      }
-    }
-
-    // count up instances of colored mana cost
-    for (let i = 0; i < manaString.length - 2; i++) {
-      if (manaString[i] === "{" && manaString[i + 2] === "}") {
-        if ("RGBUW".includes(manaString[i + 1])) {
-          let color = manaString[i + 1];
-          if (!Object.keys(colorCounts).includes(color)) {
-            colorCounts[color] = 0;
-          }
-          colorCounts[color]++;
-        }
-      }
-    }
-
-    // set outputs by checking which colors occurred most frequently
-    let color1 = "";
-    let color2 = "";
-    let amount1 = 0;
-    let amount2 = 0;
-
-    const sortedCounts = Object.entries(colorCounts).sort(
-      (a, b) => b[1] - a[1]
-    );
-
-    if (sortedCounts.length > 0) {
-      color1 = sortedCounts[0][0];
-      if (sortedCounts.length > 1) {
-        color2 = sortedCounts[1][0];
-      }
-    }
-
-    return color1 + color2;
-  }
-
-  // when passed a deck object with "cards" attribute, returns an array of
-  // only formats legal for all cards in deck
-  function getLegalities(deck) {
-    if (!Object.keys(deck).includes("cards") && deck.cards.length > 0) {
-      return;
-    }
-    const formatsArray = deck.cards.map((card) => card.formats);
-    let outputFormats = formatsArray[0];
-    for (let cardFormats of formatsArray) {
-      outputFormats = outputFormats.filter((format) =>
-        cardFormats.includes(format)
-      );
-    }
-    return outputFormats;
-  }
-
-  // returns a string of the average CMC (converted mana cost)
-  // of input deck object, rounded to 2 places
-  function getAverageCmc(deck) {
-    if (deck.cards === undefined || deck.cards.length === 0) {
-      return (0).toFixed(2);
-    }
-
-    let cmcSum = 0;
-    let cardQuantity = 0;
-    for (let card of deck.cards) {
-      cmcSum += card.cmc * card.quantity;
-      cardQuantity += card.quantity;
-    }
-
-    const average = cmcSum / cardQuantity;
-    return average.toFixed(2);
-  }
-
-  // will eventually return a string of the total price of deck
-
-  // function getDeckValue(deck) {
-  //   let sum = 0;
-  //   if (!Object.keys(deck).includes("cards")) {
-  //     return (0).toFixed(2);
-  //   }
-
-  //   for (let card of deck.cards) {
-  //     if (card.prices.usd === null) {
-  //       continue;
-  //     } else {
-  //       sum += card.prices.usd;
-  //     }
-  //   }
-  //   return (sum).toFixed(2);
-  // }
 
   function increaseCardInDeckHandler(e) {
     const multiverseId = e.currentTarget.value;
@@ -299,6 +308,7 @@ function DeckDetail() {
                       </tr>
                     </tbody>
                   </table>
+                  <DeleteDeckModal deckId={deck_id} deckName={currentDeck.name}/>
                 </div>
               </div>
             </div>
@@ -409,7 +419,7 @@ function DeckDetail() {
     return (
       <>
         <Button onClick={navigateToDecks}>Back To Decks</Button>
-        <p>Loading...</p>
+        <Loading/>
       </>
     );
   }
