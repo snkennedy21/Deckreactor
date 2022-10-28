@@ -4,7 +4,6 @@ import Card from "react-bootstrap/Card";
 import Carousel from "react-bootstrap/Carousel";
 import AddToDeckForm from "./AddToDeckForm";
 import ParseSymbolsAndLineBreaks from "./ParseSymbolsAndLineBreaks";
-import { useDispatch, useSelector } from "react-redux";
 import getBackground from "./getBackground";
 import { useGetCardQuery } from "../../store/scryfallWebApi";
 
@@ -51,14 +50,14 @@ function CardDetailPage() {
                         <img alt="card front" className="img-fluid" src={card.card_faces[0].image_uris.normal}/>
                     </Carousel.Item>
                     <Carousel.Item>
-                        <img alt="card back image" className="img-fluid" src={card.card_faces[1].image_uris.normal}/>
+                        <img alt="card back" className="img-fluid" src={card.card_faces[1].image_uris.normal}/>
                     </Carousel.Item>
                 </Carousel>
               </Card> : 
               card.layout === "flip"
               ?
               <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
-              <img alt="card image" className='img-fluid' src={card.image_uris.normal} style={{
+              <img alt="card" className='img-fluid' src={card.image_uris.normal} style={{
                 transform: `rotate(${upsideDown === 'up' ? '0' : '180'}deg)`,
                 transition: 'all 0.4s 0.2s'
                 }} onClick={toggleUpsideDown} />
@@ -67,11 +66,11 @@ function CardDetailPage() {
               card.type_line === "Phenomenon"
               ?
               <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
-              <img alt="card image" className='img-fluid' style={{transform: `rotate(90deg)`}} src={card.image_uris.normal} />
+              <img alt="card" className='img-fluid' style={{transform: `rotate(90deg)`}} src={card.image_uris.normal} />
               </Card>
               :
               <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
-              <img alt="card image" className='img-fluid' src={card.image_uris.normal} />
+              <img alt="card" className='img-fluid' src={card.image_uris.normal} />
               </Card>
             }
             </div>
