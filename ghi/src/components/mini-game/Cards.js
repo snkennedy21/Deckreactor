@@ -11,10 +11,10 @@ const GameCard = ({ id, name, flipped, matched, clicked }) => {
       }
     >
       <div className="back">
-      <img alt={name} src="/Back.jpeg"/>
+      <img alt={name} src="Back.jpeg"/>
       </div>
       <div className="front">
-        <img alt={name} src={"/" + name + ".jpeg"} />
+        <img alt={name} src={name + ".jpeg"} />
       </div>
     </div>
   );
