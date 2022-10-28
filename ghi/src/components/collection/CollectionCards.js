@@ -12,7 +12,6 @@ import { useGetMyCollectionQuery } from "../../store/myCardsApi";
 export default function MyCollection2() {
   const {
     data: collectionData,
-    error: collectionError,
     isLoading: collectionIsLoading,
   } = useGetMyCollectionQuery();
   const [filteredCollection, setFilteredCollection] = useState([]);
@@ -34,7 +33,7 @@ export default function MyCollection2() {
       });
       setFilteredCollection(cardMatches);
     }
-  }, [collectionData, search]);
+  }, [collection, collectionData, search]);
 
   const handleInputChange = (event) => {
     setSearch(event.target.value);

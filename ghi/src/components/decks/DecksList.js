@@ -1,12 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import Spinner from "react-bootstrap/Spinner";
-import { useGetTokenQuery } from "../../store/accountApi";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { deckActions } from "../../store/store";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -18,10 +12,8 @@ function DecksList() {
   // const [usersDecks, setUsersDecks] = useState([]);
   const {data: usersDecks, error: decksError, isLoading: decksIsLoading } = useGetMyDecksQuery();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   function goToDeck(e) {
-    // dispatch(deckActions.updateId(e.target.value));
     navigate(`/deck/${e.target.value}/`);
   }
 

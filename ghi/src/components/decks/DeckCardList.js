@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ParseSymbolsAndLineBreaks from "../card-details/ParseSymbolsAndLineBreaks";
 
 // will sort a list of cards by their basic types, and arrange them
@@ -38,7 +38,6 @@ function DeckCardList(props) {
   const cards = props.cards;
   const types = cardsByTypeLine(cards);
   const typesEntries = Object.entries(types);
-  const navigate = useNavigate();
 
   return (
     <div>

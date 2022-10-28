@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Navbar from "./components/ui/Navbar";
 import SearchResults from "./components/search/SearchResults";
 import { BrowserRouter, Routes, Route } from "react-router-dom";

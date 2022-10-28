@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
@@ -15,7 +14,6 @@ import {
   useAddCardToDeckMutation,
   useRemoveOneCardFromDeckMutation,
 } from "../../store/myCardsApi";
-import { useGetTokenQuery } from "../../store/accountApi";
 import getBackground from "../card-details/getBackground";
 import ParseSymbolsAndLineBreaks from "../card-details/ParseSymbolsAndLineBreaks";
 import DeckCardList from "./DeckCardList";
@@ -25,13 +23,11 @@ function DeckDetail() {
   const { deck_id } = useParams();
   const [currentDeck, setCurrentDeck] = useState({});
   const {
-    data: decksData,
-    error: decksError,
-    isLoading: decksIsLoading,
+    data: decksData
   } = useGetMyDecksQuery();
-  const [addCardToDeck, { addError, isLoading: addCardLoading }] =
+  const [addCardToDeck] =
     useAddCardToDeckMutation();
-  const [removeCardFromDeck, { removeError, isLoading: removeCardLoading }] =
+  const [removeCardFromDeck] =
     useRemoveOneCardFromDeckMutation();
   const navigate = useNavigate();
 
@@ -39,9 +35,9 @@ function DeckDetail() {
   const [dominantColors, setDominantColors] = useState("");
   const [primaryColor, setPrimaryColor] = useState("");
   const [averageCmc, setAverageCmc] = useState("");
-  const [deckValue, setDeckValue] = useState("");
+  // const [deckValue, setDeckValue] = useState("");
   const [legalities, setLegalities] = useState([]);
-  const [lostLegalities, setLostLegalities] = useState([]);
+  // const [lostLegalities, setLostLegalities] = useState([]);
 
   useEffect(() => {
     if (decksData === undefined) return;
@@ -79,7 +75,7 @@ function DeckDetail() {
     //     setLostLegalities(newLostLegalities);
     //   }
     // }
-  }, [decksData, primaryColor, cards, currentDeck, backgroundUrl]);
+  }, [deck_id, decksData, primaryColor, cards, currentDeck, backgroundUrl]);
 
   // when passed a deck object with "cards" attribute, returns a 1-2 char string
   // with 2 mana colors most commonly found in card mana costs
@@ -111,8 +107,6 @@ function DeckDetail() {
     // set outputs by checking which colors occurred most frequently
     let color1 = "";
     let color2 = "";
-    let amount1 = 0;
-    let amount2 = 0;
 
     const sortedCounts = Object.entries(colorCounts).sort(
       (a, b) => b[1] - a[1]
@@ -189,7 +183,7 @@ function DeckDetail() {
 
     const newCards = cards.map((card) => {
       let cardClone = { ...card };
-      if (cardClone.multiverse_id == multiverseId) {
+      if (cardClone.multiverse_id === multiverseId) {
         cardClone.quantity++;
       }
       return cardClone;
@@ -217,7 +211,7 @@ function DeckDetail() {
     const newCards = cards
       .map((card) => {
         let cardClone = { ...card };
-        if (cardClone.multiverse_id == multiverseId) {
+        if (cardClone.multiverse_id === multiverseId) {
           cardClone.quantity--;
         }
         return cardClone;
@@ -275,9 +269,9 @@ function DeckDetail() {
                         <td>
                           <ParseSymbolsAndLineBreaks
                             string={
-                              dominantColors.length == 2
+                              dominantColors.length === 2
                                 ? `{${dominantColors[0]}}{${dominantColors[1]}}`
-                                : dominantColors.length == 1
+                                : dominantColors.length === 1
                                 ? `{${dominantColors[0]}}`
                                 : ""
                             }
@@ -336,7 +330,7 @@ function DeckDetail() {
                 <table className="table table-striped table-sm">
                   <tbody>
                     <tr key="mana symbols row">
-                      <td><ParseSymbolsAndLineBreaks string={dominantColors.length == 2 ? `{${dominantColors[0]}}{${dominantColors[1]}}` : dominantColors.length == 1 ? `{${dominantColors[0]}}` : ''}></ParseSymbolsAndLineBreaks></td>
+                      <td><ParseSymbolsAndLineBreaks string={dominantColors.length === 2 ? `{${dominantColors[0]}}{${dominantColors[1]}}` : dominantColors.length === 1 ? `{${dominantColors[0]}}` : ''}></ParseSymbolsAndLineBreaks></td>
                       <td></td>
                     </tr>
                     <tr key="deck value row">

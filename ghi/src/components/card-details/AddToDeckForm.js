@@ -1,18 +1,17 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Alert from "react-bootstrap/Alert";
 import { useAddCardToCollectionMutation, useAddCardToDeckMutation, useGetMyCollectionQuery, useGetMyDecksQuery } from "../../store/myCardsApi";
 import { useState } from "react";
 import { useGetTokenQuery } from "../../store/accountApi";
 
 function AddToDeckForm(props) {
-  const { data: decksData, error: decksError, isLoading: decksIsLoading } = useGetMyDecksQuery();
+  const { data: decksData } = useGetMyDecksQuery();
   const [ deckId, setDeckId ] = useState("");
   const multiverseId = Number(props.multiverseId);
   const [addCardToDeck] = useAddCardToDeckMutation();
-  const { data: collectionData, error: collectionError, isLoading: collectionIsLoading } = useGetMyCollectionQuery();
+  const { data: collectionData } = useGetMyCollectionQuery();
   const [addCardToCollection] = useAddCardToCollectionMutation();
-  const { data: tokenData, error: tokenError, isLoading: tokenIsLoading } = useGetTokenQuery();
+  const { data: tokenData } = useGetTokenQuery();
 
   function handleSubmit(e) {
     e.preventDefault();

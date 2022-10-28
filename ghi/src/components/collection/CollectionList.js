@@ -1,5 +1,5 @@
 import Table from "react-bootstrap/Table";
-import { useEffect, useState, useReducer } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import "./collection.css";
@@ -12,7 +12,7 @@ export default function MyCollection() {
   const [search, setSearch] = useState("");
   const [addCardToCollection] = useAddCardToCollectionMutation();
   const [removeCardFromCollection] = useRemoveCardFromCollectionMutation();
-  const { data: collectionData, error: collectionError, isLoading: collectionIsLoading } = useGetMyCollectionQuery();
+  const { data: collectionData, isLoading: collectionIsLoading } = useGetMyCollectionQuery();
 
   useEffect(() => {
     if (collectionData) {
@@ -29,7 +29,7 @@ export default function MyCollection() {
       });
       setFilteredCollection(cardMatches);
     }
-  }, [collectionData, search]);
+  }, [collection, collectionData, search]);
 
   const handleDelete = (multiverse_id) => {
     removeCardFromCollection({multiverseId: multiverse_id});

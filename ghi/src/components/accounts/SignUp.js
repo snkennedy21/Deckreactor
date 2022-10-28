@@ -14,7 +14,7 @@ function SignUp() {
   const navigate = useNavigate()
   const dispatch = useDispatch();
   const { email, password, full_name } = useSelector((state) => state.account);
-  const [signUp, { error, isLoading: signUpLoading }] = useSignUpMutation();
+  const [signUp] = useSignUpMutation();
   const field = useCallback(
     (e) =>
       dispatch(updateField({ field: e.target.name, value: e.target.value })),

@@ -14,15 +14,13 @@ import { useGetMyDecksQuery } from "../../store/myCardsApi";
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { email, username, password } = useSelector((state) => state.account);
-  const { deckData, deckError, deckIsLoading } = useGetMyDecksQuery();
-  const [logIn, { error, isLoading: loginInLoading }] = useLogInMutation();
+  const { email, password } = useSelector((state) => state.account);
+  const [logIn] = useLogInMutation();
   const field = useCallback(
     (e) =>
       dispatch(updateField({ field: e.target.name, value: e.target.value })),
     [dispatch]
   );
-  const state = useSelector((state) => state.account);
 
   return (
     <Container className="form-login card shadow p-4 mt-5 d-grid">
