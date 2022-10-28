@@ -23,7 +23,7 @@ function DeleteDeckModal(props) {
   return (
     <React.Fragment>
       <Button variant="outline-danger" onClick={handleShow}>
-        Delete
+        Delete Deck
       </Button>
 
       <Modal show={show} onHide={handleClose}>

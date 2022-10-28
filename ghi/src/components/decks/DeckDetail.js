@@ -27,7 +27,6 @@ import ParseSymbolsAndLineBreaks from "../card-details/ParseSymbolsAndLineBreaks
 import DeckCardList, { getDeckCardQuantity } from "./DeckCardList";
 import Loading from "../ui/Loading";
 import DeleteDeckModal from "./DeleteDeckModal";
-import CreateDeckModal from "./CreateDeckModal";
 
 // when passed a deck object with "cards" attribute, returns a 1-2 char string
 // with 2 mana colors most commonly found in card mana costs
@@ -280,20 +279,6 @@ function DeckDetail() {
                 <div className="table-responsive">
                   <table className="table table-striped table-sm">
                     <tbody>
-                      <tr key="mana symbols row">
-                        <td>
-                          <ParseSymbolsAndLineBreaks
-                            string={
-                              dominantColors.length == 2
-                                ? `{${dominantColors[0]}}{${dominantColors[1]}}`
-                                : dominantColors.length == 1
-                                ? `{${dominantColors[0]}}`
-                                : ""
-                            }
-                          ></ParseSymbolsAndLineBreaks>
-                        </td>
-                        <td></td>
-                      </tr>
                       <tr key="Value row">
                         <td>Value:</td>
                         <td className="text-success">$0.00</td>
@@ -310,17 +295,6 @@ function DeckDetail() {
                   </table>
                   <DeleteDeckModal deckId={deck_id} deckName={currentDeck.name}/>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-6">
-            {/* DECK CARD DETAILS */}
-            <div className="card mb-4 box-shadow">
-              <div className="card-body img-fluid">
-                <Card
-                  className="bg-white img-fluid rounded shadow d-block mx-auto"
-                  style={{ width: "13rem" }}
-                ></Card>
               </div>
             </div>
           </div>
@@ -363,6 +337,7 @@ function DeckDetail() {
                     </tr>
                   </tbody>
                 </table>
+                <DeleteDeckModal deckId={deck_id} deckName={currentDeck.name}/>
               </div>
             </div>
           </div>
