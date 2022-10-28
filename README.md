@@ -106,7 +106,8 @@ Please follow these steps to deploy and use this application on your local machi
 2. CD into the project directory
 3. Run `docker volume create deck-reactor-node-modules`
 4. Run `docker volume create deck-reactor-mongo-data`
-5. Run `docker compose build`
+5. Run `docker compose build`, alternatively if you are on Apple Silicon (M1 or M2 chip) run
+   `DOCKER_DEFAULT_PLATFORM=linux/amd64 docker-compose build` instead.
 6. Run `docker compose up`
 7. Enjoy searching for your favorite cards and managing your collection!
 
