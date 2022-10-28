@@ -36,7 +36,7 @@ function AddToDeckForm(props) {
   }
 
   return (
-    <div className="card mb-4 p-2 box-shadow">
+    <div className="card mb-4 p-4 box-shadow">
       <Form 
       method="put"
       onSubmit={handleSubmit}
@@ -52,9 +52,9 @@ function AddToDeckForm(props) {
         {
           deckId !== "" && decksData.decks.find(deck => deck.id === deckId).cards.map(card => card.multiverse_id).includes(multiverseId)
           ?
-          <Button className="mb-2" variant="outline-success" size="sm" type="submit">+ Add more to deck ({decksData.decks.find(deck => deck.id === deckId).cards.find(card => card.multiverse_id === multiverseId).quantity})</Button>
+          <Button className="mb-2" variant="primary" size="sm" type="submit">+ Add more to deck ({decksData.decks.find(deck => deck.id === deckId).cards.find(card => card.multiverse_id === multiverseId).quantity})</Button>
           :
-          <Button className="mb-2" variant="outline-success" size="sm" type="submit">+ Add to deck</Button>
+          <Button className="mb-2" variant="outline-primary" size="sm" type="submit">+ Add to deck</Button>
         }
       </Form>
       <Form
@@ -64,9 +64,9 @@ function AddToDeckForm(props) {
         {
           collectionData.cards.map(card => card.multiverse_id).includes(multiverseId)
           ?
-          <Button variant="outline-success" size="sm" type="submit">+ Add more to collection ({collectionData.cards.find(card => card.multiverse_id === multiverseId).quantity})</Button>
+          <Button variant="primary" size="sm" type="submit">+ Add more to collection ({collectionData.cards.find(card => card.multiverse_id === multiverseId).quantity})</Button>
           :
-          <Button variant="outline-success" size="sm" type="submit">+ Add to Collection</Button>
+          <Button variant="outline-primary" size="sm" type="submit">+ Add to Collection</Button>
         }
       </Form>
     </div>

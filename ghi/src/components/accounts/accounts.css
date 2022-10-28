@@ -3,12 +3,12 @@
   text-decoration: none;
 }
 .form-login {
-  background: floralwhite;
+  background: white;
   justify-content: center;
   width: 35%;
 }
 
 .form-signup {
-  background: floralwhite;
+  background: white;
   justify-content: center;
 }
