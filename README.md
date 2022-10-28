@@ -16,9 +16,17 @@
   <ol>
     <li><a href="#about-deckreactor">About DeckReactor</a></li>
     <li><a href="#target-audience">Target Audience</a></li>
-    <li><a href="#functionality">Functionality</a>
-    <li><a href="#content">Content</a></li>
+    <li>
+      <a href="#functionality">Functionality</a>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#search">Search</a></li>
+        <li><a href="#collection">Collection</a></li>
+        <li><a href="#decks">Decks</a></li>
+      </ul>
+    </li>
   </ol>
+</details>
 
 <!-- ABOUT THE PROJECT -->
 
