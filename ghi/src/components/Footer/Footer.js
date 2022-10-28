@@ -1,6 +1,4 @@
-import SignUp from "../accounts/SignUp";
 import "./footer.css";
-import { Link } from "react-router-dom";
 
 function Footer() {
   return (

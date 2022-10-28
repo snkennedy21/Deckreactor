@@ -12,7 +12,6 @@ function CardDetailPage() {
   const { multiverse_id } = useParams();
   const { data: card, error: cardError, isLoading: cardIsLoading } = useGetCardQuery(multiverse_id);
   const [upsideDown, setUpsideDown] = useState("up");
-  const [imageStyle, setImageStyle] = useState("");
   const [backgroundUrl, setBackgroundUrl] = useState("")
 
   useEffect(() => {
@@ -20,8 +19,7 @@ function CardDetailPage() {
       const color_id = (card.color_identity.length > 0 ? card.color_identity[0] : "None");
       setBackgroundUrl(getBackground(color_id));
     }
-    setImageStyle(`{transform: rotate(${upsideDown === 'up' ? '0' : '180'}deg);}`);
-  }, [upsideDown, card])
+  }, [upsideDown, card, backgroundUrl])
 
   if (cardIsLoading || cardError) {
     return (<React.Fragment>Loading...</React.Fragment>)
@@ -50,17 +48,17 @@ function CardDetailPage() {
               <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
                 <Carousel className="img-fluid">
                     <Carousel.Item>
-                        <img className="img-fluid" src={card.card_faces[0].image_uris.normal}/>
+                        <img alt="card front" className="img-fluid" src={card.card_faces[0].image_uris.normal}/>
                     </Carousel.Item>
                     <Carousel.Item>
-                        <img className="img-fluid" src={card.card_faces[1].image_uris.normal}/>
+                        <img alt="card back image" className="img-fluid" src={card.card_faces[1].image_uris.normal}/>
                     </Carousel.Item>
                 </Carousel>
               </Card> : 
               card.layout === "flip"
               ?
               <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
-              <img className='img-fluid' src={card.image_uris.normal} style={{
+              <img alt="card image" className='img-fluid' src={card.image_uris.normal} style={{
                 transform: `rotate(${upsideDown === 'up' ? '0' : '180'}deg)`,
                 transition: 'all 0.4s 0.2s'
                 }} onClick={toggleUpsideDown} />
@@ -69,11 +67,11 @@ function CardDetailPage() {
               card.type_line === "Phenomenon"
               ?
               <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
-              <img className='img-fluid' style={{transform: `rotate(90deg)`}} src={card.image_uris.normal} />
+              <img alt="card image" className='img-fluid' style={{transform: `rotate(90deg)`}} src={card.image_uris.normal} />
               </Card>
               :
               <Card className="bg-white img-fluid rounded shadow d-block mx-auto" style={{ width: '13rem' }}>
-              <img className='img-fluid' src={card.image_uris.normal} />
+              <img alt="card image" className='img-fluid' src={card.image_uris.normal} />
               </Card>
             }
             </div>

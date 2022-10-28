@@ -3,14 +3,12 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import Image from "react-bootstrap/Image";
 import { Link } from "react-router-dom";
 import styles from "./Nav.module.css";
 import {
   useLogOutMutation,
   useGetTokenQuery,
-  useLogInMutation,
 } from "../../store/accountApi";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
@@ -21,9 +19,7 @@ import logo from "../../images/logo.png";
 import React from "react";
 
 function LogoutButton() {
-  const { data: token, isLoading: tokenLoading } = useGetTokenQuery();
-  const navigate = useNavigate();
-  const [logOut, { data }] = useLogOutMutation();
+  const [logOut] = useLogOutMutation();
 
   return (
     <Link to="/">
@@ -63,10 +59,7 @@ function LoginButton() {
 }
 
 function NavScrollExample() {
-  const { data: token, isLoading: tokenLoading } = useGetTokenQuery();
-  const {
-    account: { roles = [] },
-  } = token || { account: {} };
+  const { data: token } = useGetTokenQuery();
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const navigate = useNavigate();

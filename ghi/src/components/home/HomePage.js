@@ -3,8 +3,6 @@ import Carousel from "react-bootstrap/Carousel";
 import "./HomePage.css";
 import { useEffect, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
-import Image from "react-bootstrap/esm/Image";
-import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
 
@@ -67,6 +65,7 @@ function HomePage() {
                         <Link to={`/card/${cardObject["1"].multiverse_id}`}>
                           <img
                             className="d-block w-100"
+                            alt={`${cardObject["1"].name}`}
                             src={cardObject["1"].picture_url}
                             style={{ width: "100%" }}
                           />
@@ -76,6 +75,7 @@ function HomePage() {
                         <Link to={`/card/${cardObject["2"].multiverse_id}`}>
                           <img
                             className="d-block w-100"
+                            alt={`${cardObject["2"].name}`}
                             src={cardObject["2"].picture_url}
                             style={{ width: "100%" }}
                           />
@@ -85,6 +85,7 @@ function HomePage() {
                         <Link to={`/card/${cardObject["3"].multiverse_id}`}>
                           <img
                             className="d-block w-100"
+                            alt={`${cardObject["3"].name}`}
                             src={cardObject["3"].picture_url}
                             style={{ width: "100%" }}
                           />
@@ -94,6 +95,7 @@ function HomePage() {
                         <Link to={`/card/${cardObject["4"].multiverse_id}`}>
                           <img
                             className="d-block w-100"
+                            alt={`${cardObject["4"].name}`}
                             src={cardObject["4"].picture_url}
                             style={{ width: "100%" }}
                           />

@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // Bootstrap Imports
@@ -7,7 +7,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
-import Spinner from "react-bootstrap/Spinner";
 import logo from "../../images/logo.png";
 import "./LogoSpinner.css";
 
@@ -87,7 +86,7 @@ function SearchResults() {
                   style={{ width: "100%" }}
                 />
               </Link>
-              {accessToken === null || accessToken == undefined ? (
+              {accessToken === null || accessToken === undefined ? (
                 <></>
               ) : (
                 <Dropdown className="mb-4" onSelect={addCard}>

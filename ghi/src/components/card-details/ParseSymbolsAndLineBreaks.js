@@ -5,7 +5,7 @@ import React from "react";
 
 function ParseSymbolsAndLineBreaks(props) {
   const string = props.string;
-  const { data: symbols, error: symbolsError, isLoading: symbolsIsLoading } = useGetSymbolsQuery();
+  const { data: symbols } = useGetSymbolsQuery();
   if (string === undefined || string === "") {return(<></>)}
   const symbolUrls = {}
   if (symbols) {
@@ -48,7 +48,7 @@ function ParseSymbolsAndLineBreaks(props) {
         <React.Fragment key={`${string} ${item} ${idx} fragment`}>
         {
         item in symbolUrls ? // replaces substring with corresponding symbol
-        <img style={{height: "1em"}} key={`${string} ${item} ${idx}`} src={symbolUrls[item]} />
+        <img alt={item} style={{height: "1em"}} key={`${string} ${item} ${idx}`} src={symbolUrls[item]} />
         :
         <span key={`${string} ${item} ${idx}`}>{item}</span>
         }
