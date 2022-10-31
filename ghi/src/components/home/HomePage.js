@@ -120,6 +120,7 @@ function HomePage() {
               >
                 Random Card
               </Button>
+              <Button>Hello</Button>
             </div>
           </Container>
         </div>
