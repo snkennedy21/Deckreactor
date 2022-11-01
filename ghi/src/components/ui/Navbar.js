@@ -9,7 +9,7 @@ import styles from "./Nav.module.css";
 import {
   useLogOutMutation,
   useGetTokenQuery,
-} from "../../store/accountApi";
+} from "../../store/RTK_Query/accountApi";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -92,7 +92,7 @@ function NavScrollExample() {
             navbarScroll
             onSelect={(selectedKey) => navigate(selectedKey)}
           >
-            <Nav.Link eventKey="/advanced-search">AdvancedSearch</Nav.Link>
+            <Nav.Link eventKey="/advanced-search">Advanced Search</Nav.Link>
             {token ? (
               <Nav.Link eventKey="/collection">My Collection</Nav.Link>
             ) : (

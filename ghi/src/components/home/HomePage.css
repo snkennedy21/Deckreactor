@@ -22,3 +22,45 @@
   background-color: #e8f1fe;
   gap: 20px;
 }
+
+.button-start {
+  background-color: #e8f1fe;
+  border: solid 1px #1877f2;
+  color: #1877f2;
+  margin-right: 10px;
+  transition-duration: 0.2s;
+}
+
+.button-start:hover {
+  background-color: #5cb85c;
+  border: solid 1px #5cb85c;
+}
+
+.button-find {
+  background-color: #e8f1fe;
+  border: solid 1px #1877f2;
+  color: #1877f2;
+  margin-right: 10px;
+  transition-duration: 0.2s;
+}
+
+.button-find-disabled {
+  background-color: #e8f1fe;
+  border: solid 1px #1877f2;
+  color: #1877f2;
+  margin-right: 10px;
+}
+
+.button-find:hover {
+  background-color: #1877f2;
+  border: solid 1px #1877f2;
+}
+
+.fade-in {
+  animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}

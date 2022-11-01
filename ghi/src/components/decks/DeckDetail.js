@@ -1,34 +1,137 @@
+// react imports
 import React from "react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { FaPlus, FaMinus } from "react-icons/fa";
 
+// bootstrap imports
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import { FaPlus, FaMinus } from "react-icons/fa";
+
+// store imports
 import {
   useGetMyDecksQuery,
   useAddCardToDeckMutation,
   useRemoveOneCardFromDeckMutation,
-} from "../../store/myCardsApi";
+} from "../../store/RTK_Query/myCardsApi";
+import { useGetTokenQuery } from "../../store/RTK_Query/accountApi";
+
+// other imports
 import getBackground from "../card-details/getBackground";
 import ParseSymbolsAndLineBreaks from "../card-details/ParseSymbolsAndLineBreaks";
-import DeckCardList from "./DeckCardList";
+import DeckCardList, { getDeckCardQuantity } from "./DeckCardList";
+import Loading from "../ui/Loading";
+import DeleteDeckModal from "./DeleteDeckModal";
+
+// when passed a deck object with "cards" attribute, returns a 1-2 char string
+// with 2 mana colors most commonly found in card mana costs
+export function getDominantColors(deck) {
+  const colorCounts = {};
+
+  // generate string combining mana cost of all cards
+  let manaString = "";
+  for (let card of deck.cards) {
+    if (card.mana !== null) {
+      let currentMana = card.mana;
+      manaString += currentMana.repeat(card.quantity);
+    }
+  }
+
+  // count up instances of colored mana cost
+  for (let i = 0; i < manaString.length - 2; i++) {
+    if (manaString[i] === "{" && manaString[i + 2] === "}") {
+      if ("RGBUW".includes(manaString[i + 1])) {
+        let color = manaString[i + 1];
+        if (!Object.keys(colorCounts).includes(color)) {
+          colorCounts[color] = 0;
+        }
+        colorCounts[color]++;
+      }
+    }
+  }
+
+  // set outputs by checking which colors occurred most frequently
+  let color1 = "";
+  let color2 = "";
+  let amount1 = 0;
+  let amount2 = 0;
+
+  const sortedCounts = Object.entries(colorCounts).sort((a, b) => b[1] - a[1]);
+
+  if (sortedCounts.length > 0) {
+    color1 = sortedCounts[0][0];
+    if (sortedCounts.length > 1) {
+      color2 = sortedCounts[1][0];
+    }
+  }
+
+  return color1 + color2;
+}
+
+// when passed a deck object with "cards" attribute, returns an array of
+// only formats legal for all cards in deck
+export function getLegalities(deck) {
+  if (!Object.keys(deck).includes("cards") && deck.cards.length > 0) {
+    return;
+  }
+  const formatsArray = deck.cards.map((card) => card.formats);
+  let outputFormats = formatsArray[0];
+  for (let cardFormats of formatsArray) {
+    outputFormats = outputFormats.filter((format) =>
+      cardFormats.includes(format)
+    );
+  }
+  return outputFormats;
+}
+
+// returns a string of the average CMC (converted mana cost)
+// of input deck object, rounded to 2 places
+export function getAverageCmc(deck) {
+  if (deck.cards === undefined || deck.cards.length === 0) {
+    return (0).toFixed(2);
+  }
+
+  let cmcSum = 0;
+  let cardQuantity = 0;
+  for (let card of deck.cards) {
+    cmcSum += card.cmc * card.quantity;
+    cardQuantity += card.quantity;
+  }
+
+  const average = cmcSum / cardQuantity;
+  return average.toFixed(2);
+}
+
+// will eventually return a string of the total price of deck
+
+// export function getDeckValue(deck) {
+//   let sum = 0;
+//   if (!Object.keys(deck).includes("cards")) {
+//     return (0).toFixed(2);
+//   }
+
+//   for (let card of deck.cards) {
+//     if (card.prices.usd === null) {
+//       continue;
+//     } else {
+//       sum += card.prices.usd;
+//     }
+//   }
+//   return (sum).toFixed(2);
+// }
 
 function DeckDetail() {
   const [cards, setCards] = useState([]);
   const { deck_id } = useParams();
   const [currentDeck, setCurrentDeck] = useState({});
-  const {
-    data: decksData
-  } = useGetMyDecksQuery();
-  const [addCardToDeck] =
-    useAddCardToDeckMutation();
-  const [removeCardFromDeck] =
-    useRemoveOneCardFromDeckMutation();
+  const { data: decksData } = useGetMyDecksQuery();
+  const [addCardToDeck] = useAddCardToDeckMutation();
+  const [removeCardFromDeck] = useRemoveOneCardFromDeckMutation();
   const navigate = useNavigate();
 
   const [backgroundUrl, setBackgroundUrl] = useState("");
@@ -44,7 +147,7 @@ function DeckDetail() {
 
     const newCurrentDeck = decksData.decks.find((deck) => deck.id === deck_id);
 
-    setCurrentDeck(newCurrentDeck)
+    setCurrentDeck(newCurrentDeck);
 
     setAverageCmc(getAverageCmc(newCurrentDeck));
 
@@ -54,20 +157,20 @@ function DeckDetail() {
       // console.log(newDeckValue);
       // setDeckValue(newDeckValue)     // get this working
     }
-    
+
     let colors = getDominantColors(newCurrentDeck);
-    let primary = (colors ? colors[0] : "");
+    let primary = colors ? colors[0] : "";
 
     if (colors) {
       setDominantColors(colors);
       setPrimaryColor(primary);
     }
-    if ((cards && backgroundUrl === "")) {
+    if (cards && backgroundUrl === "") {
       setBackgroundUrl(getBackground(primary));
     }
     const newLegalities = getLegalities({ cards });
     setLegalities(newLegalities);
-    
+
     // if (legalities) {
     //   const newLostLegalities = legalities.filter(legality => !(newLegalities.includes(legality)))
 
@@ -241,7 +344,6 @@ function DeckDetail() {
         className="p-4 img-fluid"
         style={{
           background: `url(${backgroundUrl}) no-repeat center center fixed`,
-          backgroundSize: "cover",
         }}
       >
         <div className="row">
@@ -293,18 +395,11 @@ function DeckDetail() {
                       </tr>
                     </tbody>
                   </table>
+                  <DeleteDeckModal
+                    deckId={deck_id}
+                    deckName={currentDeck.name}
+                  />
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-6">
-            {/* DECK CARD DETAILS */}
-            <div className="card mb-4 box-shadow">
-              <div className="card-body img-fluid">
-                <Card
-                  className="bg-white img-fluid rounded shadow d-block mx-auto"
-                  style={{ width: "13rem" }}
-                ></Card>
               </div>
             </div>
           </div>
@@ -313,54 +408,77 @@ function DeckDetail() {
     );
   } else if (decksData && currentDeck && cards) {
     return (
-    <React.Fragment>
-      <div className="p-4 img-fluid" style={{
-      background: `url(${backgroundUrl}) no-repeat center center fixed`,
-      backgroundSize: "cover",
-      }}>
-      <div className="row">
-        <div className="col-sm-6">
-          {/* DECK OVERVIEW */}
-          <div className="card mb-4 box-shadow">
-            <div className="card-header"><h1 className="my-2"><ParseSymbolsAndLineBreaks string={currentDeck.name} /></h1></div>
-            <div className="card-body">
-              <ParseSymbolsAndLineBreaks string={currentDeck.description}></ParseSymbolsAndLineBreaks>
-              <br></br>
-              <div className="table-responsive">
-                <table className="table table-striped table-sm">
-                  <tbody>
-                    <tr key="mana symbols row">
-                      <td><ParseSymbolsAndLineBreaks string={dominantColors.length === 2 ? `{${dominantColors[0]}}{${dominantColors[1]}}` : dominantColors.length === 1 ? `{${dominantColors[0]}}` : ''}></ParseSymbolsAndLineBreaks></td>
-                      <td></td>
-                    </tr>
-                    <tr key="deck value row">
-                      <td>Deck value:</td>
-                      <td className="text-success">$TBD</td>
-                    </tr>
-                    <tr key="mana cost row">
-                      <td>Average mana cost:</td>
-                      <td>{averageCmc}</td>
-                    </tr>
-                    <tr key="formats row">
-                      <td>Legal formats:</td>
-                      <td>{legalities ? legalities.join(', ') : "None"}</td>
-                    </tr>
-                  </tbody>
-                </table>
+      <React.Fragment>
+        <div
+          className="p-4 img-fluid fade-in"
+          style={{
+            background: `url(${backgroundUrl}) no-repeat center center fixed`,
+            backgroundSize: "cover",
+          }}
+        >
+          <div className="row">
+            <div className="col-sm-6">
+              {/* DECK OVERVIEW */}
+              <div className="card mb-4 box-shadow">
+                <div className="card-header">
+                  <h1 className="my-2">
+                    <ParseSymbolsAndLineBreaks string={currentDeck.name} />
+                  </h1>
+                </div>
+                <div className="card-body">
+                  <ParseSymbolsAndLineBreaks
+                    string={currentDeck.description}
+                  ></ParseSymbolsAndLineBreaks>
+                  <br></br>
+                  <div className="table-responsive">
+                    <table className="table table-striped table-sm">
+                      <tbody>
+                        <tr key="mana symbols row">
+                          <td>
+                            <ParseSymbolsAndLineBreaks
+                              string={
+                                dominantColors.length == 2
+                                  ? `{${dominantColors[0]}}{${dominantColors[1]}}`
+                                  : dominantColors.length == 1
+                                  ? `{${dominantColors[0]}}`
+                                  : ""
+                              }
+                            ></ParseSymbolsAndLineBreaks>
+                          </td>
+                          <td></td>
+                        </tr>
+                        <tr key="deck value row">
+                          <td>Deck value:</td>
+                          <td className="text-success">$TBD</td>
+                        </tr>
+                        <tr key="mana cost row">
+                          <td>Average mana cost:</td>
+                          <td>{averageCmc}</td>
+                        </tr>
+                        <tr key="formats row">
+                          <td>Legal formats:</td>
+                          <td>{legalities ? legalities.join(", ") : "None"}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <DeleteDeckModal
+                      deckId={deck_id}
+                      deckName={currentDeck.name}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-sm-6">
+              {/* DECK CARD DETAILS */}
+              <div className="card mb-4 box-shadow">
+                <div className="card-body img-fluid">
+                  <DeckCardList cards={cards} />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="col-sm-6">
-          {/* DECK CARD DETAILS */}
-          <div className="card mb-4 box-shadow">
-            <div className="card-body img-fluid"> 
-                <DeckCardList cards={cards}/>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
         <Button onClick={navigateToDecks}>Back To Decks</Button>
         <Container>
           <Row>
@@ -403,7 +521,7 @@ function DeckDetail() {
     return (
       <>
         <Button onClick={navigateToDecks}>Back To Decks</Button>
-        <p>Loading...</p>
+        <Loading />
       </>
     );
   }

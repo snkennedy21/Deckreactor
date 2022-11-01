@@ -14,4 +14,4 @@ export const searchSlice = createSlice({
   },
 });
 
-export const { updateSearch } = searchSlice.actions;
+export const { updateSearch, getSearch } = searchSlice.actions;

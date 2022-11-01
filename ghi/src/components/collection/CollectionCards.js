@@ -7,13 +7,11 @@ import { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import "./collection.css";
-import { useGetMyCollectionQuery } from "../../store/myCardsApi";
+import { useGetMyCollectionQuery } from "../../store/RTK_Query/myCardsApi";
 
 export default function MyCollection2() {
-  const {
-    data: collectionData,
-    isLoading: collectionIsLoading,
-  } = useGetMyCollectionQuery();
+  const { data: collectionData, isLoading: collectionIsLoading } =
+    useGetMyCollectionQuery();
   const [filteredCollection, setFilteredCollection] = useState([]);
   let [collection, setCollection] = useState([]);
   let [search, setSearch] = useState("");
@@ -137,7 +135,7 @@ export default function MyCollection2() {
         <div>
           <Container
             fluid="md"
-            className="table-wrapper-scroll-y"
+            className="table-wrapper-scroll-y fade-in"
             style={{
               padding: "25px",
               backgroundImage: `url(https://media.magic.wizards.com/images/wallpaper/tasha-the-witch-queen-clb-background-1280x960.jpg)`,

@@ -4,11 +4,11 @@ import Form from "react-bootstrap/Form";
 import "./accounts.css";
 import Container from "react-bootstrap/esm/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { useLogInMutation } from "../../store/accountApi";
+import { useLogInMutation } from "../../store/RTK_Query/accountApi";
 import { useCallback } from "react";
 import logo from "../../images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import { updateField } from "../../store/accountSlice";
+import { updateField } from "../../store/redux-slices/accountSlice";
 
 function Login() {
   const dispatch = useDispatch();
@@ -32,12 +32,11 @@ function Login() {
       <Form
         className="mt-3 mb-3 w-100 justify-content-center"
         method="POST"
-        onSubmit={ (e) => {
-          e.preventDefault()
-          logIn(e.target)
-          navigate('/')
-        }
-      }
+        onSubmit={(e) => {
+          e.preventDefault();
+          logIn(e.target);
+          navigate("/");
+        }}
       >
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Control

@@ -16,7 +16,10 @@ export const scryfallWebApi = createApi({
         };
       },
     }),
+    getCardNames: builder.query({
+      query: () => '/catalog/card-names/',
+    }),
   }),
 });
 
-export const { useGetSymbolsQuery, useGetCardQuery } = scryfallWebApi;
+export const { useGetSymbolsQuery, useGetCardQuery, useGetCardNamesQuery } = scryfallWebApi;
