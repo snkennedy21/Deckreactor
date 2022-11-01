@@ -10,7 +10,6 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
 import logo from "../../images/logo.png";
-import "./LogoSpinner.css";
 
 // RTK Query Imports
 import { useGetCardsQuery } from "../../store/RTK_Query/scryfallApi";
