@@ -34,8 +34,8 @@ build-front-end-job:
   #   - api-unit-test-job
   #   - lint-test-job
   variables:
-    PUBLIC_URL: https://mtgt.gitlab.io/module3-project-gamma/
-    # REACT_APP_API_HOST: https://apis-with-sql.herokuapp.com
+    PUBLIC_URL: https://snkennedy21.gitlab.io/module3-project-gamma/
+    REACT_APP_API_HOST: https://apis-with-sql.herokuapp.com
   script:
     - cd ghi
     - npm install

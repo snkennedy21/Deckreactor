@@ -1,70 +1,55 @@
 import React, { useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDeleteDeckMutation } from "../../store/myCardsApi";
+import ParseSymbolsAndLineBreaks from "../card-details/ParseSymbolsAndLineBreaks";
 
 function DeleteDeckModal(props) {
   const deckId = props.deckId;
-  const [success, setSuccess] = useState(false);
+  const deckName = props.deckName;
   const [deleteDeck] = useDeleteDeckMutation();
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
-  // const handleClose = () => {
-
-  // }
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
   function handleSubmit(e) {
     e.preventDefault();
     deleteDeck({deckId});
-    setSuccess(true);
+    navigate("/decks");
   }
 
   return (
     <React.Fragment>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Create Deck
+      <Button variant="outline-danger" onClick={handleShow}>
+        Delete Deck
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Create A Deck</Modal.Title>
+          <Modal.Title>Delete a deck</Modal.Title>
         </Modal.Header>
-        <Form onSubmit={submitHandler}>
-          <Modal.Body>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Deck Name</Form.Label>
-              <Form.Control
-                onChange={nameChangeHandler}
-                type="input"
-                placeholder="Enter Name"
-                autoFocus
-                value={name}
-              />
-            </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Deck Description</Form.Label>
-              <Form.Control
-                onChange={descriptionChangeHandler}
-                as="textarea"
-                rows={3}
-                value={description}
-              />
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="danger" onClick={submitHandler}>
-              Delete Deck
-            </Button>
-          </Modal.Footer>
-        </Form>
-      </Modal> */}
+        <Modal.Body>
+        <div style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '20vh',
+        }}>
+          Are you sure you want to delete deck "<ParseSymbolsAndLineBreaks string={deckName}/>"?<br/><br/>This action cannot be undone.
+        </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Back
+          </Button>
+          <Button variant="danger" onClick={handleSubmit}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </React.Fragment>
   )
 }
+
+export default DeleteDeckModal;

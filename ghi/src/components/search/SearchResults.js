@@ -1,4 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
+// React Imports
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // Bootstrap Imports
@@ -19,12 +21,14 @@ import {
   useAddCardToDeckMutation,
 } from "../../store/myCardsApi";
 import { useGetTokenQuery } from "../../store/accountApi";
+import Loading from "../ui/Loading";
 
 function SearchResults() {
   // Hook Declarations
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const search = useSelector((state) => state.search);
+  const searching = useState(false);
 
   // RTK Query Hook Declarations
   const { data: decksData, isLoading: decksDataLoading } = useGetMyDecksQuery();
@@ -34,19 +38,20 @@ function SearchResults() {
   const { data: cardData, isLoading: cardDataLoading } =
     useGetCardsQuery(search);
 
+  // useEffect(() => {
+
+  // }, [])
+
   if (cardDataLoading || decksDataLoading) {
-    return (
-      <Container>
-        <Image src={logo} className="logo-spinner" style={{ width: "6rem" }} />
-        <div>Loading results...</div>
-      </Container>
-    );
+    return <Loading />;
   }
 
   if (cardData === undefined) {
     return (
       <div>
-        No search results yet<br></br>Care for a Banana while you wait
+        No search results yet
+        <br />
+        Care for a Banana while you wait
       </div>
     );
   }
