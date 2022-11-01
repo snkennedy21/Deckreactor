@@ -8,7 +8,7 @@ import { useLogInMutation } from "../../store/RTK_Query/accountApi";
 import { useCallback } from "react";
 import logo from "../../images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import { updateField } from "../../store/accountSlice";
+import { updateField } from "../../store/redux-slices/accountSlice";
 
 function Login() {
   const dispatch = useDispatch();

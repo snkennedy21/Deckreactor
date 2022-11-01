@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSignUpMutation } from "../../store/RTK_Query/accountApi";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateField } from "../../store/accountSlice";
+import { updateField } from "../../store/redux-slices/accountSlice";
 import logo from "../../images/logo.png";
 import Image from "react-bootstrap/esm/Image";
 
