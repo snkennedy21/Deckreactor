@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { clearForm } from "./accountSlice";
+import { clearForm } from "../accountSlice";
 
 export const accountApiSlice = createApi({
   reducerPath: "token",

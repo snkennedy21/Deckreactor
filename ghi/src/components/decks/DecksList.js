@@ -13,12 +13,12 @@ import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
 
 // store imports
-import { useGetTokenQuery } from "../../store/accountApi";
+import { useGetTokenQuery } from "../../store/RTK_Query/accountApi";
 import { deckActions } from "../../store/store";
 
 // other imports
 import CreateDeckModal from "./CreateDeckModal";
-import { useGetMyDecksQuery } from "../../store/myCardsApi";
+import { useGetMyDecksQuery } from "../../store/RTK_Query/myCardsApi";
 import Loading from "../ui/Loading";
 import { getAverageCmc, getLegalities, getDominantColors } from "./DeckDetail";
 import ParseSymbolsAndLineBreaks from "../card-details/ParseSymbolsAndLineBreaks";

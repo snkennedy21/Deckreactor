@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import { scryfallApi } from "./scryfallApi";
+import { scryfallApi } from "./RTK_Query/scryfallApi";
 import { searchSlice } from "./searchSlice";
 import { accountSlice } from "./accountSlice";
-import { accountApiSlice } from "./accountApi";
-import { myCardsApi } from "./myCardsApi";
-import { scryfallWebApi } from "./scryfallWebApi";
+import { accountApiSlice } from "./RTK_Query/accountApi";
+import { myCardsApi } from "./RTK_Query/myCardsApi";
+import { scryfallWebApi } from "./RTK_Query/scryfallWebApi";
 import { deckSlice } from "./deckSlice";
 
 export const store = configureStore({

@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import "./collection.css";
-import { useGetMyCollectionQuery, useAddCardToCollectionMutation, useRemoveCardFromCollectionMutation } from "../../store/myCardsApi";
+import {
+  useGetMyCollectionQuery,
+  useAddCardToCollectionMutation,
+  useRemoveCardFromCollectionMutation,
+} from "../../store/RTK_Query/myCardsApi";
 
 export default function MyCollection() {
   let [collection, setCollection] = useState([]);
@@ -12,7 +16,8 @@ export default function MyCollection() {
   const [search, setSearch] = useState("");
   const [addCardToCollection] = useAddCardToCollectionMutation();
   const [removeCardFromCollection] = useRemoveCardFromCollectionMutation();
-  const { data: collectionData, isLoading: collectionIsLoading } = useGetMyCollectionQuery();
+  const { data: collectionData, isLoading: collectionIsLoading } =
+    useGetMyCollectionQuery();
 
   useEffect(() => {
     if (collectionData) {
@@ -22,28 +27,26 @@ export default function MyCollection() {
       setFilteredCollection(collection);
     } else if (search.length > 0) {
       let cardMatches = [];
-      collection.forEach(card => {
-          if (card.name.toLowerCase().includes(search.toLowerCase())) {
-              cardMatches.push(card);
-          }
+      collection.forEach((card) => {
+        if (card.name.toLowerCase().includes(search.toLowerCase())) {
+          cardMatches.push(card);
+        }
       });
       setFilteredCollection(cardMatches);
     }
   }, [collection, collectionData, search]);
 
   const handleDelete = (multiverse_id) => {
-    removeCardFromCollection({multiverseId: multiverse_id});
+    removeCardFromCollection({ multiverseId: multiverse_id });
   };
 
   const handleIncrease = (multiverse_id) => {
-    addCardToCollection({multiverseId: multiverse_id});
+    addCardToCollection({ multiverseId: multiverse_id });
   };
 
   const handleInputChange = (event) => {
     setSearch(event.target.value.toLowerCase());
   };
-
-
 
   if (collectionIsLoading) {
     return (
@@ -166,7 +169,9 @@ export default function MyCollection() {
                   return (
                     <tr key={row.multiverse_id}>
                       <td className="text-center">
-                        <Link to={`/card/${row.multiverse_id}`}>{row.name}</Link>
+                        <Link to={`/card/${row.multiverse_id}`}>
+                          {row.name}
+                        </Link>
                         <br></br>
                         <p className="mt-3">Quantity: {row.quantity}</p>
                         <Button
@@ -189,18 +194,18 @@ export default function MyCollection() {
                       </td>
                       <td className="text-center">
                         <Link to={`/card/${row.multiverse_id}/`}>
-                        <img
-                          className="p-1"
-                          src={row.picture_url}
-                          alt="card_picture"
-                          width="170px"
-                        />
-                        <img
-                          className="p-1"
-                          src={row.back_picture_url}
-                          alt="card_picture"
-                          width="170px"
-                        />
+                          <img
+                            className="p-1"
+                            src={row.picture_url}
+                            alt="card_picture"
+                            width="170px"
+                          />
+                          <img
+                            className="p-1"
+                            src={row.back_picture_url}
+                            alt="card_picture"
+                            width="170px"
+                          />
                         </Link>
                         <br></br>
                       </td>
@@ -210,8 +215,10 @@ export default function MyCollection() {
                   return (
                     <tr key={row.multiverse_id}>
                       <td className="text-center">
-                      <Link to={`/card/${row.multiverse_id}`}>{row.name}</Link>
-                      <br></br>
+                        <Link to={`/card/${row.multiverse_id}`}>
+                          {row.name}
+                        </Link>
+                        <br></br>
                         <p className="mt-3">Quantity: {row.quantity}</p>
                         <Button
                           className="mb-1"
@@ -234,12 +241,12 @@ export default function MyCollection() {
                       </td>
                       <td className="text-center">
                         <Link to={`/card/${row.multiverse_id}/`}>
-                        <img
-                          className="p-1"
-                          src={row.picture_url}
-                          alt="card_picture"
-                          width="170px"
-                        />
+                          <img
+                            className="p-1"
+                            src={row.picture_url}
+                            alt="card_picture"
+                            width="170px"
+                          />
                         </Link>
                         <br></br>
                       </td>

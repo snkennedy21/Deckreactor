@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import { useCreateDeckMutation } from "../../store/myCardsApi";
+import { useCreateDeckMutation } from "../../store/RTK_Query/myCardsApi";
 
 function CreateDeckModal(props) {
   const [name, setName] = useState("");
@@ -15,12 +15,12 @@ function CreateDeckModal(props) {
 
   async function submitHandler(e) {
     e.preventDefault();
-    
+
     const body = {
       name: name,
       description: description,
     };
-    
+
     createDeck(body);
 
     setShow(false);

@@ -13,14 +13,14 @@ import logo from "../../images/logo.png";
 import "./LogoSpinner.css";
 
 // RTK Query Imports
-import { useGetCardsQuery } from "../../store/scryfallApi";
+import { useGetCardsQuery } from "../../store/RTK_Query/scryfallApi";
 import { searchActions } from "../../store/store";
 import {
   useGetMyDecksQuery,
   useAddCardToCollectionMutation,
   useAddCardToDeckMutation,
-} from "../../store/myCardsApi";
-import { useGetTokenQuery } from "../../store/accountApi";
+} from "../../store/RTK_Query/myCardsApi";
+import { useGetTokenQuery } from "../../store/RTK_Query/accountApi";
 import Loading from "../ui/Loading";
 
 function SearchResults() {

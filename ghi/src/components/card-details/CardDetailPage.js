@@ -5,7 +5,7 @@ import Carousel from "react-bootstrap/Carousel";
 import AddToDeckForm from "./AddToDeckForm";
 import ParseSymbolsAndLineBreaks from "./ParseSymbolsAndLineBreaks";
 import getBackground from "./getBackground";
-import { useGetCardQuery } from "../../store/scryfallWebApi";
+import { useGetCardQuery } from "../../store/RTK_Query/scryfallWebApi";
 import Loading from "../ui/Loading";
 
 function CardDetailPage() {

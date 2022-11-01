@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useDeleteDeckMutation } from "../../store/myCardsApi";
+import { useDeleteDeckMutation } from "../../store/RTK_Query/myCardsApi";
 import ParseSymbolsAndLineBreaks from "../card-details/ParseSymbolsAndLineBreaks";
 
 function DeleteDeckModal(props) {
@@ -16,7 +16,7 @@ function DeleteDeckModal(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    deleteDeck({deckId});
+    deleteDeck({ deckId });
     navigate("/decks");
   }
 
@@ -31,13 +31,20 @@ function DeleteDeckModal(props) {
           <Modal.Title>Delete a deck</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <div style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '20vh',
-        }}>
-          Are you sure you want to delete deck "<ParseSymbolsAndLineBreaks string={deckName}/>"?<br/><br/>This action cannot be undone.
-        </div>
+          <div
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              height: "20vh",
+            }}
+          >
+            Are you sure you want to delete deck "
+            <ParseSymbolsAndLineBreaks string={deckName} />
+            "?
+            <br />
+            <br />
+            This action cannot be undone.
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -49,7 +56,7 @@ function DeleteDeckModal(props) {
         </Modal.Footer>
       </Modal>
     </React.Fragment>
-  )
+  );
 }
 
 export default DeleteDeckModal;

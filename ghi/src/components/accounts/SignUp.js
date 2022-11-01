@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/esm/Container";
 import "./accounts.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useSignUpMutation } from "../../store/accountApi";
+import { useSignUpMutation } from "../../store/RTK_Query/accountApi";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateField } from "../../store/accountSlice";
@@ -11,7 +11,7 @@ import logo from "../../images/logo.png";
 import Image from "react-bootstrap/esm/Image";
 
 function SignUp() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { email, password, full_name } = useSelector((state) => state.account);
   const [signUp] = useSignUpMutation();
@@ -34,14 +34,14 @@ function SignUp() {
       </div>
       <Form
         method="POST"
-        onSubmit={ (e) => {
-          e.preventDefault()
+        onSubmit={(e) => {
+          e.preventDefault();
           signUp({
             email,
             password,
             full_name,
-          })
-          navigate("/")
+          });
+          navigate("/");
         }}
       >
         <Form.Group className="mb-3">

@@ -18,8 +18,8 @@ import {
   useGetMyDecksQuery,
   useAddCardToDeckMutation,
   useRemoveOneCardFromDeckMutation,
-} from "../../store/myCardsApi";
-import { useGetTokenQuery } from "../../store/accountApi";
+} from "../../store/RTK_Query/myCardsApi";
+import { useGetTokenQuery } from "../../store/RTK_Query/accountApi";
 
 // other imports
 import getBackground from "../card-details/getBackground";

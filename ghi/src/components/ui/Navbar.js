@@ -9,7 +9,7 @@ import styles from "./Nav.module.css";
 import {
   useLogOutMutation,
   useGetTokenQuery,
-} from "../../store/accountApi";
+} from "../../store/RTK_Query/accountApi";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";

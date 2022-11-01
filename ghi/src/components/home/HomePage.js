@@ -7,7 +7,7 @@ import Image from "react-bootstrap/esm/Image";
 import logo from "../../images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
-import { useGetCardNamesQuery } from "../../store/scryfallWebApi";
+import { useGetCardNamesQuery } from "../../store/RTK_Query/scryfallWebApi";
 import { useDispatch } from "react-redux";
 import { searchActions, store } from "../../store/store";
 
